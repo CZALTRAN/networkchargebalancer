@@ -41,7 +41,7 @@ Rede::Peer::~Peer()
 void
 Rede::Peer::setHost( const QString& _host )
 {
-
+    this->host = _host;
 }
 
 const QString

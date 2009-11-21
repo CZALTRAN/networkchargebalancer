@@ -47,6 +47,5 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
     Rede::RedeConfig::getInstance().server = false;
     Rede::RedeConfig::getInstance().estado_atual = Rede::PROCURANDO_SERVER;
 
-    //conectar na porta 6969 e perguntar pelo servidor
     _primeiro_peer->conectar();
 }
