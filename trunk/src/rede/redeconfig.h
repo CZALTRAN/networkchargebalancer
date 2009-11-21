@@ -2,6 +2,7 @@
 #define REDECONFIG_H
 
 #include <QList>
+#include <QString>
 
 namespace Rede
 {
