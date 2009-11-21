@@ -48,4 +48,5 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
     Rede::RedeConfig::getInstance().estado_atual = Rede::PROCURANDO_SERVER;
 
     _primeiro_peer->conectar();
+
 }
