@@ -5,13 +5,16 @@
 Rede::GerenciadorConexao::GerenciadorConexao()
 {
 
-    Rede::Peer*
-    eu_mesmo = new Rede::Peer();
+    if( Rede::RedeConfig::getInstance().estado_atual == Rede::SERVER )
+    {
+        Rede::Peer*
+        eu_mesmo = new Rede::Peer();
 
-    eu_mesmo->setId( Rede::RedeConfig::getInstance().meu_id );
-    eu_mesmo->setHost( Rede::RedeConfig::getInstance().host );
+        eu_mesmo->setId( Rede::RedeConfig::getInstance().meu_id );
+        eu_mesmo->setHost( Rede::RedeConfig::getInstance().host );
 
-    this->peers.insert( this->peers.size(), eu_mesmo );
+        this->peers.insert( Rede::RedeConfig::getInstance().meu_id, eu_mesmo );
+    }
 }
 
 
@@ -24,8 +27,15 @@ Rede::GerenciadorConexao::~GerenciadorConexao()
 Rede::Peer*
 Rede::GerenciadorConexao::novaConexao( int _socket_descriptor)
 {
+    Rede::Peer*
+    novo_peer = new Rede::Peer( _socket_descriptor );
 
+    novo_peer->setId( this->peers.size()+1 );
+    novo_peer->setHost( Rede::RedeConfig::getInstance().host );
 
+    this->peers.insert( novo_peer->getId(), novo_peer );
+
+    return novo_peer;
 }
 
 Rede::Peer*

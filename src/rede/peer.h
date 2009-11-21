@@ -33,7 +33,10 @@ namespace Rede
         setHost( const QString& _host );
 
         const QString
-        getHost();
+        getHost() const;
+
+        const int
+        getId() const;
 
         void
         conectar( const QString& _host );

@@ -4,6 +4,7 @@
 #include <QHostAddress>
 #include <QRegExp>
 
+#include "construtordepacotes.h"
 #include "lib/conexao.h"
 #include "redeconfig.h"
 
@@ -45,9 +46,15 @@ Rede::Peer::setHost( const QString& _host )
 }
 
 const QString
-Rede::Peer::getHost()
+Rede::Peer::getHost() const
 {
     return this->host;
+}
+
+const int
+Rede::Peer::getId() const
+{
+    return this->id;
 }
 
 void
@@ -70,10 +77,11 @@ Rede::Peer::conectar()
 void
 Rede::Peer::sendInit( const int _total_conn )
 {
-    int
-    id = this->id;
+    QString
+    mensagem = Rede::ConstrutorDePacotes::getInstance().montaInit( this->id,
+                                                                   _total_conn );
 
-
+    this->conexao->enviaDado( mensagem );
 }
 
 void
