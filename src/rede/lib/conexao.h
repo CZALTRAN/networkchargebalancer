@@ -3,6 +3,8 @@
 
 #include <QTcpSocket>
 
+#define PORTA_PRIMEIRA_CONEXAO
+
 namespace Rede
 {
     class Conexao : public QTcpSocket
