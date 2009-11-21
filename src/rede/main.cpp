@@ -24,11 +24,13 @@ int main ( int argc, char* argv[])
 
     if ( argc == 2 )
     {
+        qDebug() << "startando como host";
         primeiro_peer = new Rede::Peer();
         primeiro_peer->setHost( QString(argv[1]) );
     }
     else
     {
+        qDebug() << "startando como server";
         primeiro_peer = 0;
     }
 
