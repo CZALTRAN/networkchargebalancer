@@ -44,6 +44,9 @@ namespace Rede
         void
         sendInit( const int _total_conn );
 
+        void
+        setId( const int _id );
+
     public slots:
 
         void
