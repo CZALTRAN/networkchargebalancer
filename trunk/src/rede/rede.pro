@@ -12,11 +12,13 @@ SOURCES += gerenciadorrede.cpp \
     gerenciadorconexao.cpp \
     peer.cpp \
     redeconfig.cpp \
-    main.cpp
+    main.cpp \
+    construtordepacotes.cpp
 HEADERS += gerenciadorrede.h \
     rede_global.h \
     lib/conexao.h \
     lib/ouvinte.h \
     gerenciadorconexao.h \
     peer.h \
-    redeconfig.h
+    redeconfig.h \
+    construtordepacotes.h

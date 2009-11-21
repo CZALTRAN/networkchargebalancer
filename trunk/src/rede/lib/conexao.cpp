@@ -1,5 +1,7 @@
 #include "conexao.h"
 
+#include <QDebug>
+
 Rede::Conexao::Conexao(QObject* _parent ) : QTcpSocket(_parent)
 {
     QObject::connect(this, SIGNAL(readyRead()),
@@ -29,7 +31,6 @@ Rede::Conexao::recebeDado()
 {
     quint16 bloco = 0;
     QDataStream entrada(this);
-    entrada.setVersion(QDataStream::Qt_4_0);
 
     while(this->bytesAvailable() > sizeof(quint16))
     {
@@ -42,6 +43,6 @@ Rede::Conexao::recebeDado()
         entrada >> mensagem;
 
         emit this->incommingMessage(mensagem);
+        qDebug() << Q_FUNC_INFO << mensagem;
     }
-
 }
