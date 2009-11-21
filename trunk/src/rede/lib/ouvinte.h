@@ -19,7 +19,7 @@ namespace Rede
         ~Ouvinte();
 
         bool
-        startListen( const quint16& _porta = 2469 );
+        startListen( const quint16& _porta = 6969 );
 
     signals:
 
@@ -30,6 +30,7 @@ namespace Rede
 
         void
         incomingConnection ( int _socket_descriptor );
+
     };
 }
 #endif // OUVINTE_H

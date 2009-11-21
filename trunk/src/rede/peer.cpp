@@ -24,13 +24,13 @@ Rede::Peer::Peer( const int& _socket_descriptor )
     QObject::connect( this->conexao, SIGNAL(connected()),
                       this, SLOT(conectado()));
     
-    QObject::connect( this->conexao, SIGNAL(error(QAbstractSocket::SocketError)),
-                      this, SLOT(erro(QAbstractSocket::SocketError)));
+    QObject::connect(this->conexao, SIGNAL(error(QAbstractSocket::SocketError)),
+                     this, SLOT(erro(QAbstractSocket::SocketError)));
 }
 
 Rede::Peer::Peer()
 {
-    this->conexao = NULL;
+    this->conexao = new Rede::Conexao(this);
 }
 
 Rede::Peer::~Peer()
@@ -62,9 +62,9 @@ void
 Rede::Peer::conectar()
 {
     const quint16
-    porta = 2469;
+    porta = 6969;
 
-    this->conexao->connectToHost(this->host,porta, QIODevice::ReadWrite);
+    this->conexao->connectToHost("localhost", 6969);
 }
 
 void
@@ -91,5 +91,6 @@ Rede::Peer::conectado()
 void
 Rede::Peer::erro( QAbstractSocket::SocketError _erro )
 {
-
+    Q_UNUSED(_erro)
+    qDebug() << Q_FUNC_INFO << this->conexao->errorString();
 }

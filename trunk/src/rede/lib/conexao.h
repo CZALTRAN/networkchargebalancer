@@ -13,7 +13,7 @@ namespace Rede
 
     public:
 
-        Conexao(QObject* _parent= NULL);
+        Conexao(QObject* _parent = NULL);
 
     public slots:
 

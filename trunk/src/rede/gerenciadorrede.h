@@ -8,7 +8,7 @@
 #include "peer.h"
 #include "rede_global.h"
 
-class REDESHARED_EXPORT GerenciadorRede : public QObject
+class GerenciadorRede : public QObject
 {
 Q_OBJECT
 
