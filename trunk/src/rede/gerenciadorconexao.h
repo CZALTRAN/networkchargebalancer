@@ -24,10 +24,14 @@ namespace Rede
         virtual
         ~GerenciadorConexao();
 
-    public slots:
-
-        void
+        Rede::Peer*
         novaConexao( int _socket_descriptor);
+
+        Rede::Peer*
+        getPeerById( const int& _id);
+
+        int
+        getTotalConn() const;
     };
 }
 

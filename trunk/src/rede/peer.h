@@ -41,6 +41,9 @@ namespace Rede
         void
         conectar();
 
+        void
+        sendInit( const int _total_conn );
+
     public slots:
 
         void

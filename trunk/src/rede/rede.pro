@@ -1,4 +1,5 @@
 QT += network
+QT -= gui
 TARGET = rede
 TEMPLATE = app
 DEFINES += REDE_LIBRARY

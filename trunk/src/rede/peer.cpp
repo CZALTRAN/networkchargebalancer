@@ -64,7 +64,16 @@ Rede::Peer::conectar()
     const quint16
     porta = 6969;
 
-    this->conexao->connectToHost("localhost", 6969);
+    this->conexao->connectToHost("localhost", porta);
+}
+
+void
+Rede::Peer::sendInit( const int _total_conn )
+{
+    int
+    id = this->id;
+
+
 }
 
 void
@@ -93,4 +102,10 @@ Rede::Peer::erro( QAbstractSocket::SocketError _erro )
 {
     Q_UNUSED(_erro)
     qDebug() << Q_FUNC_INFO << this->conexao->errorString();
+}
+
+void
+Rede::Peer::setId( const int _id )
+{
+    this->id = _id;
 }
