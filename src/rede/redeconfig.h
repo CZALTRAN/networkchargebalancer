@@ -5,6 +5,15 @@
 
 namespace Rede
 {
+
+    enum PEER_ESTADO
+    {
+        PROCURANDO_SERVER,
+        CONECTANDO,
+        CONECTADO,
+        SERVER
+    };
+
     class RedeConfig
     {
     public:
@@ -14,6 +23,9 @@ namespace Rede
 
         unsigned int
         meu_id;
+
+        Rede::PEER_ESTADO
+        estado_atual;
 
         static Rede::RedeConfig
         getInstance();

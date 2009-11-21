@@ -5,6 +5,7 @@
 #include <QRegExp>
 
 #include "lib/conexao.h"
+#include "redeconfig.h"
 
 Rede::Peer::Peer( const int& _socket_descriptor )
 {
@@ -19,6 +20,12 @@ Rede::Peer::Peer( const int& _socket_descriptor )
     {
         qDebug() << Q_FUNC_INFO << " naum estah em connected state";
     }
+
+    QObject::connect( this->conexao, SIGNAL(connected()),
+                      this, SLOT(conectado()));
+    
+    QObject::connect( this->conexao, SIGNAL(error(QAbstractSocket::SocketError)),
+                      this, SLOT(erro(QAbstractSocket::SocketError)));
 }
 
 Rede::Peer::Peer()
@@ -54,10 +61,35 @@ Rede::Peer::conectar( const QString& _host )
 void
 Rede::Peer::conectar()
 {
+    const quint16
+    porta = 2469;
+
+    this->conexao->connectToHost(this->host,porta, QIODevice::ReadWrite);
 }
 
 void
 Rede::Peer::incommingMessage(const QString& _message )
 {
     emit this->incommingMessage( this->id, _message );
+}
+
+void
+Rede::Peer::conectado()
+{
+    switch ( Rede::RedeConfig::getInstance().estado_atual )
+    {
+    case Rede::CONECTADO:
+        qDebug() << Q_FUNC_INFO << " : " << Rede::CONECTADO;
+        break;
+
+    case Rede::PROCURANDO_SERVER:
+        qDebug() << Q_FUNC_INFO << " : " << Rede::PROCURANDO_SERVER;
+        break;
+    }
+}
+
+void
+Rede::Peer::erro( QAbstractSocket::SocketError _erro )
+{
+
 }

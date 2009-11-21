@@ -1,6 +1,7 @@
 #ifndef PEER_H
 #define PEER_H
 
+#include <QAbstractSocket>
 #include <QObject>
 #include <QString>
 
@@ -44,6 +45,12 @@ namespace Rede
 
         void
         incommingMessage(const QString& _message );
+
+        void
+        conectado();
+
+        void
+        erro( QAbstractSocket::SocketError _erro );
 
     signals:
 
