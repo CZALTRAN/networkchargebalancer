@@ -1,4 +1,3 @@
-
 QT += network
 QT -= gui
 
@@ -11,8 +10,14 @@ DESTDIR = build
 MOC_DIR = build
 OBJECTS_DIR = build
 
-SOURCES += rede.cpp \
-    lib/conexao.cpp
-HEADERS += rede.h \
+SOURCES += gerenciadorrede.cpp \
+    lib/conexao.cpp \
+    lib/ouvinte.cpp \
+    gerenciadorconexao.cpp \
+    peer.cpp
+HEADERS += gerenciadorrede.h \
     rede_global.h \
-    lib/conexao.h
+    lib/conexao.h \
+    lib/ouvinte.h \
+    gerenciadorconexao.h \
+    peer.h
