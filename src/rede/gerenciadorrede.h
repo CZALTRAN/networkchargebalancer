@@ -37,6 +37,16 @@ private:
 
     void
     buscaPorServer( Rede::Peer* _primeiro_peer );
+
+protected slots:
+
+    void
+    slotIndicaServer( int _socket_descriptor );
+
+signals:
+
+    void
+    novoPeer( QString _host );
 };
 
 #endif // REDE_H

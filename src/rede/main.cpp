@@ -1,5 +1,5 @@
 //Qts includes
-#include <QApplication>
+#include <QCoreApplication>
 #include <QDebug>
 
 //C includes
@@ -11,7 +11,7 @@
 
 int main ( int argc, char* argv[])
 {
-    QApplication
+    QCoreApplication
     app(argc,argv);
 
     Rede::Peer*

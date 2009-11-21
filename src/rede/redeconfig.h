@@ -27,6 +27,9 @@ namespace Rede
         Rede::PEER_ESTADO
         estado_atual;
 
+        QString
+        host;
+
         static Rede::RedeConfig
         getInstance();
 
