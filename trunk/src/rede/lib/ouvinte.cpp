@@ -14,12 +14,9 @@ Rede::Ouvinte::~Ouvinte()
 }
 
 bool
-Rede::Ouvinte::startListen()
+Rede::Ouvinte::startListen( const quint16& _porta)
 {
-    qint16
-    porta = 2469;
-
-    this->listen( QHostAddress::Any, porta );
+    this->listen( QHostAddress::Any, _porta );
 
     if ( this->isListening() )
     {

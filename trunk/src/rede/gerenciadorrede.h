@@ -2,20 +2,21 @@
 #define REDE_H
 
 #include <QMap>
+#include <QObject>
 
+#include "gerenciadorconexao.h"
 #include "peer.h"
 #include "rede_global.h"
 
-class REDESHARED_EXPORT GerenciadorRede
+class REDESHARED_EXPORT GerenciadorRede : public QObject
 {
-    QMap<int, Rede::Peer*>
-    Peers;
+Q_OBJECT
 
-    bool
-    server;
+    Rede::GerenciadorConexao*
+    gerenciador_conexoes;
 
-    unsigned int
-    meu_id;
+    Rede::Ouvinte*
+    ouvinte;
 
 public:
 
@@ -26,8 +27,23 @@ public:
         CONECTADO
     };
 
+    /**
+     *  @param _primeiro_peer Indica em qual peer o xboga deve iniciar sua busca
+     *        pelo servidor. Caso este parametro seja nulo, ele não tentará se
+     *        conectar em ninguem iniciando uma nova rede.
+     */
     GerenciadorRede( Rede::Peer* _primeiro_peer = 0 );
 
+    virtual
+    ~GerenciadorRede();
+
+private:
+
+    void
+    startComoServer();
+
+    void
+    buscaPorServer( Rede::Peer* _primeiro_peer );
 };
 
 #endif // REDE_H

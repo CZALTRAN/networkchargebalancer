@@ -19,7 +19,7 @@ namespace Rede
         ~Ouvinte();
 
         bool
-        startListen();
+        startListen( const quint16& _porta = 2469 );
 
     signals:
 
