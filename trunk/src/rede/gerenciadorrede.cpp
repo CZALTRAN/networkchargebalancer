@@ -125,9 +125,6 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
 
         switch( pacote->nome )
         {
-        case Rede::INFORMA_SERVER: // Recebe informa_server de um peer qualquer
-            //this->conectaNoServer(pacote);
-            break;
         case Rede::INIT: // Recebe informa_server do proprio server
             //this->configuraConexao(pacote);
             Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTANDO;
@@ -135,32 +132,32 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
         }
 
          break;
-    case Rede::SERVER:
-        // Recebe quem é o server ( novo peer )
+        case Rede::SERVER:
+            // Recebe quem é o server ( novo peer )
 
-        // Recebe reclamação ( novo peer, numero de peers )
+            // Recebe reclamação ( novo peer, numero de peers )
 
-        // Recebe pacotes que não são relativos a gerencia de rede
+            // Recebe pacotes que não são relativos a gerencia de rede
 
-        // Recebe pacote informando que não é mais o server
+            // Recebe pacote informando que não é mais o server
 
-        break;
-    case Rede::CONECTADO:
-        // Recebe quem é o server ( novo peer )
+            break;
+        case Rede::CONECTADO:
+            // Recebe quem é o server ( novo peer )
 
-        // Recebe pacote novo_peer
+            // Recebe pacote novo_peer
 
-        // Recebe pacotes que não são relativos a gerencia de rede
+            // Recebe pacotes que não são relativos a gerencia de rede
 
-        // Recebe pacote ( conectar novamente novo peer )
+            // Recebe pacote ( conectar novamente novo peer )
 
-        // Recebe pacote informando quem é novo server ( remetente é o novo )
+            // Recebe pacote informando quem é novo server ( remetente é o novo )
 
-        break;
-    case Rede::CONECTANDO:
-        // Recebe pacote de requisição de conexão ( veteranos )
+            break;
+        case Rede::CONECTANDO:
+            // Recebe pacote de requisição de conexão ( veteranos )
 
-        // Recebe pacote novo_peer
+            // Recebe pacote novo_peer
 
         break;
     }
@@ -200,11 +197,10 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
     server->setId( parseado->id );
 
     server->conectar();
+    this->ouvinte_procura->startListen(2469);
 
     this->gerenciador_conexoes->addConexao( server );
     Rede::RedeConfig::getInstance().server_host = server;
-
-
 
     QObject::connect( server, SIGNAL(incommingMessage(int,QString)),
                       this, SLOT(slotNovaMensagemFromPeer(int,QString)));
