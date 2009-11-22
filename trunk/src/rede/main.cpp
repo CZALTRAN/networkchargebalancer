@@ -32,5 +32,6 @@ int main ( int argc, char* argv[])
     GerenciadorRede*
     gerente_rede = new GerenciadorRede( primeiro_peer );
 
-    app.exec();
+    Q_UNUSED(gerente_rede)
+    return app.exec();
 }

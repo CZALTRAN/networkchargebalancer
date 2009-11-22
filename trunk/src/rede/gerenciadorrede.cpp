@@ -1,8 +1,7 @@
 #include "gerenciadorrede.h"
 
-//#include <cstdlib>
-
 #include "redeconfig.h"
+#include "construtordepacotes.h"
 
 GerenciadorRede::GerenciadorRede( Rede::Peer* _primeiro_peer )
 {
@@ -47,6 +46,10 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
 
     _primeiro_peer->conectar();
 
+    this->gerenciador_conexoes->tmp_peer = _primeiro_peer;
+
+    QObject::connect(_primeiro_peer,SIGNAL(incommingMessage(int,QString)),
+                     this,SLOT(slotNovaMensagemFromPeer(int,QString)));
 }
 
 void
@@ -69,11 +72,43 @@ GerenciadorRede::slotIndicaServer(int _socket_descriptor )
 
         QObject::connect(this,SIGNAL(novoPeer(const QString&)),
                          novo_peer,SLOT(enviaNovoPeer(const QString&)));
+
+        QObject::connect(novo_peer,SIGNAL(incommingMessage(int,QString)),
+                         this,SLOT(slotNovaMensagemFromPeer(int,QString)));
     }
     else
     { //não sou o servidor e preciso indicar quem é e fechar a conexão.
+        Rede::Conexao*
+        tmp_conexao = new Rede::Conexao();
+        tmp_conexao->setSocketDescriptor( _socket_descriptor );
 
+        QString
+        mensagem = Rede::ConstrutorDePacotes::getInstance().montaServer();
 
+        tmp_conexao->enviaDado(mensagem);
+
+        tmp_conexao->flush();
+        tmp_conexao->close();
     }
 
+}
+
+void
+GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _message )
+{
+    switch ( Rede::RedeConfig::getInstance().estado_atual )
+    {
+    case Rede::PROCURANDO_SERVER:
+
+        break;
+    case Rede::SERVER:
+
+        break;
+    case Rede::CONECTADO:
+
+        break;
+    case Rede::CONECTANDO:
+
+        break;
+    }
 }

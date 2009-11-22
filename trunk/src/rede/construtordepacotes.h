@@ -25,6 +25,9 @@ namespace Rede
         QString
         montaNovoPeer( const QString& _host );
 
+        QString
+        montaServer();
+
     private:
         ConstrutorDePacotes();
 

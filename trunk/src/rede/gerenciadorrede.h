@@ -43,6 +43,9 @@ protected slots:
     void
     slotIndicaServer( int _socket_descriptor );
 
+    void
+    slotNovaMensagemFromPeer( const int& _id, const QString& _message );
+
 signals:
 
     void

@@ -1,5 +1,7 @@
 #include "construtordepacotes.h"
 
+#include "redeconfig.h"
+
 Rede::ConstrutorDePacotes::ConstrutorDePacotes()
 {
 
@@ -25,6 +27,16 @@ Rede::ConstrutorDePacotes::montaNovoPeer( const QString& _host )
 
     pacote = "NOVOPEER" + SEPARADOR_DE_CAMPO;
     pacote += _host + SEPARADOR_DE_CAMPO;
+
+    return pacote;
+}
+
+QString
+Rede::ConstrutorDePacotes::montaServer()
+{
+    QString pacote("SERVER" + SEPARADOR_DE_CAMPO);
+
+    pacote += Rede::RedeConfig::getInstance().server_host;
 
     return pacote;
 }
