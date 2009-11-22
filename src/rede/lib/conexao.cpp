@@ -23,6 +23,7 @@ Rede::Conexao::enviaDado(QString _dado)
 
         this->flush();
         this->write(bloco);
+        qDebug() << Q_FUNC_INFO << _dado;
     }
 }
 
@@ -42,6 +43,7 @@ Rede::Conexao::recebeDado()
         QString mensagem;
         entrada >> mensagem;
 
+        qDebug() << Q_FUNC_INFO << mensagem;
         emit this->incommingMessage(mensagem);
     }
 }
