@@ -13,7 +13,8 @@ SOURCES += gerenciadorrede.cpp \
     peer.cpp \
     redeconfig.cpp \
     main.cpp \
-    construtordepacotes.cpp
+    construtordepacotes.cpp \
+    parserdepacotes.cpp
 HEADERS += gerenciadorrede.h \
     rede_global.h \
     lib/conexao.h \
@@ -21,4 +22,6 @@ HEADERS += gerenciadorrede.h \
     gerenciadorconexao.h \
     peer.h \
     redeconfig.h \
-    construtordepacotes.h
+    construtordepacotes.h \
+    parserdepacotes.h \
+    structpacotes.h
