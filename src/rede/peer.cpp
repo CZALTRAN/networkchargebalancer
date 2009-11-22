@@ -98,12 +98,17 @@ Rede::Peer::conectado()
 {
     switch ( Rede::RedeConfig::getInstance().estado_atual )
     {
-    case Rede::CONECTADO:
-        qDebug() << Q_FUNC_INFO << " : " << Rede::CONECTADO;
+    case Rede::CONECTANDO:
         break;
 
-    case Rede::PROCURANDO_SERVER:
-        qDebug() << Q_FUNC_INFO << " : " << Rede::PROCURANDO_SERVER;
+    case Rede::CONECTADO:
+        qDebug() << Q_FUNC_INFO << " : " << "to conectado";
+
+        QString
+        pacote = Rede::ConstrutorDePacotes::getInstance().montaMeuId();
+
+        this->conexao->enviaDado( pacote );
+
         break;
     }
 }

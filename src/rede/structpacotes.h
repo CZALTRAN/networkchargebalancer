@@ -9,7 +9,8 @@ namespace Rede{
     {
         INIT,
         NOVO_PEER,
-        INFORMA_SERVER
+        INFORMA_SERVER,
+        MEU_ID
     };
 
     typedef struct PacoteBase
