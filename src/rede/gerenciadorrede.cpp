@@ -11,7 +11,7 @@ GerenciadorRede::GerenciadorRede( Rede::Peer* _primeiro_peer )
     this->ouvinte = new Rede::Ouvinte(this);
 
     QObject::connect(this->ouvinte, SIGNAL(novaConn(int)),
-                     this, SLOT(slotIndicaServer(int)));
+                     this, SLOT(slotNovaConexao(int)));
 
     if ( _primeiro_peer == NULL )
     {
@@ -55,7 +55,23 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
 }
 
 void
-GerenciadorRede::slotIndicaServer(int _socket_descriptor )
+GerenciadorRede::informaServerInfo( const int& _socket_descriptor)
+{
+    Rede::Conexao*
+    tmp_conexao = new Rede::Conexao();
+    tmp_conexao->setSocketDescriptor( _socket_descriptor );
+
+    QString
+    mensagem = Rede::ConstrutorDePacotes::getInstance().montaServer();
+
+    tmp_conexao->enviaDado(mensagem);
+
+    tmp_conexao->flush();
+    tmp_conexao->close();
+}
+
+void
+GerenciadorRede::slotNovaConexao(int _socket_descriptor )
 {
     qDebug() << Rede::RedeConfig::getInstance().meu_id;
 
@@ -80,17 +96,7 @@ GerenciadorRede::slotIndicaServer(int _socket_descriptor )
     }
     else
     { //não sou o servidor e preciso indicar quem é e fechar a conexão.
-        Rede::Conexao*
-        tmp_conexao = new Rede::Conexao();
-        tmp_conexao->setSocketDescriptor( _socket_descriptor );
-
-        QString
-        mensagem = Rede::ConstrutorDePacotes::getInstance().montaServer();
-
-        tmp_conexao->enviaDado(mensagem);
-
-        tmp_conexao->flush();
-        tmp_conexao->close();
+        this->informaServerInfo(_socket_descriptor);
     }
 
 }
@@ -103,8 +109,8 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
 
     switch ( Rede::RedeConfig::getInstance().estado_atual )
     {
-    case Rede::PROCURANDO_SERVER:
-    
+     case Rede::PROCURANDO_SERVER:
+
         switch( pacote->nome )
         {
         case Rede::INFORMA_SERVER: // Recebe informa_server de um peer qualquer
@@ -116,9 +122,8 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
             break;
         }
 
-        break;
+         break;
     case Rede::SERVER:
-
         // Recebe quem é o server ( novo peer )
 
         // Recebe reclamação ( novo peer, numero de peers )
@@ -129,7 +134,6 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
 
         break;
     case Rede::CONECTADO:
-
         // Recebe quem é o server ( novo peer )
 
         // Recebe pacote novo_peer
@@ -142,7 +146,6 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
 
         break;
     case Rede::CONECTANDO:
-
         // Recebe pacote de requisição de conexão ( veteranos )
 
         // Recebe pacote novo_peer
