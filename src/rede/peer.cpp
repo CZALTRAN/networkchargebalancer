@@ -6,6 +6,7 @@
 
 #include "construtordepacotes.h"
 #include "lib/conexao.h"
+#include "parserdepacotes.h"
 #include "redeconfig.h"
 
 Rede::Peer::Peer( const int& _socket_descriptor )
@@ -90,7 +91,17 @@ Rede::Peer::sendInit( const int _total_conn )
 void
 Rede::Peer::incommingMessage(const QString& _message )
 {
-    emit this->incommingMessage( this->id, _message );
+    Rede::PacoteBase*
+    pacoteBase = Rede::ParserDePacotes::getInstance().parseiaPacote(_message);
+
+    if( pacoteBase->nome == Rede::MEU_ID)
+    {
+        this->id = pacoteBase->id;
+    }
+    else
+    {
+        emit this->incommingMessage( this->id, _message );
+    }
 }
 
 void

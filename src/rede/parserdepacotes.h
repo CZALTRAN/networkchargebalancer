@@ -30,6 +30,9 @@ namespace Rede
         PacoteInformaServer*
         parseiaInformaServer( const QStringList& _pacote ) const;
 
+        Rede::PacoteMeuId*
+        parseiaMeuId( const QStringList& _lista_parametros ) const;
+
         void
         setaInteiroDePacote( const QStringList& _pacote,
                              int _posicao,

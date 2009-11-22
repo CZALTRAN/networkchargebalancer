@@ -36,9 +36,13 @@ Rede::ParserDePacotes::parseiaPacote( const QString _pacote ) const
     {
         return this->parseiaNovoPeer( lista_de_campos );
     }
-    else if ( lista_de_campos[0] == "SERVER")
+    else if ( lista_de_campos[0] == "SERVER" )
     {
         return this->parseiaInformaServer( lista_de_campos );
+    }
+    else if ( lista_de_campos[0] == "MEUID" )
+    {
+        return this->parseiaMeuId( lista_de_campos );
     }
 
 
@@ -85,6 +89,18 @@ Rede::ParserDePacotes::parseiaInformaServer( const QStringList& _lista_parametro
     return pacote;
 }
 
+Rede::PacoteMeuId*
+Rede::ParserDePacotes::parseiaMeuId( const QStringList& _lista_parametros ) const
+{
+    Rede::PacoteMeuId*
+    pacote = new Rede::PacoteMeuId;
+
+    pacote->nome = Rede::MEU_ID;
+    pacote->host = _lista_parametros.value(2);
+    this->setaInteiroDePacote(_lista_parametros,1,pacote->id);
+
+}
+
 void
 Rede::ParserDePacotes::setaInteiroDePacote( const QStringList& _pacote,
                                             int _posicao,
@@ -99,3 +115,4 @@ Rede::ParserDePacotes::setaInteiroDePacote( const QStringList& _pacote,
         exit(1);
     }
 }
+
