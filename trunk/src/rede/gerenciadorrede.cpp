@@ -87,7 +87,7 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
     {
       case Rede::CONECTANDO:
         qDebug() << Q_FUNC_INFO << "Entrei no conectando";
-        this->addConexaoNovoPeer( _socket_descriptor );
+        this->addConexaoPeerVeterano( _socket_descriptor );
       break;
       case Rede::SERVER:
         //sou o servidor e preciso indicar ao novo socket sobre todas as conexões.
@@ -235,14 +235,20 @@ GerenciadorRede::recebeNovoPeer( Rede::PacoteBase* const _pacote )
 
     novo_peer->conectar();
 
+    qDebug() << Q_FUNC_INFO << "Recebi o calouro " << novo_peer->getHost()
+            << " e ja me conectei nele.";
+
     this->gerenciador_conexoes->addConexao(novo_peer);
 }
 
 void
-GerenciadorRede::addConexaoNovoPeer( const int& _socket_descriptor )
+GerenciadorRede::addConexaoPeerVeterano( const int& _socket_descriptor )
 {
     Rede::Peer*
     peer = new Rede::Peer(_socket_descriptor);
+
+    qDebug() << Q_FUNC_INFO << "Adcionando o peer " << peer->getHost()
+            << " na lista.";
 
     this->gerenciador_conexoes->addConexao(peer);
 }
