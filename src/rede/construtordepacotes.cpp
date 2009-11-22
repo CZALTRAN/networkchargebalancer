@@ -38,7 +38,8 @@ Rede::ConstrutorDePacotes::montaServer()
 
     pacote += Rede::RedeConfig::getInstance().server_host->getHost();
     pacote += SEPARADOR_DE_CAMPO;
-    pacote += Rede::RedeConfig::getInstance().server_host->getId();
+
+    pacote += QString::number(Rede::RedeConfig::getInstance().server_host->getId());
     pacote += SEPARADOR_DE_CAMPO;
 
     return pacote;
