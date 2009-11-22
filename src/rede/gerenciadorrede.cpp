@@ -201,6 +201,7 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
 
     server->conectar();
     this->ouvinte_procura->startListen(2469);
+    this->ouvinte->startListen();
 
     this->gerenciador_conexoes->addConexao( server );
     Rede::RedeConfig::getInstance().server_host = server;
