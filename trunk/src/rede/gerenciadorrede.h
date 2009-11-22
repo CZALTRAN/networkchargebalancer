@@ -38,10 +38,13 @@ private:
     void
     buscaPorServer( Rede::Peer* _primeiro_peer );
 
+    void
+    informaServerInfo( const int& _socket_descriptor);
+
 protected slots:
 
     void
-    slotIndicaServer( int _socket_descriptor );
+    slotNovaConexao( int _socket_descriptor );
 
     void
     slotNovaMensagemFromPeer( const int& _id, const QString& _message );
