@@ -13,6 +13,15 @@ Rede::ParserDePacotes::~ParserDePacotes()
 
 }
 
+Rede::ParserDePacotes&
+Rede::ParserDePacotes::getInstance()
+{
+    static Rede::ParserDePacotes
+    instance;
+
+    return instance;
+}
+
 Rede::PacoteBase*
 Rede::ParserDePacotes::parseiaPacote( const QString _pacote ) const
 {

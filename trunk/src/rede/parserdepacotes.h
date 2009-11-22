@@ -10,12 +10,16 @@ namespace Rede
     class ParserDePacotes
     {
     public:
-        ParserDePacotes();
-
-        ~ParserDePacotes();
+        static ParserDePacotes&
+        getInstance();
 
         PacoteBase*
         parseiaPacote( const QString _pacote ) const;
+
+    private:
+        ParserDePacotes();
+
+        ~ParserDePacotes();
 
         PacoteInit*
         parseiaInit( const QString _pacote ) const;
