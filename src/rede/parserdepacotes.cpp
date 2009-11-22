@@ -41,46 +41,48 @@ Rede::ParserDePacotes::parseiaPacote( const QString _pacote ) const
         return this->parseiaInformaServer( lista_de_campos );
     }
 
+
     return 0;
 }
 
 Rede::PacoteInit*
 Rede::ParserDePacotes::parseiaInit( const QStringList& _lista_parametros ) const
 {
-    Rede::PacoteInit
-    pacote;
+    Rede::PacoteInit*
+    pacote = new Rede::PacoteInit;
 
-    pacote.nome = Rede::INIT;
+    pacote->nome = Rede::INIT;
 
-    this->setaInteiroDePacote( _lista_parametros, 1, pacote.id );
-    this->setaInteiroDePacote( _lista_parametros, 2, pacote.id );
+    this->setaInteiroDePacote( _lista_parametros, 1, pacote->id );
+    this->setaInteiroDePacote( _lista_parametros, 2, pacote->id );
 
-    return &pacote;
+    return pacote;
 }
 
 Rede::PacoteNovoPeer*
 Rede::ParserDePacotes::parseiaNovoPeer( const QStringList& _lista_parametros ) const
 {
-    Rede::PacoteNovoPeer
-    pacote;
+    Rede::PacoteNovoPeer*
+    pacote = new Rede::PacoteNovoPeer;
 
-    pacote.nome = Rede::NOVO_PEER;
-    pacote.host = _lista_parametros.value(1);
-    this->setaInteiroDePacote( _lista_parametros,2,pacote.id);
+    pacote->nome = Rede::NOVO_PEER;
+    pacote->host = _lista_parametros.value(1);
+    this->setaInteiroDePacote( _lista_parametros,2,pacote->id);
 
-    return &pacote;
+    return pacote;
 }
 
 Rede::PacoteInformaServer*
 Rede::ParserDePacotes::parseiaInformaServer( const QStringList& _lista_parametros ) const
 {
-    Rede::PacoteInformaServer
-    pacote;
+    Rede::PacoteInformaServer*
+    pacote = new Rede::PacoteInformaServer;
 
-    pacote.nome = Rede::INFORMA_SERVER;
-    pacote.host = _lista_parametros.value(1);
-    this->setaInteiroDePacote(_lista_parametros,2,pacote.id);
+    pacote->nome = Rede::INFORMA_SERVER;
+    pacote->host = _lista_parametros.value(1);
+    this->setaInteiroDePacote(_lista_parametros,2,pacote->id);
 
+    return pacote;
 }
 
 void

@@ -73,8 +73,8 @@ Rede::Peer::conectar()
     {
         porta = 6969;
     }
-
-    this->conexao->connectToHost(this->getHost(), porta);
+    qDebug() << Q_FUNC_INFO << this->host << ":" << porta;
+    this->conexao->connectToHost(this->host, porta);
 }
 
 void

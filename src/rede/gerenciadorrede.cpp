@@ -125,6 +125,9 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
 
         switch( pacote->nome )
         {
+        case Rede::INFORMA_SERVER: // Recebe informa_server de um peer qualquer
+            //this->conectaNoServer(pacote);
+            break;
         case Rede::INIT: // Recebe informa_server do proprio server
             //this->configuraConexao(pacote);
             Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTANDO;
@@ -181,8 +184,10 @@ GerenciadorRede::informaServerInfo( const int& _socket_descriptor)
 
 void
 GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
-{
+{    
     Q_UNUSED(_id)
+
+    Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTANDO;
 
     Rede::PacoteInformaServer*
     parseado = static_cast<Rede::PacoteInformaServer*>(
@@ -194,10 +199,12 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
     server->setHost( parseado->host );
     server->setId( parseado->id );
 
+    server->conectar();
+
     this->gerenciador_conexoes->addConexao( server );
     Rede::RedeConfig::getInstance().server_host = server;
 
-    server->conectar();
+
 
     QObject::connect( server, SIGNAL(incommingMessage(int,QString)),
                       this, SLOT(slotNovaMensagemFromPeer(int,QString)));
