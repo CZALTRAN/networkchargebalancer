@@ -6,6 +6,7 @@
 
 #include "gerenciadorconexao.h"
 #include "rede_global.h"
+#include "parserdepacotes.h"
 
 class GerenciadorRede : public QObject
 {
@@ -22,6 +23,10 @@ Q_OBJECT
 
     QString
     interface;
+
+    int
+    qtdePeers;
+
 public:
 
     /**
@@ -42,11 +47,14 @@ private:
     void
     buscaPorServer( Rede::Peer* _primeiro_peer );
 
-//    void
-//    GerenciadorRede::conectaNoServer( const QString _pacote ) const;
-//
-//    void
-//    GerenciadorRede::configuraConexao( const QString _pacote ) const;
+    void
+    recebeInit( Rede::PacoteBase* const _pacote );
+
+    void
+    recebeNovoPeer( Rede::PacoteBase* const _pacote );
+
+    void
+    addConexaoNovoPeer( const int& _socket_descriptor );
 
 protected slots:
 
