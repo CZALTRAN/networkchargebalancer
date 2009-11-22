@@ -54,7 +54,7 @@ private:
     recebeNovoPeer( Rede::PacoteBase* const _pacote );
 
     void
-    addConexaoNovoPeer( const int& _socket_descriptor );
+    addConexaoPeerVeterano( const int& _socket_descriptor );
 
 protected slots:
 
