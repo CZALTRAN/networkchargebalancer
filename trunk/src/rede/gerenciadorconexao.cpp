@@ -33,7 +33,8 @@ Rede::GerenciadorConexao::addConexao( Rede::Peer* _novo_peer )
     int
     id = _novo_peer->getId();
 
-    if ( this->peers.size() == Rede::RedeConfig::getInstance().qtdePeers )
+    if ( this->peers.size() == Rede::RedeConfig::getInstance().qtdePeers &&
+         Rede::RedeConfig::getInstance().estado_atual != Rede::SERVER)
     {
         qDebug() << Q_FUNC_INFO << "em conectado!";
         Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTADO;
