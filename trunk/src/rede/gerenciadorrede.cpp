@@ -174,7 +174,7 @@ GerenciadorRede::informaServerInfo( const int& _socket_descriptor)
     mensagem = Rede::ConstrutorDePacotes::getInstance().montaServer();
 
     tmp_conexao->enviaDado(mensagem);
-RedeConfig
+
     tmp_conexao->flush();
     tmp_conexao->close();
 }
