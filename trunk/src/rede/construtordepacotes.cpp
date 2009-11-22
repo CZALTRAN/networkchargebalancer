@@ -34,13 +34,25 @@ Rede::ConstrutorDePacotes::montaNovoPeer( const QString& _host, const int& _id )
 QString
 Rede::ConstrutorDePacotes::montaServer()
 {
-    QString pacote("SERVER" + SEPARADOR_DE_CAMPO);
+    QString
+    pacote("SERVER" + SEPARADOR_DE_CAMPO);
 
     pacote += Rede::RedeConfig::getInstance().server_host->getHost();
     pacote += SEPARADOR_DE_CAMPO;
 
     pacote += QString::number(Rede::RedeConfig::getInstance().server_host->getId());
     pacote += SEPARADOR_DE_CAMPO;
+
+    return pacote;
+}
+
+QString
+Rede::ConstrutorDePacotes::montaMeuId()
+{
+    QString
+    pacote("MEUID" + SEPARADOR_DE_CAMPO );
+
+    pacote += QString::number( Rede::RedeConfig::getInstance().meu_id ) + SEPARADOR_DE_CAMPO;
 
     return pacote;
 }

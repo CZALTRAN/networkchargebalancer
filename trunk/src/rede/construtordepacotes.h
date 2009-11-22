@@ -28,6 +28,9 @@ namespace Rede
         QString
         montaServer();
 
+        QString
+        montaMeuId();
+
     private:
         ConstrutorDePacotes();
 
