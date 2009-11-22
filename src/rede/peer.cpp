@@ -21,8 +21,6 @@ Rede::Peer::Peer( const int& _socket_descriptor )
     {
         qDebug() << Q_FUNC_INFO << " naum estah em connected state";
     }
-
-
 }
 
 Rede::Peer::Peer()
