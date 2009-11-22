@@ -24,9 +24,6 @@ Q_OBJECT
     QString
     interface;
 
-    int
-    qtdePeers;
-
 public:
 
     /**

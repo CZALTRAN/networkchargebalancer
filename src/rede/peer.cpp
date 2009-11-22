@@ -110,6 +110,7 @@ Rede::Peer::conectado()
     switch ( Rede::RedeConfig::getInstance().estado_atual )
     {
     case Rede::CONECTANDO:
+        qDebug() << Q_FUNC_INFO << " : " << "to conectando";
         break;
 
     case Rede::CONECTADO:

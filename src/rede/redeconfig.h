@@ -32,6 +32,9 @@ namespace Rede
         Rede::Peer*
         server_host;
 
+        int
+        qtdePeers;
+
         static Rede::RedeConfig&
         getInstance()
         {
