@@ -32,10 +32,10 @@ namespace Rede
         void
         setHost( const QString& _host );
 
-        const QString
+        QString
         getHost() const;
 
-        const int
+        int
         getId() const;
 
         void

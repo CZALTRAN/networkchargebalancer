@@ -19,9 +19,6 @@ namespace Rede
     {
     public:
 
-        bool
-        server;
-
         unsigned int
         meu_id;
 
@@ -31,13 +28,21 @@ namespace Rede
         QString
         host;
 
-        static Rede::RedeConfig
-        getInstance();
+        static Rede::RedeConfig&
+        getInstance()
+        {
+            static Rede::RedeConfig
+            instancia;
+
+            return instancia;
+        }
 
     private:
 
-        RedeConfig();
+        static Rede::RedeConfig
+        instance;
 
+        RedeConfig();
 
     };
 }
