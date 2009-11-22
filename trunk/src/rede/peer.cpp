@@ -109,10 +109,10 @@ Rede::Peer::erro( QAbstractSocket::SocketError _erro )
 }
 
 void
-Rede::Peer::enviaNovoPeer( const QString& _host )
+Rede::Peer::enviaNovoPeer( const QString& _host, const int& _id )
 {
     QString
-    mensagem = Rede::ConstrutorDePacotes::getInstance().montaNovoPeer( _host );
+    mensagem = Rede::ConstrutorDePacotes::getInstance().montaNovoPeer( _host, _id );
 
     this->conexao->enviaDado(mensagem);
 }

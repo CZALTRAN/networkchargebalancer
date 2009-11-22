@@ -22,7 +22,18 @@ namespace Rede
         ~ParserDePacotes();
 
         PacoteInit*
-        parseiaInit( const QString _pacote ) const;
+        parseiaInit( const QStringList& _pacote ) const;
+
+        PacoteNovoPeer*
+        parseiaNovoPeer( const QStringList& _pacote ) const;
+
+        PacoteInformaServer*
+        parseiaInformaServer( const QStringList& _pacote ) const;
+
+        void
+        setaInteiroDePacote( const QStringList& _pacote,
+                             int _posicao,
+                             int& _campo) const;
     };
 }
 

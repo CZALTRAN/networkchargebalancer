@@ -64,7 +64,7 @@ namespace Rede
     //slots de envio de mensagem
 
         void
-        enviaNovoPeer( const QString& _host );
+        enviaNovoPeer( const QString& _host, const int& _id );
 
     signals:
 

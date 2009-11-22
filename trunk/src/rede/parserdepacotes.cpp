@@ -30,34 +30,70 @@ Rede::ParserDePacotes::parseiaPacote( const QString _pacote ) const
 
     if( lista_de_campos[0] == "INIT" )
     {
-        return this->parseiaInit( _pacote );
+        return this->parseiaInit( lista_de_campos );
+    }
+    else if ( lista_de_campos[0] == "NOVOPEER" )
+    {
+        return this->parseiaNovoPeer( lista_de_campos );
+    }
+    else if ( lista_de_campos[0] == "SERVER")
+    {
+        return this->parseiaInformaServer( lista_de_campos );
     }
 
     return 0;
 }
 
 Rede::PacoteInit*
-Rede::ParserDePacotes::parseiaInit( const QString _pacote ) const
+Rede::ParserDePacotes::parseiaInit( const QStringList& _lista_parametros ) const
 {
-    qDebug() << Q_FUNC_INFO << "Parseando pacote init";
-
-    QStringList
-    lista_de_campos = _pacote.split( SEPARADOR_DE_CAMPO );
-
     Rede::PacoteInit
     pacote;
 
-    pacote.nome = lista_de_campos.value(0);
+    pacote.nome = Rede::INIT;
 
-    bool sucesso_ao_converter;
-    pacote.id = lista_de_campos.value(1).toInt( &sucesso_ao_converter, 10 ) ;
-
-    if( sucesso_ao_converter == true )
-    {
-        qDebug() << Q_FUNC_INFO << "Ocorreu um erro ao parsear pacote.";
-        exit(1);
-    }
+    this->setaInteiroDePacote( _lista_parametros, 1, pacote.id );
+    this->setaInteiroDePacote( _lista_parametros, 2, pacote.id );
 
     return &pacote;
 }
 
+Rede::PacoteNovoPeer*
+Rede::ParserDePacotes::parseiaNovoPeer( const QStringList& _lista_parametros ) const
+{
+    Rede::PacoteNovoPeer
+    pacote;
+
+    pacote.nome = Rede::NOVO_PEER;
+    pacote.host = _lista_parametros.value(1);
+    this->setaInteiroDePacote( _lista_parametros,2,pacote.id);
+
+    return &pacote;
+}
+
+Rede::PacoteInformaServer*
+Rede::ParserDePacotes::parseiaInformaServer( const QStringList& _lista_parametros ) const
+{
+    Rede::PacoteInformaServer
+    pacote;
+
+    pacote.nome = Rede::INFORMA_SERVER;
+    pacote.host = _lista_parametros.value(1);
+    this->setaInteiroDePacote(_lista_parametros,2,pacote.id);
+
+}
+
+void
+Rede::ParserDePacotes::setaInteiroDePacote( const QStringList& _pacote,
+                                            int _posicao,
+                                            int& campo) const
+{
+    bool sucesso_ao_converter;
+
+    campo = _pacote.value(_posicao).toInt( &sucesso_ao_converter, 10 ) ;
+    if( sucesso_ao_converter == false )
+    {
+        qDebug() << Q_FUNC_INFO << "Ocorreu um erro ao parsear pacote.";
+        exit(1);
+    }
+}

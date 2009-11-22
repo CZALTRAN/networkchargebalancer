@@ -23,7 +23,7 @@ namespace Rede
         montaInit( const int _id, const int _total_peers );
 
         QString
-        montaNovoPeer( const QString& _host );
+        montaNovoPeer( const QString& _host, const int& _id );
 
         QString
         montaServer();

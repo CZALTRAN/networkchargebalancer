@@ -1,7 +1,9 @@
 #include "gerenciadorrede.h"
 
-#include "redeconfig.h"
 #include "construtordepacotes.h"
+#include "parserdepacotes.h"
+#include "redeconfig.h"
+#include "structpacotes.h"
 
 GerenciadorRede::GerenciadorRede( Rede::Peer* _primeiro_peer )
 {
@@ -68,10 +70,10 @@ GerenciadorRede::slotIndicaServer(int _socket_descriptor )
 
         novo_peer->sendInit( this->gerenciador_conexoes->getTotalConn() );
 
-        emit this->novoPeer( novo_peer->getHost() );
+        emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
 
-        QObject::connect(this,SIGNAL(novoPeer(const QString&)),
-                         novo_peer,SLOT(enviaNovoPeer(const QString&)));
+        QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
+                         novo_peer,SLOT(enviaNovoPeer(const QString&, const int&)));
 
         QObject::connect(novo_peer,SIGNAL(incommingMessage(int,QString)),
                          this,SLOT(slotNovaMensagemFromPeer(int,QString)));
