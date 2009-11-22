@@ -37,6 +37,9 @@ namespace Rede
         Rede::Peer*
         getPeerById( const int& _id);
 
+        Rede::Peer*
+        getPeerByHost( const QString& _host);
+
         int
         getTotalConn() const;
     };

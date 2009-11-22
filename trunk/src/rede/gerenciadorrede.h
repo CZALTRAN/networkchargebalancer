@@ -74,6 +74,7 @@ signals:
 
     void
     novoPeer( const QString& _host, const int& id );
+
 };
 
 #endif // REDE_H

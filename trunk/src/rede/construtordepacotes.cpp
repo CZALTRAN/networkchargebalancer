@@ -54,5 +54,7 @@ Rede::ConstrutorDePacotes::montaMeuId()
 
     pacote += QString::number( Rede::RedeConfig::getInstance().meu_id ) + SEPARADOR_DE_CAMPO;
 
+    pacote += Rede::RedeConfig::getInstance().host + SEPARADOR_DE_CAMPO;
+
     return pacote;
 }

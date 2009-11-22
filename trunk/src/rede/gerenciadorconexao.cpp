@@ -43,6 +43,12 @@ Rede::GerenciadorConexao::getPeerById( const int& _id)
     return this->peers[_id];
 }
 
+Rede::Peer*
+Rede::GerenciadorConexao::getPeerByHost( const QString& _host)
+{
+
+}
+
 int
 Rede::GerenciadorConexao::getTotalConn() const
 {

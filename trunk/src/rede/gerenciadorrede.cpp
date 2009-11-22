@@ -247,6 +247,9 @@ GerenciadorRede::addConexaoPeerVeterano( const int& _socket_descriptor )
     Rede::Peer*
     peer = new Rede::Peer(_socket_descriptor);
 
+    QObject::connect(peer, SIGNAL(incommingMessage(int,QString)),
+                     this, SLOT(slotNovaMensagemFromPeer(int,QString)));
+
     qDebug() << Q_FUNC_INFO << "Adcionando o peer " << peer->getHost()
             << " na lista.";
 

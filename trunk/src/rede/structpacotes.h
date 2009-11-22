@@ -43,6 +43,12 @@ namespace Rede{
         host;
 
     } PacoteInformaServer;
+
+    typedef struct PacoteMeuId : public PacoteBase
+    {
+        QString
+        host;
+    };
 }
 
 #endif // STRUCTPACOTES_H
