@@ -19,6 +19,10 @@ namespace Rede
         peers;
 
     public:
+
+        Rede::Peer*
+        tmp_peer;
+
         GerenciadorConexao();
 
         virtual

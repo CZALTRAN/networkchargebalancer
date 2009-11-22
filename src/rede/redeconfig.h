@@ -28,6 +28,9 @@ namespace Rede
         QString
         host;
 
+        QString
+        server_host;
+
         static Rede::RedeConfig&
         getInstance()
         {
