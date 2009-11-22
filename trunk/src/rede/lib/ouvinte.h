@@ -3,7 +3,6 @@
 
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QThread>
 #include <QList>
 
 #include "conexao.h"
