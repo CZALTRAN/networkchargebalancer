@@ -31,6 +31,9 @@ namespace Rede
         Rede::Peer*
         novaConexao( int _socket_descriptor);
 
+        void
+        addConexao( Rede::Peer* _novo_peer );
+
         Rede::Peer*
         getPeerById( const int& _id);
 

@@ -30,7 +30,7 @@ int main ( int argc, char* argv[])
     }
 
     GerenciadorRede*
-    gerente_rede = new GerenciadorRede( primeiro_peer );
+    gerente_rede = new GerenciadorRede( "wlan0", primeiro_peer );
 
     Q_UNUSED(gerente_rede)
     return app.exec();

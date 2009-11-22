@@ -64,8 +64,17 @@ Rede::Peer::conectar( const QString& _host )
 void
 Rede::Peer::conectar()
 {
-    const quint16
-    porta = 6969;
+    quint16
+    porta;
+
+    if ( Rede::RedeConfig::getInstance().estado_atual == Rede::PROCURANDO_SERVER )
+    {
+        porta = 2469;
+    }
+    else
+    {
+        porta = 6969;
+    }
 
     this->conexao->connectToHost(this->getHost(), porta);
 }

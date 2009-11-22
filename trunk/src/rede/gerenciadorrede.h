@@ -5,7 +5,6 @@
 #include <QObject>
 
 #include "gerenciadorconexao.h"
-#include "peer.h"
 #include "rede_global.h"
 
 class GerenciadorRede : public QObject
@@ -18,6 +17,11 @@ Q_OBJECT
     Rede::Ouvinte*
     ouvinte;
 
+    Rede::Ouvinte*
+    ouvinte_procura;
+
+    QString
+    interface;
 public:
 
     /**
@@ -25,7 +29,7 @@ public:
      *        pelo servidor. Caso este parametro seja nulo, ele não tentará se
      *        conectar em ninguem iniciando uma nova rede.
      */
-    GerenciadorRede( Rede::Peer* _primeiro_peer = NULL );
+    GerenciadorRede( QString _interface, Rede::Peer* _primeiro_peer = NULL );
 
     virtual
     ~GerenciadorRede();
@@ -38,16 +42,19 @@ private:
     void
     buscaPorServer( Rede::Peer* _primeiro_peer );
 
-    void
-    informaServerInfo( const int& _socket_descriptor);
-
 protected slots:
 
     void
-    slotNovaConexao( int _socket_descriptor );
+    slotNovaConexao( const int& _socket_descriptor );
 
     void
     slotNovaMensagemFromPeer( const int& _id, const QString& _message );
+
+    void
+    informaServerInfo( const int& _socket_descriptor);
+
+    void
+    serverEncontrado( const int& _id, const QString& _message );
 
 signals:
 

@@ -1,17 +1,26 @@
 #include "gerenciadorrede.h"
 
 #include "construtordepacotes.h"
+#include "lib/getifaddrfromadapter.h"
 #include "parserdepacotes.h"
 #include "redeconfig.h"
 #include "structpacotes.h"
 
-GerenciadorRede::GerenciadorRede( Rede::Peer* _primeiro_peer )
+
+GerenciadorRede::GerenciadorRede( QString _interface,
+                                  Rede::Peer* _primeiro_peer )
 {
+    this->interface = _interface;
+
     this->gerenciador_conexoes = new Rede::GerenciadorConexao::GerenciadorConexao();
     this->ouvinte = new Rede::Ouvinte(this);
+    this->ouvinte_procura = new Rede::Ouvinte(this);
 
     QObject::connect(this->ouvinte, SIGNAL(novaConn(int)),
                      this, SLOT(slotNovaConexao(int)));
+
+    QObject::connect(this->ouvinte_procura, SIGNAL(novaConn(int)),
+                     this,SLOT(informaServerInfo(int)));
 
     if ( _primeiro_peer == NULL )
     {
@@ -33,9 +42,25 @@ void
 GerenciadorRede::startComoServer()
 {
     Rede::RedeConfig::getInstance().meu_id = 1;
+    Rede::RedeConfig::getInstance().host = getIfaddrFromAdapter(this->interface);
     Rede::RedeConfig::getInstance().estado_atual = Rede::SERVER;
 
+    Rede::Peer*
+    eu_mesmo = new Rede::Peer();
+
+    eu_mesmo->setId( Rede::RedeConfig::getInstance().meu_id );
+    eu_mesmo->setHost( Rede::RedeConfig::getInstance().host );
+
+    this->gerenciador_conexoes->addConexao( eu_mesmo );
+
+    Rede::RedeConfig::getInstance().server_host = eu_mesmo;
+
     if (! this->ouvinte->startListen() )
+    {
+        exit(1);
+    }
+
+    if (! this->ouvinte_procura->startListen(2469))
     {
         exit(1);
     }
@@ -51,33 +76,22 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
     this->gerenciador_conexoes->tmp_peer = _primeiro_peer;
 
     QObject::connect(_primeiro_peer,SIGNAL(incommingMessage(int,QString)),
-                     this,SLOT(slotNovaMensagemFromPeer(int,QString)));
+                     this,SLOT(serverEncontrado(int,QString)));
 }
 
 void
-GerenciadorRede::informaServerInfo( const int& _socket_descriptor)
+GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 {
-    Rede::Conexao*
-    tmp_conexao = new Rede::Conexao();
-    tmp_conexao->setSocketDescriptor( _socket_descriptor );
+    switch( Rede::RedeConfig::getInstance().estado_atual )
+    {
+    case Rede::CONECTANDO:
 
-    QString
-    mensagem = Rede::ConstrutorDePacotes::getInstance().montaServer();
-
-    tmp_conexao->enviaDado(mensagem);
-
-    tmp_conexao->flush();
-    tmp_conexao->close();
-}
-
-void
-GerenciadorRede::slotNovaConexao(int _socket_descriptor )
-{
-    qDebug() << Rede::RedeConfig::getInstance().meu_id;
-
-    if ( Rede::RedeConfig::getInstance().estado_atual == Rede::SERVER )
-    { //sou o servidor e preciso indicar ao novo socket sobre todas as conexões.
-
+        break;
+    case Rede::CONECTADO:
+        this->informaServerInfo(_socket_descriptor);
+        break;
+    case Rede::SERVER:
+        //sou o servidor e preciso indicar ao novo socket sobre todas as conexões.
         qDebug() << Q_FUNC_INFO << "tenho que indicar o server para o socket "
                  << _socket_descriptor;
 
@@ -93,10 +107,8 @@ GerenciadorRede::slotNovaConexao(int _socket_descriptor )
 
         QObject::connect(novo_peer,SIGNAL(incommingMessage(int,QString)),
                          this,SLOT(slotNovaMensagemFromPeer(int,QString)));
-    }
-    else
-    { //não sou o servidor e preciso indicar quem é e fechar a conexão.
-        this->informaServerInfo(_socket_descriptor);
+
+        break;
     }
 
 }
@@ -113,9 +125,6 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
 
         switch( pacote->nome )
         {
-        case Rede::INFORMA_SERVER: // Recebe informa_server de um peer qualquer
-            //this->conectaNoServer(pacote);
-            break;
         case Rede::INIT: // Recebe informa_server do proprio server
             //this->configuraConexao(pacote);
             Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTANDO;
@@ -153,3 +162,43 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
         break;
     }
 }
+
+void
+GerenciadorRede::informaServerInfo( const int& _socket_descriptor)
+{
+    Rede::Conexao*
+    tmp_conexao = new Rede::Conexao();
+    tmp_conexao->setSocketDescriptor( _socket_descriptor );
+
+    QString
+    mensagem = Rede::ConstrutorDePacotes::getInstance().montaServer();
+
+    tmp_conexao->enviaDado(mensagem);
+RedeConfig
+    tmp_conexao->flush();
+    tmp_conexao->close();
+}
+
+void
+GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
+{
+    Q_UNUSED(_id)
+
+    Rede::PacoteInformaServer*
+    parseado = Rede::ParserDePacotes::parseiaPacote( _message );
+
+    Rede::Peer*
+    server = new Rede::Peer();
+
+    server->setHost( parseado->host );
+    server->setId( parseado->id );
+
+    this->gerenciador_conexoes->addConexao( server );
+    Rede::RedeConfig::server_host = server;
+
+    server->conectar();
+
+    QObject::connect( server, SIGNAL(incommingMessage(int,QString)),
+                      this, SLOT(slotNovaMensagemFromPeer(int,QString)));
+}
+
