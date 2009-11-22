@@ -67,7 +67,7 @@ Rede::Peer::conectar()
     const quint16
     porta = 6969;
 
-    this->conexao->connectToHost("localhost", porta);
+    this->conexao->connectToHost(this->getHost(), porta);
 }
 
 void
