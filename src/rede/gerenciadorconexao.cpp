@@ -31,7 +31,6 @@ Rede::GerenciadorConexao::novaConexao( int _socket_descriptor)
     novo_peer = new Rede::Peer( _socket_descriptor );
 
     novo_peer->setId( this->peers.size()+1 );
-    novo_peer->setHost( Rede::RedeConfig::getInstance().host );
 
     this->peers.insert( novo_peer->getId(), novo_peer );
 

@@ -61,10 +61,20 @@ namespace Rede
         void
         erro( QAbstractSocket::SocketError _erro );
 
+    //slots de envio de mensagem
+
+        void
+        enviaNovoPeer( const QString& _host );
+
     signals:
 
         void
         incommingMessage( const int& _id, const QString& _message );
+
+    private:
+
+        void
+        constroiSocket();
     };
 }
 

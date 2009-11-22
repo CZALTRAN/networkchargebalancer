@@ -46,7 +46,7 @@ protected slots:
 signals:
 
     void
-    novoPeer( QString _host );
+    novoPeer( const QString& _host );
 };
 
 #endif // REDE_H

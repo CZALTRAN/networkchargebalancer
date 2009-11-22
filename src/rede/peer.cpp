@@ -10,7 +10,7 @@
 
 Rede::Peer::Peer( const int& _socket_descriptor )
 {
-    this->conexao = new Rede::Conexao(this);
+    this->constroiSocket();
     this->conexao->setSocketDescriptor( _socket_descriptor );
 
     if( this->conexao->state() == QAbstractSocket::ConnectedState )
@@ -22,16 +22,12 @@ Rede::Peer::Peer( const int& _socket_descriptor )
         qDebug() << Q_FUNC_INFO << " naum estah em connected state";
     }
 
-    QObject::connect( this->conexao, SIGNAL(connected()),
-                      this, SLOT(conectado()));
-    
-    QObject::connect(this->conexao, SIGNAL(error(QAbstractSocket::SocketError)),
-                     this, SLOT(erro(QAbstractSocket::SocketError)));
+
 }
 
 Rede::Peer::Peer()
 {
-    this->conexao = new Rede::Conexao(this);
+    this->constroiSocket();
 }
 
 Rede::Peer::~Peer()
@@ -113,7 +109,31 @@ Rede::Peer::erro( QAbstractSocket::SocketError _erro )
 }
 
 void
+Rede::Peer::enviaNovoPeer( const QString& _host )
+{
+    QString
+    mensagem = Rede::ConstrutorDePacotes::getInstance().montaNovoPeer( _host );
+
+    this->conexao->enviaDado(mensagem);
+}
+
+void
 Rede::Peer::setId( const int _id )
 {
     this->id = _id;
+}
+
+void
+Rede::Peer::constroiSocket()
+{
+    this->conexao = new Rede::Conexao(this);
+
+    QObject::connect( this->conexao, SIGNAL(connected()),
+                      this, SLOT(conectado()));
+
+    QObject::connect(this->conexao, SIGNAL(error(QAbstractSocket::SocketError)),
+                     this, SLOT(erro(QAbstractSocket::SocketError)));
+
+    QObject::connect(this->conexao, SIGNAL(incommingMessage(QString)),
+                     this,SLOT(incommingMessage(const QString&)));
 }

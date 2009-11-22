@@ -43,6 +43,5 @@ Rede::Conexao::recebeDado()
         entrada >> mensagem;
 
         emit this->incommingMessage(mensagem);
-        qDebug() << Q_FUNC_INFO << mensagem;
     }
 }

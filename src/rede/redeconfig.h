@@ -44,6 +44,11 @@ namespace Rede
 
         RedeConfig();
 
+        RedeConfig( RedeConfig const& );
+
+        Rede::RedeConfig&
+        operator= ( Rede::RedeConfig const& );
+
     };
 }
 #endif // REDECONFIG_H

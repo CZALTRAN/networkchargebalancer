@@ -67,8 +67,8 @@ GerenciadorRede::slotIndicaServer(int _socket_descriptor )
 
         emit this->novoPeer( novo_peer->getHost() );
 
-        QObject::connect(this,SIGNAL(novoPeer(QString)),
-                         novo_peer,SLOT(enviaNovoPeer(QString)));
+        QObject::connect(this,SIGNAL(novoPeer(const QString&)),
+                         novo_peer,SLOT(enviaNovoPeer(const QString&)));
     }
     else
     { //não sou o servidor e preciso indicar quem é e fechar a conexão.
