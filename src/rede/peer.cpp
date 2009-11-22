@@ -45,13 +45,13 @@ Rede::Peer::setHost( const QString& _host )
     this->host = _host;
 }
 
-const QString
+QString
 Rede::Peer::getHost() const
 {
     return this->host;
 }
 
-const int
+int
 Rede::Peer::getId() const
 {
     return this->id;

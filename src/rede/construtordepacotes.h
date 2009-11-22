@@ -10,8 +10,14 @@ namespace Rede
     class ConstrutorDePacotes
     {
     public:
-        static ConstrutorDePacotes
-        getInstance();
+        static ConstrutorDePacotes&
+        getInstance()
+        {
+            static Rede::ConstrutorDePacotes
+            instance;
+
+            return instance;
+        }
 
         QString
         montaInit( const int _id, const int _total_peers );

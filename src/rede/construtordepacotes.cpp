@@ -5,15 +5,6 @@ Rede::ConstrutorDePacotes::ConstrutorDePacotes()
 
 }
 
-Rede::ConstrutorDePacotes
-Rede::ConstrutorDePacotes::getInstance()
-{
-    static Rede::ConstrutorDePacotes
-    instance;
-
-    return instance;
-}
-
 QString
 Rede::ConstrutorDePacotes::montaInit( const int _id, const int _total_peers )
 {
