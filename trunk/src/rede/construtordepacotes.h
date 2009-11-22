@@ -22,8 +22,17 @@ namespace Rede
         QString
         montaInit( const int _id, const int _total_peers );
 
+        QString
+        montaNovoPeer( const QString& _host );
+
     private:
         ConstrutorDePacotes();
+
+        ConstrutorDePacotes( ConstrutorDePacotes const&);
+
+        Rede::ConstrutorDePacotes&
+        operator= ( Rede::ConstrutorDePacotes const& );
+
     };
 }
 #endif // CONSTRUTORDEPACOTES_H
