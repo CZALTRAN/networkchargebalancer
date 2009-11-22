@@ -126,12 +126,6 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
         // Recebe pacote informando que não é mais o server
 
         break;
-    case Rede::CONECTADO:
-        // Recebe quem é o server ( novo peer )
-
-        // Recebe pacote novo_peer
-
-            break;
          case Rede::CONECTADO:
             // Recebe quem é o server ( novo peer )
           qDebug() << Q_FUNC_INFO << "Entrei no conectado.";
@@ -148,12 +142,7 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
         // Recebe pacote informando quem é novo server ( remetente é o novo )
 
         break;
-    case Rede::CONECTANDO:
-        // Recebe pacote de requisição de conexão ( veteranos )
 
-        // Recebe pacote novo_peer
-
-            break;
          case Rede::CONECTANDO:
              // Recebe pacote de requisição de conexão ( veteranos )
 
