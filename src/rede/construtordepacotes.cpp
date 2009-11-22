@@ -1,6 +1,7 @@
 #include "construtordepacotes.h"
 
 #include "redeconfig.h"
+#include "peer.h"
 
 Rede::ConstrutorDePacotes::ConstrutorDePacotes()
 {
@@ -20,14 +21,13 @@ Rede::ConstrutorDePacotes::montaInit( const int _id, const int _total_peers )
 }
 
 QString
-Rede::ConstrutorDePacotes::montaNovoPeer( const QString& _host )
+Rede::ConstrutorDePacotes::montaNovoPeer( const QString& _host, const int& _id )
 {
     QString
-    pacote;
+    pacote("NOVOPEER" + SEPARADOR_DE_CAMPO);
 
-    pacote = "NOVOPEER" + SEPARADOR_DE_CAMPO;
     pacote += _host + SEPARADOR_DE_CAMPO;
-
+    pacote += QString::number(_id) + SEPARADOR_DE_CAMPO;
     return pacote;
 }
 
@@ -36,7 +36,10 @@ Rede::ConstrutorDePacotes::montaServer()
 {
     QString pacote("SERVER" + SEPARADOR_DE_CAMPO);
 
-    pacote += Rede::RedeConfig::getInstance().server_host;
+    pacote += Rede::RedeConfig::getInstance().server_host->getHost();
+    pacote += SEPARADOR_DE_CAMPO;
+    pacote += Rede::RedeConfig::getInstance().server_host->getId();
+    pacote += SEPARADOR_DE_CAMPO;
 
     return pacote;
 }

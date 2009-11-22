@@ -6,6 +6,7 @@
 
 namespace Rede
 {
+    class Peer;
 
     enum PEER_ESTADO
     {
@@ -28,7 +29,7 @@ namespace Rede
         QString
         host;
 
-        QString
+        Rede::Peer*
         server_host;
 
         static Rede::RedeConfig&
