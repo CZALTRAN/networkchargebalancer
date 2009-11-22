@@ -185,7 +185,8 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
     Q_UNUSED(_id)
 
     Rede::PacoteInformaServer*
-    parseado = Rede::ParserDePacotes::parseiaPacote( _message );
+    parseado = static_cast<Rede::PacoteInformaServer*>(
+                Rede::ParserDePacotes::getInstance().parseiaPacote( _message ));
 
     Rede::Peer*
     server = new Rede::Peer();
@@ -194,11 +195,10 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
     server->setId( parseado->id );
 
     this->gerenciador_conexoes->addConexao( server );
-    Rede::RedeConfig::server_host = server;
+    Rede::RedeConfig::getInstance().server_host = server;
 
     server->conectar();
 
     QObject::connect( server, SIGNAL(incommingMessage(int,QString)),
                       this, SLOT(slotNovaMensagemFromPeer(int,QString)));
 }
-

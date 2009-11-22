@@ -42,6 +42,12 @@ private:
     void
     buscaPorServer( Rede::Peer* _primeiro_peer );
 
+//    void
+//    GerenciadorRede::conectaNoServer( const QString _pacote ) const;
+//
+//    void
+//    GerenciadorRede::configuraConexao( const QString _pacote ) const;
+
 protected slots:
 
     void
