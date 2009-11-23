@@ -85,11 +85,12 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 {
     switch( Rede::RedeConfig::getInstance().estado_atual )
     {
-      case Rede::CONECTANDO:
+    case Rede::CONECTADO:
+    case Rede::CONECTANDO:
         qDebug() << Q_FUNC_INFO << "Entrei no conectando";
         this->addConexaoPeerVeterano( _socket_descriptor );
-      break;
-      case Rede::SERVER:
+    break;
+    case Rede::SERVER:
         //sou o servidor e preciso indicar ao novo socket sobre todas as conexões.
         qDebug() << Q_FUNC_INFO << "tenho que indicar o server para o socket "
                  << _socket_descriptor;
@@ -106,7 +107,7 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 
         QObject::connect(novo_peer,SIGNAL(incommingMessage(int,QString)),
                          this,SLOT(slotNovaMensagemFromPeer(int,QString)));
-      break;
+    break;
     }
 
 }
