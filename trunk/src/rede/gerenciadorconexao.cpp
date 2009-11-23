@@ -22,7 +22,7 @@ Rede::GerenciadorConexao::novaConexao( int _socket_descriptor)
 
     novo_peer->setId( this->peers.size()+1 );
 
-    this->peers.insert( novo_peer->getId(), novo_peer );
+    this->indexaPeer( novo_peer->getId(), novo_peer );
 
     return novo_peer;
 }
@@ -40,7 +40,7 @@ Rede::GerenciadorConexao::addConexao( Rede::Peer* _novo_peer )
         Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTADO;
     }
 
-    this->peers.insert(id, _novo_peer);
+    this->indexaPeer( id, _novo_peer );
 }
 
 Rede::Peer*
@@ -59,4 +59,34 @@ int
 Rede::GerenciadorConexao::getTotalConn() const
 {
     return this->peers.size();
+}
+
+void
+Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
+{
+    if( _peer->getId() == Rede::RedeConfig::getInstance().server_host->id )
+    {
+        qDebug() << Q_FUNC_INFO << "Fudeu. Caiu o server. Vou notificar o GR";
+
+        emit this->peerCaiu(true);
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "O idiota " << _peer->getHost() << " caiu.";
+
+        emit this->peerCaiu(false);
+    }
+    this->peers.remove(_peer->getId());
+}
+
+void
+Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
+{
+    this->peers.insert(_id, _peer);
+
+    QObject::connect( _peer, SIGNAL(perdiConexao(Rede::Peer*const)),
+                      this, SLOT(peerCaiu(Rede::Peer*const)));
+
+    qDebug() << Q_FUNC_INFO << "Conectei meu slot no sinal do peer.";
+
 }

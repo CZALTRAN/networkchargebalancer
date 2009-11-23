@@ -12,6 +12,10 @@ GerenciadorRede::GerenciadorRede( QString _interface,
     this->interface = _interface;
 
     this->gerenciador_conexoes = new Rede::GerenciadorConexao::GerenciadorConexao();
+
+    QObject::connect( this->gerenciador_conexoes, SIGNAL(peerCaiu(bool)),
+                      this, SLOT(peerCaiu(bool)));
+
     this->ouvinte = new Rede::Ouvinte(this);
     this->ouvinte_procura = new Rede::Ouvinte(this);
 
@@ -179,6 +183,19 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
 
     QObject::connect( this->ouvinte, SIGNAL(novaConn(int)),
                       this,SLOT(slotNovaConexao(int)));
+}
+
+void
+GerenciadorRede::peerCaiu(bool _isServer)
+{
+    if( _isServer == true )
+    {
+        qDebug() << Q_FUNC_INFO << "Iniciando a logica para tratar queda do server";
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "Iniciando a logica para tratar queda de um peer qualquer";
+    }
 }
 
 void

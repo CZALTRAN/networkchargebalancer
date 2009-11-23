@@ -67,6 +67,9 @@ protected slots:
     void
     serverEncontrado( const int& _id, const QString& _message );
 
+    void
+    peerCaiu( bool _isServer );
+
 signals:
 
     void
