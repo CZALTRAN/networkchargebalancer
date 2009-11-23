@@ -1,5 +1,7 @@
 #include "peer.h"
 
+#include <cstdlib>
+
 #include <QDebug>
 #include <QHostAddress>
 #include <QRegExp>
@@ -74,6 +76,7 @@ Rede::Peer::conectar()
     {
         porta = 6969;
     }
+
     qDebug() << Q_FUNC_INFO << this->host << ":" << porta;
     this->conexao->connectToHost(this->host, porta);
 }
