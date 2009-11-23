@@ -83,6 +83,8 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
 void
 GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 {
+    qDebug() << Q_FUNC_INFO << "Entrei.";
+
     switch( Rede::RedeConfig::getInstance().estado_atual )
     {
     case Rede::CONECTADO:

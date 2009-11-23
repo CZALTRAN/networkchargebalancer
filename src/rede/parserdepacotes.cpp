@@ -98,6 +98,7 @@ Rede::ParserDePacotes::parseiaMeuId( const QStringList& _lista_parametros ) cons
     pacote->nome = Rede::MEU_ID;
     this->setaInteiroDePacote(_lista_parametros,1,pacote->id);
 
+    return pacote;
 }
 
 void
