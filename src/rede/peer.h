@@ -71,6 +71,9 @@ namespace Rede
         void
         incommingMessage( const int& _id, const QString& _message );
 
+        void
+        perdiConexao( Rede::Peer* const _peer );
+
     private:
 
         void

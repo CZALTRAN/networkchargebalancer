@@ -42,6 +42,20 @@ namespace Rede
 
         int
         getTotalConn() const;
+
+        void
+        indexaPeer( const int _id, Rede::Peer* const _peer );
+
+    public slots:
+
+        void
+        peerCaiu( Rede::Peer* const _peer );
+
+    signals:
+
+        void
+        peerCaiu( const bool _isServer );
+
     };
 }
 
