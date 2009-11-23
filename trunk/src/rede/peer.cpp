@@ -94,8 +94,12 @@ Rede::Peer::sendInit( const int _total_conn )
 void
 Rede::Peer::incommingMessage(const QString& _message )
 {
+    qDebug() << Q_FUNC_INFO << "Vou atribuir o ponteiro!";
+
     Rede::PacoteBase*
     pacoteBase = Rede::ParserDePacotes::getInstance().parseiaPacote(_message);
+
+    qDebug() << Q_FUNC_INFO << "o ID eh: " << pacoteBase->id;
 
     if( pacoteBase->nome == Rede::MEU_ID)
     {
