@@ -138,7 +138,7 @@ Rede::Peer::erro( QAbstractSocket::SocketError _erro )
     Q_UNUSED(_erro)
     emit this->perdiConexao(this);
 
-    QObject::disconnect(this,"enviaNovoPeer");
+    QObject::disconnect(this,SLOT(enviaNovoPeer(QString,int)));
 }
 
 void
