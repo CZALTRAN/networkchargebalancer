@@ -44,13 +44,13 @@ Rede::GerenciadorConexao::addConexao( Rede::Peer* _novo_peer )
 }
 
 Rede::Peer*
-Rede::GerenciadorConexao::getPeerById( const int& _id)
+Rede::GerenciadorConexao::getPeerById( const int& _id) const
 {
     return this->peers[_id];
 }
 
 Rede::Peer*
-Rede::GerenciadorConexao::getPeerByHost( const QString& _host)
+Rede::GerenciadorConexao::getPeerByHost( const QString& _host) const
 {
 
 }
@@ -64,7 +64,7 @@ Rede::GerenciadorConexao::getTotalConn() const
 void
 Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 {
-    if( _peer->getId() == Rede::RedeConfig::getInstance().server_host->id )
+    if( _peer->getId() == Rede::RedeConfig::getInstance().server_host->getId() )
     {
         qDebug() << Q_FUNC_INFO << "Fudeu. Caiu o server. Vou notificar o GR";
 
@@ -77,6 +77,7 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
         emit this->peerCaiu(false);
     }
     this->peers.remove(_peer->getId());
+    this->setNextServer();
 }
 
 void
@@ -89,4 +90,29 @@ Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
 
     qDebug() << Q_FUNC_INFO << "Conectei meu slot no sinal do peer.";
 
+}
+
+void
+Rede::GerenciadorConexao::setNextServer() const
+{
+    Rede::Peer*
+    proximo_server = this->getPeerById( Rede::RedeConfig::getInstance().meu_id );
+
+    Rede::Peer*
+    tmp_server;
+
+    foreach( tmp_server, this->peers)
+    {
+        if ( tmp_server->getId() < proximo_server->getId() )
+        {
+            proximo_server = tmp_server;
+        }
+    }
+
+    if ( proximo_server->getId() == Rede::RedeConfig::getInstance().meu_id )
+    {
+        Rede::RedeConfig::getInstance().estado_atual = Rede::SERVER;
+    }
+
+    Rede::RedeConfig::getInstance().server_host = proximo_server;
 }

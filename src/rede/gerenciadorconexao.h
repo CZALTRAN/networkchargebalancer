@@ -35,10 +35,10 @@ namespace Rede
         addConexao( Rede::Peer* _novo_peer );
 
         Rede::Peer*
-        getPeerById( const int& _id);
+        getPeerById( const int& _id) const;
 
         Rede::Peer*
-        getPeerByHost( const QString& _host);
+        getPeerByHost( const QString& _host) const;
 
         int
         getTotalConn() const;
@@ -56,6 +56,10 @@ namespace Rede
         void
         peerCaiu( const bool _isServer );
 
+    private:
+
+        void
+        setNextServer() const;
     };
 }
 

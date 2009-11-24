@@ -207,6 +207,14 @@ GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
     Rede::RedeConfig::getInstance().qtdePeers = pacote->total_peers;
 
     qDebug() << Q_FUNC_INFO << " sentando id para: " << pacote->id;
+
+    Rede::Peer*
+    eu_mesmo = new Rede::Peer();
+
+    eu_mesmo->setHost( getIfaddrFromAdapter( this->interface ) );
+    eu_mesmo->setId( pacote->id );
+
+    this->gerenciador_conexoes->addConexao( eu_mesmo );
     Rede::RedeConfig::getInstance().meu_id = pacote->id;
 }
 
