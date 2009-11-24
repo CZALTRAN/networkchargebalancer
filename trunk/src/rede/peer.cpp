@@ -140,8 +140,6 @@ Rede::Peer::erro( QAbstractSocket::SocketError _erro )
     qDebug() << Q_FUNC_INFO << this->conexao->errorString();
 
     emit this->perdiConexao(this);
-
-    qDebug() << Q_FUNC_INFO << "Emiti o sinal para avisar q eu cai";
 }
 
 void
