@@ -73,7 +73,8 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
     int
     removed = this->peers.remove(_peer->getId());
 
-    qDebug() << Q_FUNC_INFO << " removi " << removed << "entradas";
+    qDebug() << Q_FUNC_INFO << " removi " << removed << "entradas."
+             << " Tentando remover a entrada numero: " << _peer->getId();
 }
 
 void
