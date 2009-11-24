@@ -226,6 +226,9 @@ GerenciadorRede::addConexaoPeerVeterano( const int& _socket_descriptor )
     Rede::Peer*
     peer = new Rede::Peer(_socket_descriptor);
 
+    QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
+                     peer ,SLOT(enviaNovoPeer(const QString&, const int&)));
+
     QObject::connect(peer, SIGNAL(incommingMessage(int,QString)),
                      this, SLOT(slotNovaMensagemFromPeer(int,QString)));
 
