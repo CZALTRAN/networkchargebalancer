@@ -20,7 +20,7 @@ Rede::GerenciadorConexao::novaConexao( int _socket_descriptor)
     Rede::Peer*
     novo_peer = new Rede::Peer( _socket_descriptor );
 
-    novo_peer->setId( this->peers.size()+1 );
+    novo_peer->setId( this->getNextId() );
 
     this->indexaPeer( novo_peer->getId(), novo_peer );
 
@@ -96,6 +96,7 @@ Rede::GerenciadorConexao::getNextId() const
 
     foreach( tmp_peer, this->peers )
     {
+        qDebug () << Q_FUNC_INFO << ": teste novo id:" << tmp_peer->getId();
         if ( tmp_peer->getId() > max_id )
         {
             max_id = tmp_peer->getId();

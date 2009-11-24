@@ -120,10 +120,13 @@ Rede::Peer::conectado()
     case Rede::CONECTADO:
         qDebug() << Q_FUNC_INFO << " : " << "to conectado";
 
-        QString
-        pacote = Rede::ConstrutorDePacotes::getInstance().montaMeuId();
+        if ( Rede::RedeConfig::getInstance().meu_id != 0 )
+        {
+            QString
+            pacote = Rede::ConstrutorDePacotes::getInstance().montaMeuId();
 
-        this->conexao->enviaDado( pacote );
+            this->conexao->enviaDado( pacote );
+        }
 
         break;
     }
