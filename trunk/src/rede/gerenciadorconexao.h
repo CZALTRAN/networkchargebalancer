@@ -47,7 +47,7 @@ namespace Rede
         getNextId() const;
         
         void
-        debug();
+        debug() const;
 
     public slots:
 
