@@ -36,7 +36,6 @@ Rede::GerenciadorConexao::addConexao( Rede::Peer* _novo_peer )
     if ( this->peers.size() == Rede::RedeConfig::getInstance().qtdePeers &&
          Rede::RedeConfig::getInstance().estado_atual != Rede::SERVER)
     {
-        qDebug() << Q_FUNC_INFO << "em conectado!";
         Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTADO;
     }
 
@@ -66,14 +65,13 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 {
     if( _peer->getId() == Rede::RedeConfig::getInstance().server_host->getId() )
     {
-        qDebug() << Q_FUNC_INFO << "Fudeu. Caiu o server. Vou notificar o GR";
+        qDebug() << Q_FUNC_INFO << "Caiu o server. Vou notificar o GR";
 
         this->setNextServer();
         emit this->peerCaiu(true);
     }
     else
     {
-        qDebug() << Q_FUNC_INFO << "O idiota " << _peer->getHost() << " caiu.";
         emit this->peerCaiu(false);
     }
 
@@ -87,9 +85,6 @@ Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
 
     QObject::connect( _peer, SIGNAL(perdiConexao(Rede::Peer*const)),
                       this, SLOT(peerCaiu(Rede::Peer*const)));
-
-    qDebug() << Q_FUNC_INFO << "Conectei meu slot no sinal do peer.";
-
 }
 
 void
@@ -111,6 +106,7 @@ Rede::GerenciadorConexao::setNextServer() const
 
     if ( proximo_server->getId() == Rede::RedeConfig::getInstance().meu_id )
     {
+        qDebug() << Q_FUNC_INFO << ": fui eleito server";
         Rede::RedeConfig::getInstance().estado_atual = Rede::SERVER;
     }
 
