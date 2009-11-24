@@ -63,10 +63,8 @@ Rede::GerenciadorConexao::getTotalConn() const
 void
 Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 {
-    if( _peer->getId() == Rede::RedeConfig::getInstance().server_host->getId() )
+    if( _peer == Rede::RedeConfig::getInstance().server_host )
     {
-        qDebug() << Q_FUNC_INFO << "Caiu o server. Vou notificar o GR";
-
         this->setNextServer();
         emit this->peerCaiu(true);
     }
@@ -75,6 +73,7 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
         emit this->peerCaiu(false);
     }
 
+    -- Rede::RedeConfig::getInstance().qtdePeers;
     this->peers.remove(_peer->getId());
 }
 
@@ -87,9 +86,30 @@ Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
                       this, SLOT(peerCaiu(Rede::Peer*const)));
 }
 
+int
+Rede::GerenciadorConexao::getNextId() const
+{
+    int max_id = Rede::RedeConfig::getInstance().meu_id;
+
+    Rede::Peer*
+    tmp_peer;
+
+    foreach( tmp_peer, this->peers )
+    {
+        if ( tmp_peer->getId() > max_id )
+        {
+            max_id = tmp_peer->getId();
+        }
+
+    }
+
+    return max_id + 1;
+}
+
 void
 Rede::GerenciadorConexao::setNextServer() const
 {
+
     Rede::Peer*
     proximo_server = this->getPeerById( Rede::RedeConfig::getInstance().meu_id );
 
@@ -98,7 +118,8 @@ Rede::GerenciadorConexao::setNextServer() const
 
     foreach( tmp_server, this->peers)
     {
-        if ( tmp_server->getId() < proximo_server->getId() )
+        if ( tmp_server->getId() < proximo_server->getId() &&
+             tmp_server != Rede::RedeConfig::getInstance().server_host )
         {
             proximo_server = tmp_server;
         }

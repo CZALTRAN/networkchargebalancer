@@ -46,6 +46,9 @@ namespace Rede
         void
         indexaPeer( const int _id, Rede::Peer* const _peer );
 
+        int
+        getNextId() const;
+
     public slots:
 
         void
