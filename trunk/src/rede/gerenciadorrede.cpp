@@ -2,6 +2,7 @@
 
 #include "construtordepacotes.h"
 #include "lib/getifaddrfromadapter.h"
+#include "ping.h"
 #include "redeconfig.h"
 #include "structpacotes.h"
 
@@ -247,4 +248,13 @@ GerenciadorRede::recebeConexaoPeerVeterano( const int& _socket_descriptor )
                      this, SLOT(slotNovaMensagemFromPeer(int,QString)));
 
     this->gerenciador_conexoes->addConexao(novo_peer);
+}
+
+QStringList
+GerenciadorRede::pingPeer( QString _host )
+{
+    Rede::Ping*
+    ping = new Rede::Ping( _host, this->interface );
+
+    return ping->getRetorno();
 }

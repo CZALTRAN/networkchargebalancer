@@ -8,6 +8,7 @@
 //project includes
 #include "gerenciadorrede.h"
 #include "peer.h"
+#include "ping.h"
 
 int main ( int argc, char* argv[])
 {
@@ -31,6 +32,8 @@ int main ( int argc, char* argv[])
 
     GerenciadorRede*
     gerente_rede = new GerenciadorRede( "wlan0", primeiro_peer );
+
+    //gerente_rede->pingPeer("192.168.1.100");
 
     Q_UNUSED(gerente_rede)
     return app.exec();
