@@ -98,6 +98,7 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 
         novo_peer->sendInit( this->gerenciador_conexoes->getTotalConn() );
 
+        qDebug() << Q_FUNC_INFO << ": enviando sinal de novo peer!!!!!";
         emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
 
         QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
@@ -227,7 +228,7 @@ GerenciadorRede::addConexaoPeerVeterano( const int& _socket_descriptor )
     peer = new Rede::Peer(_socket_descriptor);
 
     QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
-                     peer ,SLOT(enviaNovoPeer(const QString&, const int&)));
+                     peer, SLOT(enviaNovoPeer(const QString&, const int&)));
 
     QObject::connect(peer, SIGNAL(incommingMessage(int,QString)),
                      this, SLOT(slotNovaMensagemFromPeer(int,QString)));
