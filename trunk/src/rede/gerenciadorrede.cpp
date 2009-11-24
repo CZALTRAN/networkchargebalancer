@@ -98,7 +98,7 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 
         novo_peer->sendInit( this->gerenciador_conexoes->getTotalConn() );
 
-        qDebug() << Q_FUNC_INFO << ": enviando sinal de novo peer!!!!!";
+        this->gerenciador_conexoes->debug();
         emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
 
         QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
