@@ -30,6 +30,8 @@ namespace Rede
         void
         incomingConnection ( int _socket_descriptor );
 
+        int
+        porta;
     };
 }
 #endif // OUVINTE_H

@@ -170,9 +170,6 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
 
     QObject::connect( server, SIGNAL(incommingMessage(int,QString)),
                       this, SLOT(slotNovaMensagemFromPeer(int,QString)));
-
-    QObject::connect( this->ouvinte, SIGNAL(novaConn(int)),
-                      this,SLOT(slotNovaConexao(int)));
 }
 
 void
