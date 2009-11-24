@@ -15,7 +15,8 @@ SOURCES += gerenciadorrede.cpp \
     main.cpp \
     construtordepacotes.cpp \
     parserdepacotes.cpp \
-    lib/getifaddrfromadapter.cpp
+    lib/getifaddrfromadapter.cpp \
+    ping.cpp
 HEADERS += gerenciadorrede.h \
     rede_global.h \
     lib/conexao.h \
@@ -26,4 +27,5 @@ HEADERS += gerenciadorrede.h \
     construtordepacotes.h \
     parserdepacotes.h \
     structpacotes.h \
-    lib/getifaddrfromadapter.h
+    lib/getifaddrfromadapter.h \
+    ping.h
