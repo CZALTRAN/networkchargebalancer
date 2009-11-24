@@ -87,9 +87,11 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 {
     switch( Rede::RedeConfig::getInstance().estado_atual )
     {
+    case Rede::PROCURANDO_SERVER:
+        break;
     case Rede::CONECTADO:
     case Rede::CONECTANDO:
-        this->addConexaoPeerVeterano( _socket_descriptor );
+        this->recebeConexaoPeerVeterano( _socket_descriptor );
     break;
     case Rede::SERVER:
         //sou o servidor e preciso indicar ao novo socket sobre todas as conexões.
@@ -99,6 +101,7 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
         novo_peer->sendInit( this->gerenciador_conexoes->getTotalConn() );
 
         this->gerenciador_conexoes->debug();
+
         emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
 
         QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
@@ -115,16 +118,22 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 void
 GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _message )
 {
+    Q_UNUSED(_id)
+
     Rede::PacoteBase*
     pacote = Rede::ParserDePacotes::getInstance().parseiaPacote(_message);
 
     switch( pacote->nome )
     {
+        case Rede::INFORMA_SERVER:
+        case Rede::MEU_ID:
+
+        break;
         case Rede::INIT: // Recebe init do proprio server
            this->recebeInit(pacote);
         break;
         case Rede::NOVO_PEER:
-           this->recebeNovoPeer(pacote);
+           this->recebePacoteNovoPeer(pacote);
         break;
     }
 }
@@ -205,7 +214,7 @@ GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
 }
 
 void
-GerenciadorRede::recebeNovoPeer( Rede::PacoteBase* const _pacote )
+GerenciadorRede::recebePacoteNovoPeer( Rede::PacoteBase* const _pacote )
 {
     Rede::PacoteNovoPeer*
     pacote = static_cast<Rede::PacoteNovoPeer*>(_pacote);
@@ -226,16 +235,16 @@ GerenciadorRede::recebeNovoPeer( Rede::PacoteBase* const _pacote )
 }
 
 void
-GerenciadorRede::addConexaoPeerVeterano( const int& _socket_descriptor )
+GerenciadorRede::recebeConexaoPeerVeterano( const int& _socket_descriptor )
 {
     Rede::Peer*
-    peer = new Rede::Peer(_socket_descriptor);
+    novo_peer = new Rede::Peer(_socket_descriptor);
 
     QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
-                     peer, SLOT(enviaNovoPeer(const QString&, const int&)));
+                     novo_peer, SLOT(enviaNovoPeer(const QString&, const int&)));
 
-    QObject::connect(peer, SIGNAL(incommingMessage(int,QString)),
+    QObject::connect(novo_peer, SIGNAL(incommingMessage(int,QString)),
                      this, SLOT(slotNovaMensagemFromPeer(int,QString)));
 
-    this->gerenciador_conexoes->addConexao(peer);
+    this->gerenciador_conexoes->addConexao(novo_peer);
 }
