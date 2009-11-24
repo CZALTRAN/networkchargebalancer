@@ -110,6 +110,24 @@ Rede::GerenciadorConexao::getNextId() const
 }
 
 void
+Rede::GerenciadorConexao::debug()
+{
+    Rede::Peer*
+    tmp_peer;
+
+    qDebug() << "********************************";
+    qDebug() << "       Debugando peers          ";
+    qDebug() << "********************************";
+    foreach( tmp_peer, this->peers )
+    {
+
+        qDebug() << "Peer : " << tmp_peer->getId() << " host: " <<tmp_peer->getHost();
+
+    }
+    qDebug() << "********************************";
+}
+
+void
 Rede::GerenciadorConexao::setNextServer() const
 {
 
