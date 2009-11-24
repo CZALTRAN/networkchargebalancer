@@ -15,9 +15,9 @@ GerenciadorRede::GerenciadorRede( QString _interface,
 
     this->ouvinte = new Rede::Ouvinte(this);
     this->ouvinte_procura = new Rede::Ouvinte(this);
-
-    QObject::connect( this->gerenciador_conexoes, SIGNAL(peerCaiu(bool)),
-                      this, SLOT(peerCaiu(bool)));
+//
+//    QObject::connect( this->gerenciador_conexoes, SIGNAL(peerCaiu(bool)),
+//                      this, SLOT(peerCaiu(bool)));
 
     QObject::connect(this->ouvinte, SIGNAL(novaConn(int)),
                      this, SLOT(slotNovaConexao(int)));
@@ -219,7 +219,6 @@ GerenciadorRede::recebeNovoPeer( Rede::PacoteBase* const _pacote )
 
     novo_peer->conectar();
 
-    ++ Rede::RedeConfig::getInstance().qtdePeers;
     this->gerenciador_conexoes->addConexao(novo_peer);
 }
 
