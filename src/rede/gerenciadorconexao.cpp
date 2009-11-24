@@ -104,7 +104,7 @@ Rede::GerenciadorConexao::getNextId() const
 }
 
 void
-Rede::GerenciadorConexao::debug()
+Rede::GerenciadorConexao::debug() const
 {
     Rede::Peer*
     tmp_peer;
@@ -124,7 +124,7 @@ Rede::GerenciadorConexao::debug()
 void
 Rede::GerenciadorConexao::setNextServer() const
 {
-
+    this->debug();
     Rede::Peer*
     proximo_server = this->getPeerById( Rede::RedeConfig::getInstance().meu_id );
 
@@ -153,6 +153,4 @@ Rede::GerenciadorConexao::setNextServer() const
     }
 
     Rede::RedeConfig::getInstance().server_host = proximo_server;
-
-    this->debug();
 }
