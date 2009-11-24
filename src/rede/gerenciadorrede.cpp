@@ -60,13 +60,11 @@ GerenciadorRede::startComoServer()
 
     if (! this->ouvinte->startListen() )
     {
-        qDebug() << Q_FUNC_INFO << "Nao foi possivel inicializar o ouvinte(6969)";
         exit(1);
     }
 
     if (! this->ouvinte_procura->startListen(2469))
     {
-        qDebug() << Q_FUNC_INFO << "Nao foi possivel inicializar o ouvinte_procura(6969)";
         exit(1);
     }
 }
@@ -87,19 +85,14 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
 void
 GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 {
-    qDebug() << Q_FUNC_INFO << "Entrei.";
-
     switch( Rede::RedeConfig::getInstance().estado_atual )
     {
     case Rede::CONECTADO:
     case Rede::CONECTANDO:
-        qDebug() << Q_FUNC_INFO << "Entrei no conectando";
         this->addConexaoPeerVeterano( _socket_descriptor );
     break;
     case Rede::SERVER:
         //sou o servidor e preciso indicar ao novo socket sobre todas as conexões.
-        qDebug() << Q_FUNC_INFO << "tenho que indicar o server para o socket "
-                 << _socket_descriptor;
 
         Rede::Peer*
         novo_peer = this->gerenciador_conexoes->novaConexao( _socket_descriptor );
@@ -124,15 +117,12 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
     Rede::PacoteBase*
     pacote = Rede::ParserDePacotes::getInstance().parseiaPacote(_message);
 
-    qDebug() << Q_FUNC_INFO << "decidindo sobre :" << _message;
     switch( pacote->nome )
     {
         case Rede::INIT: // Recebe init do proprio server
-           qDebug() << Q_FUNC_INFO << "Entrei no init.";
            this->recebeInit(pacote);
         break;
         case Rede::NOVO_PEER:
-           qDebug() << Q_FUNC_INFO << "Entrei no novo_peer.";
            this->recebeNovoPeer(pacote);
         break;
     }
@@ -206,8 +196,6 @@ GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
 
     Rede::RedeConfig::getInstance().qtdePeers = pacote->total_peers;
 
-    qDebug() << Q_FUNC_INFO << " sentando id para: " << pacote->id;
-
     Rede::Peer*
     eu_mesmo = new Rede::Peer();
 
@@ -232,9 +220,6 @@ GerenciadorRede::recebeNovoPeer( Rede::PacoteBase* const _pacote )
 
     novo_peer->conectar();
 
-    qDebug() << Q_FUNC_INFO << "Recebi o calouro " << novo_peer->getHost()
-            << " e ja me conectei nele.";
-
     ++ Rede::RedeConfig::getInstance().qtdePeers;
     this->gerenciador_conexoes->addConexao(novo_peer);
 }
@@ -247,9 +232,6 @@ GerenciadorRede::addConexaoPeerVeterano( const int& _socket_descriptor )
 
     QObject::connect(peer, SIGNAL(incommingMessage(int,QString)),
                      this, SLOT(slotNovaMensagemFromPeer(int,QString)));
-
-    qDebug() << Q_FUNC_INFO << "Adcionando o peer " << peer->getHost()
-            << " na lista.";
 
     this->gerenciador_conexoes->addConexao(peer);
 }
