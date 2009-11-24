@@ -146,6 +146,11 @@ Rede::GerenciadorConexao::setNextServer() const
         qDebug() << Q_FUNC_INFO << ": fui eleito server";
         Rede::RedeConfig::getInstance().estado_atual = Rede::SERVER;
     }
+    else
+    {
+        qDebug() << "O server agora eh o host " << proximo_server->getHost()
+                 << " com o id: " << proximo_server->getId();
+    }
 
     Rede::RedeConfig::getInstance().server_host = proximo_server;
 }
