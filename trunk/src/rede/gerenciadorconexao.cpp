@@ -153,4 +153,6 @@ Rede::GerenciadorConexao::setNextServer() const
     }
 
     Rede::RedeConfig::getInstance().server_host = proximo_server;
+
+    this->debug();
 }
