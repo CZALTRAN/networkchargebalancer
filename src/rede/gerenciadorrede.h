@@ -36,6 +36,9 @@ public:
     virtual
     ~GerenciadorRede();
 
+    QStringList
+    pingPeer( QString _host );
+
 private:
 
     void

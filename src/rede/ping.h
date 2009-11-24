@@ -2,11 +2,35 @@
 #define PING_H
 
 #include <QProcess>
+#include <QStringList>
+#include <QString>
 
-class Ping : public QProcess
-{
-public:
-    Ping();
-};
+namespace Rede{
 
+    class Ping : public QObject
+    {
+    Q_OBJECT
+
+        QStringList
+        retorno;
+
+        QProcess*
+        ping;
+
+    public:
+
+        Ping( QString _host, QString _interface );
+
+        ~Ping();
+
+        QStringList
+        getRetorno();
+
+    private slots:
+
+        void
+        slotPingStdOutAndErr();
+    };
+
+}
 #endif // PING_H
