@@ -77,7 +77,6 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 
     this->peers.remove(_peer->getId());
 
-    delete _peer;
 }
 
 void
