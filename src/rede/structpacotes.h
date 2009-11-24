@@ -48,7 +48,7 @@ namespace Rede{
     {
         QString
         host;
-    };
+    } PacoteMeuId;
 }
 
 #endif // STRUCTPACOTES_H

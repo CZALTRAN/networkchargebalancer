@@ -114,12 +114,10 @@ Rede::Peer::conectado()
     switch ( Rede::RedeConfig::getInstance().estado_atual )
     {
     case Rede::CONECTANDO:
-        qDebug() << Q_FUNC_INFO << " : " << "to conectando";
+
         break;
 
     case Rede::CONECTADO:
-        qDebug() << Q_FUNC_INFO << " : " << "to conectado";
-
         if ( Rede::RedeConfig::getInstance().meu_id != 0 )
         {
             QString

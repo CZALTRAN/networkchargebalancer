@@ -48,10 +48,10 @@ private:
     recebeInit( Rede::PacoteBase* const _pacote );
 
     void
-    recebeNovoPeer( Rede::PacoteBase* const _pacote );
+    recebePacoteNovoPeer( Rede::PacoteBase* const _pacote );
 
     void
-    addConexaoPeerVeterano( const int& _socket_descriptor );
+    recebeConexaoPeerVeterano( const int& _socket_descriptor );
 
 protected slots:
 

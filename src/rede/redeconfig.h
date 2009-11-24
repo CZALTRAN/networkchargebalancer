@@ -20,7 +20,7 @@ namespace Rede
     {
     public:
 
-        unsigned int
+        int
         meu_id;
 
         Rede::PEER_ESTADO
