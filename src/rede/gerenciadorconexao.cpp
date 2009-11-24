@@ -81,6 +81,7 @@ void
 Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
 {
     this->peers.insert(_id, _peer);
+    ++ Rede::RedeConfig::getInstance().qtdePeers;
 
     QObject::connect( _peer, SIGNAL(perdiConexao(Rede::Peer*const)),
                       this, SLOT(peerCaiu(Rede::Peer*const)));
@@ -101,7 +102,6 @@ Rede::GerenciadorConexao::getNextId() const
         {
             max_id = tmp_peer->getId();
         }
-
     }
 
     return max_id + 1;
@@ -119,6 +119,7 @@ Rede::GerenciadorConexao::setNextServer() const
 
     foreach( tmp_server, this->peers)
     {
+        qDebug() << Q_FUNC_INFO << ": testando ids cadastrados " << tmp_server->getId();
         if ( tmp_server->getId() < proximo_server->getId() &&
              tmp_server != Rede::RedeConfig::getInstance().server_host )
         {
