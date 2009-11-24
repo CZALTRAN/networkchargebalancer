@@ -68,16 +68,16 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
     {
         qDebug() << Q_FUNC_INFO << "Fudeu. Caiu o server. Vou notificar o GR";
 
+        this->setNextServer();
         emit this->peerCaiu(true);
     }
     else
     {
         qDebug() << Q_FUNC_INFO << "O idiota " << _peer->getHost() << " caiu.";
-
         emit this->peerCaiu(false);
     }
+
     this->peers.remove(_peer->getId());
-    this->setNextServer();
 }
 
 void
