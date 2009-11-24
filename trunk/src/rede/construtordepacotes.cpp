@@ -9,13 +9,13 @@ Rede::ConstrutorDePacotes::ConstrutorDePacotes()
 }
 
 QString
-Rede::ConstrutorDePacotes::montaInit( const int _id, const int _next_id )
+Rede::ConstrutorDePacotes::montaInit( const int _id, const int _qtde_peers )
 {
     QString pacote;
 
     pacote = "INIT" + SEPARADOR_DE_CAMPO;
     pacote += QString::number(_id) + SEPARADOR_DE_CAMPO;
-    pacote += QString::number(_next_id) + SEPARADOR_DE_CAMPO;
+    pacote += QString::number(_qtde_peers) + SEPARADOR_DE_CAMPO;
 
     return pacote;
 }

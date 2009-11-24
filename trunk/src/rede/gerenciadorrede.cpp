@@ -93,11 +93,10 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
     break;
     case Rede::SERVER:
         //sou o servidor e preciso indicar ao novo socket sobre todas as conexões.
-
         Rede::Peer*
         novo_peer = this->gerenciador_conexoes->novaConexao( _socket_descriptor );
 
-        novo_peer->sendInit( this->gerenciador_conexoes->getNextId() );
+        novo_peer->sendInit( this->gerenciador_conexoes->getTotalConn() );
 
         emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
 
