@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QStringList>
+
 #include "construtordepacotes.h"
 
 Rede::ParserDePacotes::ParserDePacotes()
@@ -58,7 +59,7 @@ Rede::ParserDePacotes::parseiaInit( const QStringList& _lista_parametros ) const
     pacote->nome = Rede::INIT;
 
     this->setaInteiroDePacote( _lista_parametros, 1, pacote->id );
-    this->setaInteiroDePacote( _lista_parametros, 2, pacote->id );
+    this->setaInteiroDePacote( _lista_parametros, 2, pacote->total_peers );
 
     return pacote;
 }
