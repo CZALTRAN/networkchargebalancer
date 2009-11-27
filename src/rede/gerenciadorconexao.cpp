@@ -42,7 +42,17 @@ Rede::GerenciadorConexao::addConexao( Rede::Peer* _novo_peer )
 Rede::Peer*
 Rede::GerenciadorConexao::getPeerById( const int& _id) const
 {
-    return this->peers[_id];
+    for ( QList<Rede::Peer*>::const_iterator it = this->peers.begin();
+          it != this->peers.end();
+          it++)
+    {
+        if ( (*it)->getId() == _id )
+        {
+            return (*it);
+        }
+    }
+
+    return NULL;
 }
 
 int
