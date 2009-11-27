@@ -1,31 +1,34 @@
 QT += network
 QT -= gui
-TARGET = rede
+
 TEMPLATE = app
+TARGET = rede
 DEFINES += REDE_LIBRARY
 DESTDIR = build
 MOC_DIR = build
 OBJECTS_DIR = build
-SOURCES += gerenciadorrede.cpp \
-    lib/conexao.cpp \
-    lib/ouvinte.cpp \
-    gerenciadorconexao.cpp \
-    peer.cpp \
-    redeconfig.cpp \
-    main.cpp \
-    construtordepacotes.cpp \
-    parserdepacotes.cpp \
-    lib/getifaddrfromadapter.cpp \
-    ping.cpp
-HEADERS += gerenciadorrede.h \
-    rede_global.h \
-    lib/conexao.h \
-    lib/ouvinte.h \
-    gerenciadorconexao.h \
-    peer.h \
-    redeconfig.h \
-    construtordepacotes.h \
-    parserdepacotes.h \
-    structpacotes.h \
-    lib/getifaddrfromadapter.h \
-    ping.h
+
+HEADERS += construtordepacotes.h \
+           gerenciadorconexao.h \
+           gerenciadorrede.h \
+           parserdepacotes.h \
+           peer.h \
+           ping.h \
+           rede_global.h \
+           redeconfig.h \
+           structpacotes.h \
+           lib/conexao.h \
+           lib/getifaddrfromadapter.h \
+           lib/ouvinte.h
+
+SOURCES += construtordepacotes.cpp \
+           gerenciadorconexao.cpp \
+           gerenciadorrede.cpp \
+           main.cpp \
+           parserdepacotes.cpp \
+           peer.cpp \
+           ping.cpp \
+           redeconfig.cpp \
+           lib/conexao.cpp \
+           lib/getifaddrfromadapter.cpp \
+           lib/ouvinte.cpp
