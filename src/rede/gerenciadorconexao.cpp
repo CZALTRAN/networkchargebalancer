@@ -30,16 +30,13 @@ Rede::GerenciadorConexao::novaConexao( int _socket_descriptor)
 void
 Rede::GerenciadorConexao::addConexao( Rede::Peer* _novo_peer )
 {
-    int
-    id = _novo_peer->getId();
-
     if ( this->peers.size() == Rede::RedeConfig::getInstance().qtdePeers &&
          Rede::RedeConfig::getInstance().estado_atual != Rede::SERVER)
     {
         Rede::RedeConfig::getInstance().estado_atual = Rede::CONECTADO;
     }
 
-    this->indexaPeer( id, _novo_peer );
+    this->indexaPeer( _novo_peer->getId(), _novo_peer );
 }
 
 Rede::Peer*

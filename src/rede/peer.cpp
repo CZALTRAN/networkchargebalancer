@@ -137,8 +137,6 @@ Rede::Peer::erro( QAbstractSocket::SocketError _erro )
 {
     Q_UNUSED(_erro)
     emit this->perdiConexao(this);
-
-    delete this;
 }
 
 void
@@ -154,6 +152,7 @@ void
 Rede::Peer::setId( const int _id )
 {
     this->id = _id;
+
 }
 
 void
