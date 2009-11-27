@@ -74,22 +74,16 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 
     if ( removed == 0)
     {
-        for ( QMap<int, Rede::Peer*>::iterator it = this->peers.begin();
-              it != this->peers.end();
-              it++)
+        QMap<int, Rede::Peer*>::iterator it = this->peers.find(_peer->getId());
+
+        this->peers.erase(it);
+
+        if ( this->peers.find(_peer->getId()) != this->peers.end())
         {
-            if ( it.value() == _peer )
-            {
-                it = this->peers.erase(it);
-                if ( it.value() == _peer )
-                {
-                    qDebug() << Q_FUNC_INFO << " removi " << removed << "entradas."
-                             << " Tentando remover a entrada numero: " << _peer->getId();
+            qDebug() << Q_FUNC_INFO << " removi " << removed << "entradas."
+                     << " Tentando remover a entrada numero: " << _peer->getId();
 
-                    exit (1);
-                }
-
-            }
+            exit (1);
         }
     }
 }
