@@ -1,7 +1,7 @@
 #ifndef GERENCIADORCONEXAO_H
 #define GERENCIADORCONEXAO_H
 
-#include <QMap>
+#include <QList>
 #include <QObject>
 
 #include "lib/conexao.h"
@@ -15,7 +15,7 @@ namespace Rede
     {
     Q_OBJECT
 
-        QMap<int, Rede::Peer*>
+        QList<Rede::Peer*>
         peers;
 
     public:
