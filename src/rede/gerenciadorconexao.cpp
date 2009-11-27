@@ -18,7 +18,7 @@ Rede::Peer*
 Rede::GerenciadorConexao::novaConexao( int _socket_descriptor)
 {
     Rede::Peer*
-    novo_peer = new Rede::Peer( _socket_descriptor );
+    novo_peer = new Rede::Peer( _socket_descriptor, this );
 
     novo_peer->setId( this->getNextId() );
 

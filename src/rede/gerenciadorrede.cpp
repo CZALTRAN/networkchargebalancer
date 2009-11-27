@@ -50,7 +50,7 @@ GerenciadorRede::startComoServer()
     Rede::RedeConfig::getInstance().estado_atual = Rede::SERVER;
 
     Rede::Peer*
-    eu_mesmo = new Rede::Peer();
+    eu_mesmo = new Rede::Peer( this->gerenciador_conexoes );
 
     eu_mesmo->setId( Rede::RedeConfig::getInstance().meu_id );
     eu_mesmo->setHost( Rede::RedeConfig::getInstance().host );
@@ -167,7 +167,7 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
                 Rede::ParserDePacotes::getInstance().parseiaPacote( _message ));
 
     Rede::Peer*
-    server = new Rede::Peer();
+    server = new Rede::Peer( this->gerenciador_conexoes );
 
     server->setHost( parseado->host );
     server->setId( parseado->id );
@@ -205,7 +205,7 @@ GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
     Rede::RedeConfig::getInstance().qtdePeers = pacote->total_peers;
 
     Rede::Peer*
-    eu_mesmo = new Rede::Peer();
+    eu_mesmo = new Rede::Peer( this->gerenciador_conexoes );
 
     eu_mesmo->setHost( getIfaddrFromAdapter( this->interface ) );
     eu_mesmo->setId( pacote->id );
@@ -221,7 +221,7 @@ GerenciadorRede::recebePacoteNovoPeer( Rede::PacoteBase* const _pacote )
     pacote = static_cast<Rede::PacoteNovoPeer*>(_pacote);
 
     Rede::Peer*
-    novo_peer = new Rede::Peer();
+    novo_peer = new Rede::Peer( this->gerenciador_conexoes );
 
     novo_peer->setHost(pacote->host);
     novo_peer->setId(pacote->id);
@@ -239,7 +239,7 @@ void
 GerenciadorRede::recebeConexaoPeerVeterano( const int& _socket_descriptor )
 {
     Rede::Peer*
-    novo_peer = new Rede::Peer(_socket_descriptor);
+    novo_peer = new Rede::Peer(_socket_descriptor, this->gerenciador_conexoes);
 
     QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
                      novo_peer, SLOT(enviaNovoPeer(const QString&, const int&)));

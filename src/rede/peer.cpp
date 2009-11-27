@@ -12,7 +12,8 @@
 #include "parserdepacotes.h"
 #include "redeconfig.h"
 
-Rede::Peer::Peer( const int& _socket_descriptor )
+Rede::Peer::Peer( const int& _socket_descriptor, QObject* _parent )
+    : QObject(_parent)
 {
     this->constroiSocket();
     this->conexao->setSocketDescriptor( _socket_descriptor );
@@ -27,7 +28,8 @@ Rede::Peer::Peer( const int& _socket_descriptor )
     }
 }
 
-Rede::Peer::Peer()
+Rede::Peer::Peer( QObject* _parent )
+    : QObject(_parent)
 {
     this->constroiSocket();
 }
@@ -135,6 +137,8 @@ Rede::Peer::erro( QAbstractSocket::SocketError _erro )
 {
     Q_UNUSED(_erro)
     emit this->perdiConexao(this);
+
+    delete this;
 }
 
 void

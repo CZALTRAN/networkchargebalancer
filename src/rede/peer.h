@@ -22,9 +22,9 @@ namespace Rede
         id;
 
     public:
-        Peer( const int& _socket_descriptor );
+        Peer( const int& _socket_descriptor, QObject* _parent = 0 );
 
-        Peer();
+        Peer(QObject* _parent = 0);
 
         virtual
         ~Peer();
