@@ -177,6 +177,7 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
     this->ouvinte->startListen();
 
     this->gerenciador_conexoes->addConexao( server );
+
     Rede::RedeConfig::getInstance().server_host = server;
 
     QObject::connect( server, SIGNAL(incommingMessage(int,QString)),
