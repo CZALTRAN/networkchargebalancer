@@ -152,7 +152,6 @@ void
 Rede::Peer::setId( const int _id )
 {
     this->id = _id;
-
 }
 
 void

@@ -66,29 +66,22 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 
     -- Rede::RedeConfig::getInstance().qtdePeers;
 
-    int
-    removed = this->peers.remove(_peer->getId());
-
-    if ( removed == 0)
+    for( QList<Rede::Peer*>::iterator it = this->peers.begin();
+         it != this->peers.end();
+         it++)
     {
-        QMap<int, Rede::Peer*>::iterator it = this->peers.find(_peer->getId());
-
-        this->peers.erase(it);
-
-        if ( this->peers.find(_peer->getId()) != this->peers.end())
+        if ( *it == _peer )
         {
-            qDebug() << Q_FUNC_INFO << " removi " << removed << "entradas."
-                     << " Tentando remover a entrada numero: " << _peer->getId();
-
-            exit (1);
+            this->peers.erase(it);
         }
     }
+
 }
 
 void
 Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
 {
-    this->peers.insert(_id, _peer);
+    this->peers.push_back(_peer);
     ++ Rede::RedeConfig::getInstance().qtdePeers;
 
     QObject::connect( _peer, SIGNAL(perdiConexao(Rede::Peer*const)),
