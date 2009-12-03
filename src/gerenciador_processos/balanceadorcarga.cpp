@@ -22,3 +22,11 @@ GP::BalanceadorCarga::peerNovo( const int& )
 {
 
 }
+
+void
+GP::BalanceadorCarga::incommingMessage( const int& _id, const GP::PacoteBase& _pacote )
+{
+
+}
+
+
