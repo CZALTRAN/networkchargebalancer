@@ -12,3 +12,9 @@ GP::Launcher::~Launcher()
 
 
 }
+
+void
+GP::Launcher::processoStart( const QString& )
+{
+
+}
