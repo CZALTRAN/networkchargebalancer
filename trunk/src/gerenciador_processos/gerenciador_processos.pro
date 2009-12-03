@@ -6,15 +6,22 @@ TARGET = gp
 CONFIG += console
 CONFIG -= app_bundle
 TEMPLATE = app
-
 DESTDIR = build
 MOC_DIR = build
 OBJECTS_DIR = build
-
 SOURCES += main.cpp \
     gerenciadorprocessos.cpp \
     launcher.cpp \
-    balanceadorcarga.cpp
+    balanceadorcarga.cpp \
+    processosconfig.cpp \
+    processo.cpp \
+    parserdepacotes.cpp \
+    construtordepacotes.cpp
 HEADERS += gerenciadorprocessos.h \
     launcher.h \
-    balanceadorcarga.h
+    balanceadorcarga.h \
+    processosconfig.h \
+    processo.h \
+    structpacotes.h \
+    parserdepacotes.h \
+    construtordepacotes.h

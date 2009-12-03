@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QQueue>
 
+#include "structpacotes.h"
+
 namespace GP
 {
     class BalanceadorCarga : public QObject
@@ -19,6 +21,14 @@ namespace GP
 
         void
         peerNovo( const int& );
+
+    public slots:
+        void
+        incommingMessage( const int& _id, const GP::PacoteBase& _pacote );
+
+    signals:
+        void
+        sendMessage( const int& _id_destino, const QString& _message );
 
     private:
 
