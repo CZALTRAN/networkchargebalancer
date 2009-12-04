@@ -7,8 +7,10 @@
 #include "structpacotes.h"
 
 
-GerenciadorRede::GerenciadorRede( QString _interface,
-                                  Rede::Peer* _primeiro_peer )
+GerenciadorRede::GerenciadorRede( const QString& _interface,
+                                  Rede::Peer* _primeiro_peer,
+                                  QObject* _parent )
+            : QObject(_parent)
 {
     this->interface = _interface;
 
@@ -17,7 +19,7 @@ GerenciadorRede::GerenciadorRede( QString _interface,
     this->ouvinte = new Rede::Ouvinte(this);
     this->ouvinte_procura = new Rede::Ouvinte(this);
 
-    QObject::connect( this->gerenciador_conexoes, SIGNAL(slotPeerCaiu( const int& )),
+    QObject::connect( this->gerenciador_conexoes, SIGNAL(peerCaiu( const int& )),
                       this, SLOT(slotPeerCaiu( const int& )));
 
     QObject::connect(this->ouvinte, SIGNAL(novaConn(int)),
@@ -35,6 +37,18 @@ GerenciadorRede::GerenciadorRede( QString _interface,
         this->buscaPorServer(_primeiro_peer);
     }
 
+}
+
+GerenciadorRede::GerenciadorRede( const QString& _interface,
+                                  const QString& _host,
+                                  QObject* _parent)
+{
+    Rede::Peer*
+    primeiro_peer = new Rede::Peer();;
+
+    primeiro_peer->setHost( _host );
+
+    GerenciadorRede::GerenciadorRede(_interface,primeiro_peer, _parent);
 }
 
 GerenciadorRede::~GerenciadorRede()
@@ -57,7 +71,9 @@ GerenciadorRede::startComoServer()
 
     this->gerenciador_conexoes->addConexao( eu_mesmo );
 
-    emit this->novoPeer();
+    emit this->novoPeer(
+            Rede::RedeConfig::getInstance().meu_id
+            );
     emit this->meuId(
             Rede::RedeConfig::getInstance().meu_id
             );
@@ -224,7 +240,7 @@ GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
 }
 
 void
-GerenciadorRede::recebePacoteNovo( Rede::PacoteBase* const _pacote )
+GerenciadorRede::recebePacoteNovoPeer( Rede::PacoteBase* const _pacote )
 {
     Rede::PacoteNovoPeer*
     pacote = static_cast<Rede::PacoteNovoPeer*>(_pacote);

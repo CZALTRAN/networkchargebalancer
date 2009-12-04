@@ -31,7 +31,13 @@ public:
      *        pelo servidor. Caso este parametro seja nulo, ele não tentará se
      *        conectar em ninguem iniciando uma nova rede.
      */
-    GerenciadorRede( QString _interface, Rede::Peer* _primeiro_peer = NULL );
+    GerenciadorRede( const QString& _interface,
+                     Rede::Peer* _primeiro_peer = NULL,
+                     QObject* _parent = NULL);
+
+    GerenciadorRede( const QString& _interface,
+                     const QString& _host,
+                     QObject* _parent = NULL );
 
     virtual
     ~GerenciadorRede();
