@@ -10,6 +10,9 @@ GerenciadorProcessos::GerenciadorProcessos(QObject * _parent )
 
     QObject::connect(this, SIGNAL(messageLauncher(const int&, const GP::PacoteBase&)),
                      &this->launcher, SLOT(incommingMessage(const int&, const GP::PacoteBase&)));
+
+    QObject::connect(this, SIGNAL(processoLaunch(QString,QStringList)),
+                     &this->launcher, SLOT(processoStart(QString,QStringList)));
     
 }
 
@@ -60,8 +63,8 @@ GerenciadorProcessos::killProcess( const int& _id_dono, const Q_PID& _processo)
 }
 
 void
-GerenciadorProcessos::startProcess( const QString& _processo, const QStringList& _parametros )
+GerenciadorProcessos::processoStart( const QString& _processo, const QStringList& _parametros )
 {
-
+    emit this->processoLaunch( _processo, _parametros );
 }
 

@@ -26,7 +26,7 @@ Q_OBJECT
     GP::Launcher
     launcher;
 
-    QHash<const Q_PID&, const GP::Processo*>
+    QHash<const Q_PID, const GP::Processo*>
     processos;
 
 public:
@@ -48,7 +48,7 @@ public:
 
 public slots:
     void
-    startProcess( const QString& _processo, const QStringList& _parametros );
+    processoStart( const QString& _processo, const QStringList& _parametros );
 
     void
     killProcess( const int& _id_dono, const Q_PID& _processo );
@@ -66,6 +66,9 @@ signals:
 
     void
     terminoDeProcesso( const motivoFimProcesso& _motivo );
+
+    void
+    processoLaunch( const QString& _processo, const QStringList& _parametros );
 };
 
 #endif // GERENCIADORPROCESSOS_H
