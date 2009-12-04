@@ -18,8 +18,12 @@ SOURCES += main.cpp \
     rede/lib/ouvinte.cpp \
     rede/lib/getifaddrfromadapter.cpp \
     rede/lib/conexao.cpp \
+    gerenciador_processos/processosconfig.cpp \
+    gerenciador_processos/processo.cpp \
+    gerenciador_processos/parserdepacotes.cpp \
     gerenciador_processos/launcher.cpp \
     gerenciador_processos/gerenciadorprocessos.cpp \
+    gerenciador_processos/construtordepacotes.cpp \
     gerenciador_processos/balanceadorcarga.cpp
 HEADERS += xbogainittializer.h \
     rede/structpacotes.h \
@@ -34,6 +38,11 @@ HEADERS += xbogainittializer.h \
     rede/lib/ouvinte.h \
     rede/lib/getifaddrfromadapter.h \
     rede/lib/conexao.h \
+    gerenciador_processos/structpacotes.h \
+    gerenciador_processos/processosconfig.h \
+    gerenciador_processos/processo.h \
+    gerenciador_processos/parserdepacotes.h \
     gerenciador_processos/launcher.h \
     gerenciador_processos/gerenciadorprocessos.h \
+    gerenciador_processos/construtordepacotes.h \
     gerenciador_processos/balanceadorcarga.h
