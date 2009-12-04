@@ -10,7 +10,8 @@ namespace Rede{
         INIT,
         NOVO_PEER,
         INFORMA_SERVER,
-        MEU_ID
+        MEU_ID,
+        GP
     };
 
     typedef struct PacoteBase
@@ -20,6 +21,7 @@ namespace Rede{
 
         int
         id;
+
     } PacoteBase;
 
     typedef struct PacoteInit : public PacoteBase
@@ -48,7 +50,15 @@ namespace Rede{
     {
         QString
         host;
+
     } PacoteMeuId;
+
+    typedef struct PacoteGP : public PacoteBase
+    {
+        QString
+        mensagem;
+
+    } PacoteGP;
 }
 
 #endif // STRUCTPACOTES_H

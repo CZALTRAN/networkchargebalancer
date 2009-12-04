@@ -95,6 +95,17 @@ Rede::Peer::sendInit( const int _total_conn )
 }
 
 void
+Rede::Peer::sendGP( const int& _id, const QString& _message )
+{
+    QString pacote = Rede::ConstrutorDePacotes::getInstance().montaGP(
+            Rede::RedeConfig::getInstance().meu_id,
+            _message
+            );
+
+    this->conexao->enviaDado(pacote);
+}
+
+void
 Rede::Peer::incommingMessage(const QString& _message )
 {
     Rede::PacoteBase*

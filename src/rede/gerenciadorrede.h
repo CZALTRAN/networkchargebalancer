@@ -56,6 +56,11 @@ private:
     void
     recebeConexaoPeerVeterano( const int& _socket_descriptor );
 
+public slots:
+
+    void
+    enviaPacoteGP( const int& _destinatario_id, const QString& _message );
+
 protected slots:
 
     void
@@ -71,13 +76,25 @@ protected slots:
     serverEncontrado( const int& _id, const QString& _message );
 
     void
-    peerCaiu( bool _isServer );
+    slotPeerCaiu( const int& _id );
 
 signals:
 
     void
     novoPeer( const QString& _host, const int& id );
 
+    //sinais para outros modulos
+    void
+    novoPeer( const int& _id );
+
+    void
+    peerCaiu( const int& _id );
+
+    void
+    meuId( const int& _id );
+
+    void
+    recebePacoteGP( const int& _remetente, const QString& );
 };
 
 #endif // REDE_H

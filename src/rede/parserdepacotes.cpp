@@ -45,6 +45,10 @@ Rede::ParserDePacotes::parseiaPacote( const QString _pacote ) const
     {
         return this->parseiaMeuId( lista_de_campos );
     }
+    else if ( lista_de_campos[0] == "GP" )
+    {
+        return this->parseiaGP( lista_de_campos );
+    }
 
 
     return 0;
@@ -98,6 +102,19 @@ Rede::ParserDePacotes::parseiaMeuId( const QStringList& _lista_parametros ) cons
 
     pacote->nome = Rede::MEU_ID;
     this->setaInteiroDePacote(_lista_parametros,1,pacote->id);
+
+    return pacote;
+}
+
+Rede::PacoteGP*
+Rede::ParserDePacotes::parseiaGP( const QStringList& _lista_parametros ) const
+{
+    Rede::PacoteGP*
+    pacote = new Rede::PacoteGP;
+
+    this->setaInteiroDePacote(_lista_parametros,1,pacote->id);
+    pacote->mensagem = _lista_parametros.value(2);
+    pacote->nome = Rede::GP;
 
     return pacote;
 }

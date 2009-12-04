@@ -64,14 +64,11 @@ Rede::GerenciadorConexao::getTotalConn() const
 void
 Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 {
+    emit this->peerCaiu(_peer->getId() );
+
     if( _peer == Rede::RedeConfig::getInstance().server_host )
     {
         this->setNextServer();
-        emit this->peerCaiu(true);
-    }
-    else
-    {
-        emit this->peerCaiu(false);
     }
 
     -- Rede::RedeConfig::getInstance().qtdePeers;

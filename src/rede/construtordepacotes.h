@@ -31,6 +31,9 @@ namespace Rede
         QString
         montaMeuId();
 
+        QString
+        montaGP( const int& _id, const QString& _mensagem );
+
     private:
         ConstrutorDePacotes();
 
