@@ -26,3 +26,9 @@ GP::Processo::getIdDono()
 {
     return this->id_dono;
 }
+
+QString
+GP::Processo::stdOutAndErr()
+{
+
+}

@@ -1,3 +1,11 @@
+//////////////////////
+/********************/
+/* Esta classe não  */
+/* será mais usada! */
+/* (por enquanto)   */
+/********************/
+//////////////////////
+
 #ifndef PROCESSOSCONFIG_H
 #define PROCESSOSCONFIG_H
 
