@@ -26,6 +26,8 @@ namespace Rede
 
         Peer(QObject* _parent = 0);
 
+        Peer( const QString& host );
+
         virtual
         ~Peer();
 
