@@ -1,4 +1,4 @@
-#include "peer.h"
+#include "gppeer.h"
 
 GP::Peer::Peer()
 {
