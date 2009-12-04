@@ -8,7 +8,7 @@
 
 #include "structpacotes.h"
 #include "peer.h"
-#include "peerrelacionado.h"
+#include "processo.h"
 
 namespace GP
 {
@@ -38,7 +38,7 @@ namespace GP
 
     public slots:
         void
-        incommingMessage( const int& _id, const GP::PacoteBase& _pacote );
+        incommingMessage( const int& _id, const PacoteBase& _pacote );
 
         void
         enviaPeerHost(int* _id);
