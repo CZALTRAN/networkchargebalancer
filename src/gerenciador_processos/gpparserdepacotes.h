@@ -1,5 +1,5 @@
-#ifndef PARSERDEPACOTES_H
-#define PARSERDEPACOTES_H
+#ifndef GPPARSERDEPACOTES_H
+#define GPPARSERDEPACOTES_H
 
 #include <QStringList>
 

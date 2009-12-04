@@ -1,5 +1,5 @@
-#ifndef CONSTRUTORDEPACOTES_H
-#define CONSTRUTORDEPACOTES_H
+#ifndef GPCONSTRUTORDEPACOTES_H
+#define GPCONSTRUTORDEPACOTES_H
 
 #include <QString>
 #include <QStringList>

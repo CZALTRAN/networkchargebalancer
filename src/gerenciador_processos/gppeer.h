@@ -1,5 +1,5 @@
-#ifndef PEER_H
-#define PEER_H
+#ifndef GPPEER_H
+#define GPPEER_H
 
 namespace GP
 {
