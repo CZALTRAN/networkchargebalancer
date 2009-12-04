@@ -47,11 +47,17 @@ public:
     incommingMessage( const int& _id, const QString& _mensagem );
 
 public slots:
+
+    //slots para comunicação externa
     void
-    processoStart( const QString& _processo, const QStringList& _parametros );
+    processoStart( const QString _processo, const QStringList _parametros );
 
     void
     killProcess( const int& _id_dono, const Q_PID& _processo );
+
+    //slots para comunicação interna
+    void
+    novoProcesso( const int& _id_host, const GP::Processo& _processo );
 
 signals:
 
@@ -59,16 +65,7 @@ signals:
     sendMessage( const int& _id_destino, const QString& _mensagem);
 
     void
-    messageBalancer( const int& _id, const GP::PacoteBase& _mensagem );
-
-    void
-    messageLauncher( const int& _id, const GP::PacoteBase& _mensagem );
-
-    void
     terminoDeProcesso( const motivoFimProcesso& _motivo );
-
-    void
-    processoLaunch( const QString& _processo, const QStringList& _parametros );
 };
 
 #endif // GERENCIADORPROCESSOS_H
