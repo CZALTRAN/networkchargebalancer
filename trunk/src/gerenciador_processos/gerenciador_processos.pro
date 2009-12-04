@@ -13,21 +13,21 @@ SOURCES += main.cpp \
     gerenciadorprocessos.cpp \
     launcher.cpp \
     balanceadorcarga.cpp \
-    processosconfig.cpp \
+    gpconfig.cpp \
     processo.cpp \
     parserdepacotes.cpp \
     construtordepacotes.cpp \
-    peer.cpp \
+    gppeer.cpp \
     processolocalouimportado.cpp \
     processoexportado.cpp
 HEADERS += gerenciadorprocessos.h \
     launcher.h \
     balanceadorcarga.h \
-    processosconfig.h \
+    gpconfig.h \
     processo.h \
     structpacotes.h \
     parserdepacotes.h \
     construtordepacotes.h \
-    peer.h \
+    gppeer.h \
     processolocalouimportado.h \
     processoexportado.h

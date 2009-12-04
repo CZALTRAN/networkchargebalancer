@@ -7,7 +7,7 @@
 #include <QHashIterator>
 
 #include "structpacotes.h"
-#include "peer.h"
+#include "gppeer.h"
 #include "processo.h"
 
 namespace GP
@@ -16,13 +16,13 @@ namespace GP
     {
     Q_OBJECT
 
-    QHash<const int&, const Peer*>
+    QHash<const int, const Peer*>
     peers;
 
     int
     qtde_peers;
 
-    QHashIterator<const int&, const GP::Peer*>*
+    QHashIterator<const int, const GP::Peer*>*
     peer_round_robin;
 
     public:
