@@ -21,13 +21,13 @@ GP::Peer::setId( const int& _id )
 }
 
 void
-setPossuiRelacao( const int& _possui_relacao)
+GP::Peer::setPossuiRelacao( const int& _possui_relacao)
 {
 
 }
 
 void
-setQtdeProcessos( const int& _qtde_processos)
+GP::Peer::setQtdeProcessos( const int& _qtde_processos)
 {
 
 }
@@ -45,7 +45,7 @@ GP::Peer::getPossuiRelacao()
 }
 
 int
-getQtdeProcessos()
+GP::Peer::getQtdeProcessos()
 {
 
 }

@@ -1,19 +1,12 @@
 #include "gerenciadorprocessos.h"
 
 #include "gpparserdepacotes.h"
+#include "gpconfig.h"
 
 GerenciadorProcessos::GerenciadorProcessos(QObject * _parent )
     : QObject(_parent)
 {
-    QObject::connect(this, SIGNAL(messageBalancer(const int&, const GP::PacoteBase&)),
-                     &this->balancer, SLOT(incommingMessage(const int&, const GP::PacoteBase&)));
 
-    QObject::connect(this, SIGNAL(messageLauncher(const int&, const GP::PacoteBase&)),
-                     &this->launcher, SLOT(incommingMessage(const int&, const GP::PacoteBase&)));
-
-    QObject::connect(this, SIGNAL(processoLaunch(QString,QStringList)),
-                     &this->launcher, SLOT(processoStart(QString,QStringList)));
-    
 }
 
 GerenciadorProcessos::~GerenciadorProcessos()
@@ -43,11 +36,11 @@ GerenciadorProcessos::incommingMessage( const int& _id, const QString& _mensagem
     switch( _pacote->nome )
     {
         case GP::BALANCER:
-            emit this->messageBalancer( _id, *_pacote );
+            this->balancer.incommingMessage( _id, *_pacote );
         break;
 
         case GP::LAUNCHER:
-            emit this->messageLauncher( _id, *_pacote );
+            this->launcher.incommingMessage( _id, *_pacote );
         break;
 
         case GP::GP:
@@ -57,14 +50,24 @@ GerenciadorProcessos::incommingMessage( const int& _id, const QString& _mensagem
 }
 
 void
+GerenciadorProcessos::processoStart( const QString _processo, const QStringList _parametros )
+{
+    int
+    id_peer_host = this->balancer.getPeerHost();
+
+    this->launcher.processoStart( id_peer_host, GP::GPConfig::getInstance().getMeuId(), _processo, _parametros );
+}
+
+void
 GerenciadorProcessos::killProcess( const int& _id_dono, const Q_PID& _processo)
 {
 
 }
 
 void
-GerenciadorProcessos::processoStart( const QString& _processo, const QStringList& _parametros )
+GerenciadorProcessos::novoProcesso( const int& _id_host, const GP::Processo& _processo )
 {
-    emit this->processoLaunch( _processo, _parametros );
+
 }
+
 
