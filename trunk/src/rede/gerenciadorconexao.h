@@ -57,7 +57,7 @@ namespace Rede
     signals:
 
         void
-        peerCaiu( const bool _isServer );
+        peerCaiu( const int& _id );
 
     private:
 

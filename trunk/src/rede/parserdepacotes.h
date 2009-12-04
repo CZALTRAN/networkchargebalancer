@@ -33,6 +33,9 @@ namespace Rede
         Rede::PacoteMeuId*
         parseiaMeuId( const QStringList& _lista_parametros ) const;
 
+        Rede::PacoteGP*
+        parseiaGP( const QStringList& _lista_parametros ) const;
+
         void
         setaInteiroDePacote( const QStringList& _pacote,
                              int _posicao,

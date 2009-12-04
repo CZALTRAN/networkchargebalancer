@@ -37,8 +37,6 @@ Rede::ConstrutorDePacotes::montaServer()
     QString
     pacote("SERVER" + SEPARADOR_DE_CAMPO);
 
-    qDebug() << Q_FUNC_INFO << Rede::RedeConfig::getInstance().server_host->getHost();
-
     pacote += Rede::RedeConfig::getInstance().server_host->getHost();
     pacote += SEPARADOR_DE_CAMPO;
 
@@ -56,8 +54,17 @@ Rede::ConstrutorDePacotes::montaMeuId()
 
     pacote += QString::number( Rede::RedeConfig::getInstance().meu_id ) + SEPARADOR_DE_CAMPO;
 
-    qDebug() << Q_FUNC_INFO << "montando com id: " << Rede::RedeConfig::getInstance().meu_id
-            << " e host: " << Rede::RedeConfig::getInstance().host ;
+    return pacote;
+}
+
+QString
+Rede::ConstrutorDePacotes::montaGP( const int& _id, const QString& _mensagem )
+{
+    QString
+    pacote( "GP" + SEPARADOR_DE_CAMPO );
+
+    pacote += QString::number(_id) + SEPARADOR_DE_CAMPO;
+    pacote += _mensagem + SEPARADOR_DE_CAMPO;
 
     return pacote;
 }

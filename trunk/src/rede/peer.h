@@ -48,6 +48,9 @@ namespace Rede
         sendInit( const int _total_conn );
 
         void
+        sendGP( const int& _id, const QString& _message );
+
+        void
         setId( const int _id );
 
     public slots:

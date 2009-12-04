@@ -17,8 +17,8 @@ GerenciadorRede::GerenciadorRede( QString _interface,
     this->ouvinte = new Rede::Ouvinte(this);
     this->ouvinte_procura = new Rede::Ouvinte(this);
 
-    QObject::connect( this->gerenciador_conexoes, SIGNAL(peerCaiu(bool)),
-                      this, SLOT(peerCaiu(bool)));
+    QObject::connect( this->gerenciador_conexoes, SIGNAL(slotPeerCaiu( const int& )),
+                      this, SLOT(slotPeerCaiu( const int& )));
 
     QObject::connect(this->ouvinte, SIGNAL(novaConn(int)),
                      this, SLOT(slotNovaConexao(int)));
@@ -56,6 +56,11 @@ GerenciadorRede::startComoServer()
     eu_mesmo->setHost( Rede::RedeConfig::getInstance().host );
 
     this->gerenciador_conexoes->addConexao( eu_mesmo );
+
+    emit this->novoPeer();
+    emit this->meuId(
+            Rede::RedeConfig::getInstance().meu_id
+            );
 
     Rede::RedeConfig::getInstance().server_host = eu_mesmo;
 
@@ -117,9 +122,9 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 }
 
 void
-GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _message )
+GerenciadorRede::slotNovaMensagemFromPeer( const int& _remetente, const QString& _message )
 {
-    Q_UNUSED(_id)
+    Q_UNUSED(_remetente)
 
     Rede::PacoteBase*
     pacote = Rede::ParserDePacotes::getInstance().parseiaPacote(_message);
@@ -135,6 +140,9 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _id, const QString& _messa
         break;
         case Rede::NOVO_PEER:
            this->recebePacoteNovoPeer(pacote);
+        break;
+        case Rede::GP:
+            emit this->recebePacoteGP(_remetente, _message);
         break;
     }
 }
@@ -185,16 +193,9 @@ GerenciadorRede::serverEncontrado( const int& _id, const QString& _message )
 }
 
 void
-GerenciadorRede::peerCaiu(bool _isServer)
+GerenciadorRede::slotPeerCaiu( const int& _id)
 {
-    if( _isServer == true )
-    {
-        qDebug() << Q_FUNC_INFO << "Iniciando a logica para tratar queda do server";
-    }
-    else
-    {
-        qDebug() << Q_FUNC_INFO << "Iniciando a logica para tratar queda de um peer qualquer";
-    }
+    emit this->peerCaiu( _id );
 }
 
 void
@@ -213,10 +214,17 @@ GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
 
     this->gerenciador_conexoes->addConexao( eu_mesmo );
     Rede::RedeConfig::getInstance().meu_id = pacote->id;
+
+    emit( this->novoPeer(
+            Rede::RedeConfig::getInstance().server_host->getId()
+            )
+          );
+
+    emit( this->meuId( pacote->id ) );
 }
 
 void
-GerenciadorRede::recebePacoteNovoPeer( Rede::PacoteBase* const _pacote )
+GerenciadorRede::recebePacoteNovo( Rede::PacoteBase* const _pacote )
 {
     Rede::PacoteNovoPeer*
     pacote = static_cast<Rede::PacoteNovoPeer*>(_pacote);
@@ -234,6 +242,7 @@ GerenciadorRede::recebePacoteNovoPeer( Rede::PacoteBase* const _pacote )
     QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
                      novo_peer, SLOT(enviaNovoPeer(const QString&, const int&)));
 
+    emit( this->novoPeer( novo_peer->getId() ) );
 }
 
 void
@@ -249,6 +258,19 @@ GerenciadorRede::recebeConexaoPeerVeterano( const int& _socket_descriptor )
                      this, SLOT(slotNovaMensagemFromPeer(int,QString)));
 
     this->gerenciador_conexoes->addConexao(novo_peer);
+
+    emit this->novoPeer( novo_peer->getId() );
+
+}
+
+void
+GerenciadorRede::enviaPacoteGP( const int& _destinatario_id, const QString& _message )
+{
+    Rede::Peer*
+    peer_destino = this->gerenciador_conexoes->getPeerById(_destinatario_id);
+
+    peer_destino->sendGP(_destinatario_id, _message);
+
 }
 
 QStringList
