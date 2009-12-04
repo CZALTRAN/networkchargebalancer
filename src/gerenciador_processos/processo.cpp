@@ -1,13 +1,8 @@
 #include "processo.h"
 
-GP::Processo::Processo()
+GP::Processo::Processo(QObject* _parent)
+    : QObject(_parent)
 {
-}
-
-GP::Processo::Processo( const GP::Processo& _processo )
-{
-    this->id_dono = _processo.id_dono;
-    this->pid = _processo.pid;
 }
 
 GP::Processo::~Processo()

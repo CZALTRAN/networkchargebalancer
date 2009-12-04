@@ -1,15 +1,16 @@
 #ifndef PROCESSO_H
 #define PROCESSO_H
 
+#include <QObject>
 #include <QProcess>
 #include <QString>
 
 namespace GP{
 
-    class Processo : public QProcess
+    class Processo : public QObject
     {
     Q_OBJECT
-    
+
     private:
         Q_PID
         pid;
@@ -18,9 +19,7 @@ namespace GP{
         id_dono;
 
     public:
-        Processo();
-
-        Processo( const GP::Processo& _processo );
+        Processo( QObject* _parent=0 );
 
         virtual
         ~Processo();

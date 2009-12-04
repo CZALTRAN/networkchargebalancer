@@ -5,7 +5,7 @@ GP::ConstrutorDePacotes::ConstrutorDePacotes()
 }
 
 QString
-GP::ConstrutorDePacotes::montaStartProcess( const QString& _processo, const QStringList _parametros )
+GP::ConstrutorDePacotes::montaStartProcess( const QString& _id_dono, const QString& _processo, const QStringList _parametros )
 {
 
 }

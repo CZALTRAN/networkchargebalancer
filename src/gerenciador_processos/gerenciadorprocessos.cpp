@@ -33,7 +33,7 @@ GerenciadorProcessos::incommingMessage( const int& _id, const QString& _mensagem
     GP::PacoteBase*
     _pacote = GP::ParserDePacotes::getInstance().parseiaPacote(_mensagem);
 
-    switch( _pacote->nome )
+    switch( _pacote->dono )
     {
         case GP::BALANCER:
             this->balancer.incommingMessage( _id, *_pacote );

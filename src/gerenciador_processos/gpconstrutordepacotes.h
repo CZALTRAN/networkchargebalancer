@@ -11,7 +11,7 @@ namespace GP
     {
     public:
         QString
-        montaStartProcess( const QString& _processo, const QStringList _parametros );
+        montaStartProcess( const QString& _id_dono, const QString& _processo, const QStringList _parametros );
 
         QString
         montaSuccessStartProcess( const QString& _processo, const Q_PID& _pid );

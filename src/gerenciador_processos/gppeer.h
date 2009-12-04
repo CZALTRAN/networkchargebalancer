@@ -16,10 +16,13 @@ namespace GP
         int
         qtde_processos;
 
+        int
+        qtde_processos_permitidos;
+
     public:
         Peer();
 
-        Peer( const int& _id, const bool& _possui_relacao, const int& _qtde_processos );
+        Peer( const int& _id, const bool& _possui_relacao, const int& _qtde_processos, const int& _qtde_processos_permitidos );
 
         virtual
         ~Peer();
@@ -33,6 +36,9 @@ namespace GP
         void
         setQtdeProcessos(const int& _qtde_processos);
 
+        void
+        setQtdeProcessosPermitidos(const int& _qtde_processos);
+
         int
         getId();
 
@@ -41,6 +47,9 @@ namespace GP
 
         int
         getQtdeProcessos();
+
+        int
+        getQtdeProcessosPermitidos();
     };
 }
 
