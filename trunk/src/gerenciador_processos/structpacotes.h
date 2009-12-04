@@ -1,5 +1,5 @@
-#ifndef STRUCTPACOTES_H
-#define STRUCTPACOTES_H
+#ifndef GPSTRUCTPACOTES_H
+#define GPSTRUCTPACOTES_H
 
 #include <QString>
 #include <QStringList>

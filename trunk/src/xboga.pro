@@ -1,5 +1,4 @@
-QT += console \
-    network
+QT += network
 QT -= gui
 TARGET = xboga
 TEMPLATE = app
@@ -18,13 +17,16 @@ SOURCES += main.cpp \
     rede/lib/ouvinte.cpp \
     rede/lib/getifaddrfromadapter.cpp \
     rede/lib/conexao.cpp \
-    gerenciador_processos/processosconfig.cpp \
-    gerenciador_processos/processo.cpp \
-    gerenciador_processos/parserdepacotes.cpp \
     gerenciador_processos/launcher.cpp \
     gerenciador_processos/gerenciadorprocessos.cpp \
-    gerenciador_processos/construtordepacotes.cpp \
-    gerenciador_processos/balanceadorcarga.cpp
+    gerenciador_processos/gppeer.cpp \
+    gerenciador_processos/gpparserdepacotes.cpp \
+    gerenciador_processos/gpconstrutordepacotes.cpp \
+    gerenciador_processos/balanceadorcarga.cpp \
+    gerenciador_processos/processolocalouimportado.cpp \
+    gerenciador_processos/processoexportado.cpp \
+    gerenciador_processos/processo.cpp \
+    gerenciador_processos/gpconfig.cpp
 HEADERS += xbogainittializer.h \
     rede/structpacotes.h \
     rede/redeconfig.h \
@@ -38,11 +40,14 @@ HEADERS += xbogainittializer.h \
     rede/lib/ouvinte.h \
     rede/lib/getifaddrfromadapter.h \
     rede/lib/conexao.h \
-    gerenciador_processos/structpacotes.h \
-    gerenciador_processos/processosconfig.h \
-    gerenciador_processos/processo.h \
-    gerenciador_processos/parserdepacotes.h \
     gerenciador_processos/launcher.h \
     gerenciador_processos/gerenciadorprocessos.h \
-    gerenciador_processos/construtordepacotes.h \
-    gerenciador_processos/balanceadorcarga.h
+    gerenciador_processos/gpparserdepacotes.h \
+    gerenciador_processos/gpconstrutordepacotes.h \
+    gerenciador_processos/balanceadorcarga.h \
+    gerenciador_processos/structpacotes.h \
+    gerenciador_processos/processolocalouimportado.h \
+    gerenciador_processos/processoexportado.h \
+    gerenciador_processos/processo.h \
+    gerenciador_processos/gppeer.h \
+    gerenciador_processos/gpconfig.h

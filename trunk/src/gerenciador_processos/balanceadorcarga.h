@@ -16,7 +16,7 @@ namespace GP
     {
     Q_OBJECT
 
-    QHash<const int, const Peer*>
+    QHash<const int, const GP::Peer*>
     peers;
 
     int
@@ -38,7 +38,7 @@ namespace GP
 
     public slots:
         void
-        incommingMessage( const int& _id, const PacoteBase& _pacote );
+        incommingMessage( const int& _id, const GP::PacoteBase& _pacote );
 
         void
         enviaPeerHost(int* _id);
