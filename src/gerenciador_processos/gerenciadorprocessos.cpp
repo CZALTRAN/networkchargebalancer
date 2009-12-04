@@ -1,6 +1,6 @@
 #include "gerenciadorprocessos.h"
 
-#include "parserdepacotes.h"
+#include "gpparserdepacotes.h"
 
 GerenciadorProcessos::GerenciadorProcessos(QObject * _parent )
     : QObject(_parent)
