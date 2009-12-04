@@ -6,6 +6,7 @@
 #include <QStringList>
 
 #include "structpacotes.h"
+#include "processo.h"
 
 namespace GP
 {
@@ -25,6 +26,12 @@ namespace GP
     signals:
         void
         sendMessage( int _id_destino, QString _message );
+
+        void
+        pegaPeerHost( int* _id );
+
+        void
+        novoProcesso( const int& _id_host, const Processo& _processo );
 
     public slots:
 

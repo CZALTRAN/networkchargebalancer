@@ -3,14 +3,28 @@
 
 #include <QObject>
 #include <QQueue>
+#include <QHash>
+#include <QHashIterator>
 
 #include "structpacotes.h"
+#include "peer.h"
+#include "peerrelacionado.h"
 
 namespace GP
 {
     class BalanceadorCarga : public QObject
     {
     Q_OBJECT
+
+    QHash<const int&, const Peer*>
+    peers;
+
+    int
+    qtde_peers;
+
+    QHashIterator<const int&, const GP::Peer*>*
+    peer_round_robin;
+
     public:
         BalanceadorCarga(QObject *parent = 0);
 
@@ -26,11 +40,19 @@ namespace GP
         void
         incommingMessage( const int& _id, const GP::PacoteBase& _pacote );
 
+        void
+        enviaPeerHost(int* _id);
+
+        void
+        novoProcesso( const int& _id_peer, const Processo& _processo );
+
     signals:
         void
         sendMessage( const int& _id_destino, const QString& _message );
 
     private:
+        int
+        selecionaPeer();
 
     };
 }

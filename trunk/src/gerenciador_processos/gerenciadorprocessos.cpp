@@ -52,3 +52,16 @@ GerenciadorProcessos::incommingMessage( const int& _id, const QString& _mensagem
     }
 
 }
+
+void
+GerenciadorProcessos::killProcess( const int& _id_dono, const Q_PID& _processo)
+{
+
+}
+
+void
+GerenciadorProcessos::startProcess( const QString& _processo, const QStringList& _parametros )
+{
+
+}
+

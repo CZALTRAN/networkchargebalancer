@@ -2,13 +2,15 @@
 #define PROCESSO_H
 
 #include <QProcess>
+#include <QString>
 
 namespace GP{
 
-    class Processo
+    class Processo : public QProcess
     {
+    Q_OBJECT
+    
     private:
-
         Q_PID
         pid;
 
@@ -16,11 +18,11 @@ namespace GP{
         id_dono;
 
     public:
-
         Processo();
 
         Processo( const GP::Processo& _processo );
 
+        virtual
         ~Processo();
 
         Q_PID
@@ -28,6 +30,15 @@ namespace GP{
 
         int
         getIdDono();
+
+    public slots:
+        QString
+        stdOutAndErr();
+
+    signals:
+        void
+        stdIn(const QString& _entrada);
+
     };
 
 }
