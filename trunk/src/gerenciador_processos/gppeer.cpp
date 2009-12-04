@@ -4,7 +4,7 @@ GP::Peer::Peer()
 {
 }
 
-GP::Peer::Peer( const int& _id, const bool& _possui_relacao, const int& _qtde_processos )
+GP::Peer::Peer( const int& _id, const bool& _possui_relacao, const int& _qtde_processos, const int& _qtde_processos_permitidos )
 {
 
 }
@@ -32,6 +32,12 @@ GP::Peer::setQtdeProcessos( const int& _qtde_processos)
 
 }
 
+void
+GP::Peer::setQtdeProcessosPermitidos(const int& _qtde_processos)
+{
+
+}
+
 int
 GP::Peer::getId()
 {
@@ -46,6 +52,12 @@ GP::Peer::getPossuiRelacao()
 
 int
 GP::Peer::getQtdeProcessos()
+{
+
+}
+
+int
+GP::Peer::getQtdeProcessosPermitidos()
 {
 
 }

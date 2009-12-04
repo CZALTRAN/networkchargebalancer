@@ -1,5 +1,7 @@
 #include "launcher.h"
 
+#include "gpconfig.h"
+
 GP::Launcher::Launcher(QObject *parent) :
     QObject(parent)
 {
@@ -20,6 +22,10 @@ GP::Launcher::processoStart( const int& _id_host, const int& _id_dono, const QSt
     // se o _id_host for o igual ao meu_id, starta um ProcessoLocalOuImportado
     // senao, envia mensagem através da rede para o _id_host startar um processo
 
+    if( _id_host == GP::GPConfig::getInstance().getMeuId() )
+    {
+
+    }
 }
 
 void

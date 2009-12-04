@@ -4,6 +4,8 @@
 #include <QHash>
 #include <QPair>
 #include <QProcess>
+#include <QStringList>
+
 #include "processo.h"
 
 namespace GP
@@ -12,6 +14,7 @@ namespace GP
     {
         int
         meu_id;
+
 
     public:
         int

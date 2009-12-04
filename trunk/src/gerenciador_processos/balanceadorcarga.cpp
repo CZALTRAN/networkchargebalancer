@@ -1,4 +1,5 @@
 #include "balanceadorcarga.h"
+#include "gpconfig.h"
 
 GP::BalanceadorCarga::BalanceadorCarga(QObject *parent) :
     QObject(parent)
@@ -38,9 +39,43 @@ GP::BalanceadorCarga::incommingMessage( const int& _id, const GP::PacoteBase& _p
 //}
 
 int
-GP::BalanceadorCarga::getPeerHost()
+GP::BalanceadorCarga::getPeerHost() const
 {
-    //retorna o peer selecionado para processar
+    QHashIterator<const int, const Peer*>*
+    ponto_de_partida = this->peer_round_robin;
+
+    if( this->peer_round_robin->hasNext() )
+    {
+        this->peer_round_robin->next();
+    }
+    else
+    {
+        this->peer_round_robin->toFront();
+        this->peer_round_robin->next();
+    }
+
+    while( this->peer_round_robin != ponto_de_partida )
+    {
+        GP::Peer
+        peer_atual = *this->peer_round_robin->value();
+
+        if( peer_atual.getQtdeProcessosPermitidos() - peer_atual.getQtdeProcessos() )
+        {
+            return peer_atual.getId();
+        }
+
+        if( this->peer_round_robin->hasNext() )
+        {
+            this->peer_round_robin->next();
+        }
+        else
+        {
+            this->peer_round_robin->toFront();
+            this->peer_round_robin->next();
+        }
+    }
+
+    return GP::GPConfig::getInstance().getMeuId();
 }
 
 

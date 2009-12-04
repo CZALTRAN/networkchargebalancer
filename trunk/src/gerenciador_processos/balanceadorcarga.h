@@ -41,7 +41,7 @@ namespace GP
         incommingMessage( const int& _id, const PacoteBase& _pacote );
 
         int
-        getPeerHost();
+        getPeerHost() const;
 
     public slots:
 //        void

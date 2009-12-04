@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     gpconstrutordepacotes.cpp \
     gppeer.cpp \
     processolocalouimportado.cpp \
-    processoexportado.cpp
+    processoexportado.cpp \
+    aplicacao.cpp
 HEADERS += gerenciadorprocessos.h \
     launcher.h \
     balanceadorcarga.h \
@@ -30,4 +31,5 @@ HEADERS += gerenciadorprocessos.h \
     gpconstrutordepacotes.h \
     gppeer.h \
     processolocalouimportado.h \
-    processoexportado.h
+    processoexportado.h \
+    aplicacao.h
