@@ -29,6 +29,9 @@ private:
     GPAdaptor*
     interfaceGP;
 
+    RedeAdaptor*
+    interfaceRede;
+
     friend class GPAdaptor;
     friend class RedeAdaptor;
 };

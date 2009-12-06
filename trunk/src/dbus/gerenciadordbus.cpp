@@ -1,7 +1,7 @@
 #include "gerenciadordbus.h"
 
 #include <QDebug>
-#include <QDBusConnection>
+#include <QtDBus>
 
 #include "dbusconfig.h"
 
@@ -9,6 +9,7 @@ GerenciadorDBus::GerenciadorDBus(QObject *parent) :
     QObject(parent)
 {
     this->interfaceGP = new GPAdaptor(this);
+    this->interfaceRede = new RedeAdaptor(this);
 
     if (! QDBusConnection::sessionBus().isConnected() )
     {
@@ -25,6 +26,10 @@ GerenciadorDBus::GerenciadorDBus(QObject *parent) :
                  << "Nao foi possivel registrar o servico xboga no dbus.";
         exit(1);
     }
+
+    QDBusConnection::sessionBus().registerObject("/rede",
+                                                 this->interfaceRede,
+                                                 QDBusConnection::ExportAllContents);
 
     QDBusConnection::sessionBus().registerObject("/gp",
                                                  this->interfaceGP,
