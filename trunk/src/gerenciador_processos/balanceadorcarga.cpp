@@ -54,21 +54,13 @@ GP::BalanceadorCarga::getPeerHost() const
     QHashIterator<const int, const Peer*>*
     ponto_de_partida = this->peer_round_robin;
 
-    qDebug() << Q_FUNC_INFO << "comecando a partir do ultimo peer selecionado.";
-
     if( this->peer_round_robin->hasNext() )
     {
-        qDebug() << Q_FUNC_INFO << "pulando para o proximo peer.";
-
         this->peer_round_robin->next();
     }
     else
     {
-        qDebug() << Q_FUNC_INFO << "voltando ao comeco da hash.";
-
         this->peer_round_robin->toFront();
-
-        qDebug() << Q_FUNC_INFO << "avancando para o primeiro termo.";
 
         //this->peer_round_robin->next();
     }

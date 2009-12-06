@@ -90,9 +90,12 @@ GerenciadorProcessos::killProcess( const int _id_dono, const Q_PID _processo)
 }
 
 void
-GerenciadorProcessos::novoProcesso(int _id_host, const GP::Processo* _processo)
+GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 {
-
+    if( GP::GPConfig::getInstance().getMeuId() == _id_host )
+    {
+        this->processos.insert(_processo->getPid(), _processo);
+    }
 }
 
 void
