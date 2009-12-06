@@ -1,12 +1,15 @@
-QT += console dbus
-QT-= gui
-
+QT += console \
+    dbus
+QT -= gui
 TARGET = dbus
 TEMPLATE = app
-
 OBJECTS_DIR = build
 MOC_DIR = build
 DESTDIR = build
-
-
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    gerenciadordbus.cpp \
+    dbusconfig.cpp \
+    gpadaptor.cpp
+HEADERS += gerenciadordbus.h \
+    dbusconfig.h \
+    gpadaptor.h
