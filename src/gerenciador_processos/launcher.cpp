@@ -60,6 +60,8 @@ GP::Launcher::processoStart( const int& _num_requisicao,
                                                                    _parametros);
         }
     }
+
+    emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome);
 }
 
 GP::ProcessoLocalOuImportado*

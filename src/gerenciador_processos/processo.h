@@ -15,6 +15,9 @@ namespace GP{
         Q_PID
         pid;
 
+        QString
+        nome;
+
         int
         id_dono;
 
@@ -30,6 +33,9 @@ namespace GP{
         Q_PID
         getPid();
 
+        QString
+        getNome();
+
         int
         getIdDono();
 
@@ -38,6 +44,9 @@ namespace GP{
 
         void
         setPid( const Q_PID& _pid );
+
+        void
+        setNome( const QString& _nome );
 
         void
         setIdDono( const int& _id_dono );

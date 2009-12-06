@@ -67,13 +67,22 @@ public slots:
     falhouStartProcesso( int _num_requisicao, int _id_dono,
                                               QString _processo );
 
+    void
+    enviaMensagem( int _id_destino, QString _mensagem );
+
 signals:
 
     void
-    sendMessage( const int& _id_destino, const QString& _mensagem);
+    sendMessage( int _id_destino, QString _mensagem);
 
     void
-    terminoDeProcesso( const motivoFimProcesso& _motivo );
+    terminoDeProcesso( motivoFimProcesso _motivo );
+
+    void
+    falhouProcessoStart( int _num_requisicao, QString _processo );
+
+    void
+    sucessoProcessoStart( int _num_requisicao, QString _processo, Q_PID _pid );
 };
 
 #endif // GERENCIADORPROCESSOS_H
