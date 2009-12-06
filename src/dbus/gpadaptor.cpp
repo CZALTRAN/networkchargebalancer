@@ -12,5 +12,6 @@ GPAdaptor::GPAdaptor( GerenciadorDBus* _parent )
 void
 GPAdaptor::startProcesso( QString _nome_processo, QString _parametros )
 {
-    qDebug() << _nome_processo << _parametros;
+    emit static_cast<GerenciadorDBus*>(this->parent())
+            ->novaSolicitacaoDeProcesso(_nome_processo,_parametros);
 }
