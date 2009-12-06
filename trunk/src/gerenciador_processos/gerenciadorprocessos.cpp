@@ -52,15 +52,17 @@ GerenciadorProcessos::incommingMessage(const int& _id, const QString& _mensagem)
 void
 GerenciadorProcessos::processoStart( int _num_requisicao,
                                                        QString _processo,
-                                                       QStringList _parametros )
+                                                       QString _parametros )
 {
+    QStringList
+    parametros = _parametros.split(" ");
     int
     id_peer_host = this->balancer.getPeerHost();
 
     this->launcher.processoStart( _num_requisicao, id_peer_host,
                                   GP::GPConfig::getInstance().getMeuId(),
                                   _processo,
-                                  _parametros );
+                                  parametros );
 }
 
 void

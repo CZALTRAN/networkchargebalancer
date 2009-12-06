@@ -19,4 +19,6 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
 
     QObject::connect( this->grede, SIGNAL(peerCaiu(int)),
                       this->gprocessos, SLOT(peerCaiu(int)));
+
+    this->gprocessos->processoStart(123, "firefox", "");
 }

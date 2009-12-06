@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     gerenciador_processos/processolocalouimportado.cpp \
     gerenciador_processos/processoexportado.cpp \
     gerenciador_processos/processo.cpp \
-    gerenciador_processos/gpconfig.cpp
+    gerenciador_processos/gpconfig.cpp \
+    gerenciador_processos/aplicacao.cpp
 HEADERS += xbogainittializer.h \
     rede/structpacotes.h \
     rede/redeconfig.h \
@@ -50,4 +51,6 @@ HEADERS += xbogainittializer.h \
     gerenciador_processos/processoexportado.h \
     gerenciador_processos/processo.h \
     gerenciador_processos/gppeer.h \
-    gerenciador_processos/gpconfig.h
+    gerenciador_processos/gpconfig.h \
+    gerenciador_processos/aplicacao.h \
+    gerenciador_processos/aplicacao.h
