@@ -15,12 +15,21 @@ public:
 
 signals:
 
+    void
+    novaSolicitacaoDeProcesso( QString _processo, QString _parametros );
+
 public slots:
+
+    //testes:
+    void
+    testeNovoProcesso( QString _processo, QString _parametros);
 
 private:
 
     GPAdaptor*
     interfaceGP;
+
+    friend class GPAdaptor;
 };
 
 #endif // GERENCIADORDBUS_H

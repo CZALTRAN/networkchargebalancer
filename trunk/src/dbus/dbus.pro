@@ -9,7 +9,9 @@ DESTDIR = build
 SOURCES += main.cpp \
     gerenciadordbus.cpp \
     dbusconfig.cpp \
-    gpadaptor.cpp
+    gpadaptor.cpp \
+    redeadaptor.cpp
 HEADERS += gerenciadordbus.h \
     dbusconfig.h \
-    gpadaptor.h
+    gpadaptor.h \
+    redeadaptor.h

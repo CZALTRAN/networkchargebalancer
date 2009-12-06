@@ -29,6 +29,7 @@ GerenciadorDBus::GerenciadorDBus(QObject *parent) :
     QDBusConnection::sessionBus().registerObject("/gp",
                                                  this->interfaceGP,
                                                  QDBusConnection::ExportAllContents);
+
 }
 
 GerenciadorDBus::~GerenciadorDBus()
