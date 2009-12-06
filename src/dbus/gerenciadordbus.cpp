@@ -27,13 +27,27 @@ GerenciadorDBus::GerenciadorDBus(QObject *parent) :
         exit(1);
     }
 
-    QDBusConnection::sessionBus().registerObject("/rede",
-                                                 this->interfaceRede,
-                                                 QDBusConnection::ExportAllContents);
+    bool ok = false;
 
-    QDBusConnection::sessionBus().registerObject("/gp",
-                                                 this->interfaceGP,
-                                                 QDBusConnection::ExportAllContents);
+    ok = QDBusConnection::sessionBus().registerObject("/rede",
+                                                      this->interfaceRede,
+                                                      QDBusConnection::ExportAllContents);
+
+    if ( ! ok )
+    {
+        qDebug() << "nao foi possivel registrar os servicos necessarios para a aplicacao";
+        exit(1);
+    }
+
+    ok = QDBusConnection::sessionBus().registerObject("/gp",
+                                                      this->interfaceGP,
+                                                      QDBusConnection::ExportAllContents);
+
+    if ( ! ok )
+    {
+        qDebug() << "nao foi possivel registrar os servicos necessarios para a aplicacao";
+        exit(1);
+    }
 
 }
 
