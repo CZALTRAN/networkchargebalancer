@@ -1,15 +1,24 @@
 #include "dbusconfig.h"
 
-DBus::DBusConfig::DBusConfig()
+DBusConfig::DBusConfig()
 {
     this->name_service = "uel.computacao.xboga";
+    this->indice_processo = 0;
 }
 
-DBus::DBusConfig&
-DBus::DBusConfig::getInstance()
+DBusConfig&
+DBusConfig::getInstance()
 {
-    static DBus::DBusConfig
+    static DBusConfig
     instance;
 
     return instance;
+}
+
+quint64
+DBusConfig::getNovoProcId()
+{
+    ++ this->indice_processo;
+
+    return this->indice_processo;
 }

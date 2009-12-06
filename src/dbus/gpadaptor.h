@@ -15,7 +15,7 @@ public:
 
 public slots:
 
-    Q_NOREPLY void
+    quint64
     startProcesso( QString _nome_processo, QString _parametros );
 
 signals:

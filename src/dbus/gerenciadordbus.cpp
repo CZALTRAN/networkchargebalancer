@@ -18,7 +18,7 @@ GerenciadorDBus::GerenciadorDBus(QObject *parent) :
     }
 
     if (! QDBusConnection::sessionBus().registerService(
-            DBus::DBusConfig::getInstance().name_service
+            DBusConfig::getInstance().name_service
             ))
     {
         qDebug() << Q_FUNC_INFO
@@ -34,4 +34,12 @@ GerenciadorDBus::GerenciadorDBus(QObject *parent) :
 
 GerenciadorDBus::~GerenciadorDBus()
 {
+}
+
+void
+GerenciadorDBus::resultStartProcesso( bool _sucesso,
+                                      QString _processo,
+                                      quint32 _id )
+{
+
 }
