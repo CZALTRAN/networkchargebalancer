@@ -38,7 +38,7 @@ namespace GP
         setDiretorio( const QString& _diretorio );
 
         void
-        setUsaX11();
+        setUsaX11( bool _usa_x11 );
     };
 }
 

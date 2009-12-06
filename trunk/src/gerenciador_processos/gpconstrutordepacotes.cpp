@@ -4,20 +4,35 @@ GP::ConstrutorDePacotes::ConstrutorDePacotes()
 {
 }
 
+GP::ConstrutorDePacotes&
+GP::ConstrutorDePacotes::getInstance()
+{
+    static GP::ConstrutorDePacotes
+    instance;
+
+    return instance;
+}
+
 QString
-GP::ConstrutorDePacotes::montaStartProcess( const QString& _id_dono, const QString& _processo, const QStringList _parametros )
+GP::ConstrutorDePacotes::montaStartProcess( const int& _num_requisicao,
+                                            const int& _id_dono,
+                                            const QString& _processo,
+                                            const QStringList _parametros )
 {
 
 }
 
 QString
-GP::ConstrutorDePacotes::montaSuccessStartProcess( const QString& _processo, const Q_PID& _pid )
+GP::ConstrutorDePacotes::montaSuccessStartProcess( const int& _num_requisicao,
+                                                   const QString& _processo,
+                                                   const Q_PID& _pid )
 {
 
 }
 
 QString
-GP::ConstrutorDePacotes::montaFailStartProcess( const QString& _processo )
+GP::ConstrutorDePacotes::montaFailStartProcess( const int& _num_requisicao,
+                                                const QString& _processo )
 {
 
 }

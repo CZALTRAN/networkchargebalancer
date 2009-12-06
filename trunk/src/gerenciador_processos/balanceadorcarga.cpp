@@ -19,9 +19,21 @@ GP::BalanceadorCarga::peerCaiu( const int& )
 }
 
 void
-GP::BalanceadorCarga::peerNovo( const int& )
+GP::BalanceadorCarga::peerNovo( const int& _id )
 {
+    GP::Peer*
+    novo_peer = new GP::Peer();
 
+    novo_peer->setId(_id);
+
+    if( GP::GPConfig::getInstance().getMeuId() == _id )
+    {
+        novo_peer->setPossuiRelacao(true);
+    }
+    else
+    {
+        novo_peer->setPossuiRelacao(false);
+    }
 }
 
 void

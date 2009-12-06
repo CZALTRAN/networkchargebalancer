@@ -42,7 +42,7 @@ GP::Aplicacao::setDiretorio( const QString& _diretorio )
 }
 
 void
-GP::Aplicacao::setUsaX11()
+GP::Aplicacao::setUsaX11( bool _usa_x11 )
 {
-    this->x11 = !this->x11;
+    this->x11 = _usa_x11;
 }
