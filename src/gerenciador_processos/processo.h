@@ -2,7 +2,6 @@
 #define PROCESSO_H
 
 #include <QObject>
-#include <QProcess>
 #include <QString>
 
 namespace GP{
@@ -12,11 +11,11 @@ namespace GP{
     Q_OBJECT
 
     private:
-        Q_PID
-        pid;
-
         int
         id_dono;
+
+        int
+        num_requisicao;
 
     public:
         Processo( QObject* _parent=0 );
@@ -24,19 +23,24 @@ namespace GP{
         virtual
         ~Processo();
 
-        Q_PID
-        getPid();
-
         int
         getIdDono();
 
-    public slots:
-        QString
-        stdOutAndErr();
+        int
+        getNumRequisicao();
+
+        void
+        setIdDono( const int& _id_dono );
+
+        void
+        setNumRequisicao( const int& _num_requisicao );
+
+        virtual void
+        stdIn(const QString& _entrada)=0;
 
     signals:
-        void
-        stdIn(const QString& _entrada);
+        QString
+        stdOutAndErr();
 
     };
 

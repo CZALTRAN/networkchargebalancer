@@ -2,11 +2,8 @@
 #define PROCESSOSCONFIG_H
 
 #include <QHash>
-#include <QPair>
-#include <QProcess>
-#include <QStringList>
 
-#include "processo.h"
+#include "aplicacao.h"
 
 namespace GP
 {
@@ -15,10 +12,21 @@ namespace GP
         int
         meu_id;
 
+        QHash<QString,const Aplicacao*>
+        aplicacoes;
 
     public:
         int
         getMeuId();
+
+        Aplicacao*
+        getAplicacao(const QString& _nome);
+
+        bool
+        getPossuiAplicacao(const QString& _nome);
+
+        void
+        setMeuId(const int& _meu_id);
 
         static GPConfig&
         getInstance();

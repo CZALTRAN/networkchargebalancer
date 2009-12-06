@@ -27,7 +27,7 @@ GerenciadorProcessos::peerCaiu( const int& _id )
 }
 
 void
-GerenciadorProcessos::incommingMessage( const int& _id, const QString& _mensagem )
+GerenciadorProcessos::incommingMessage(const int& _id, const QString& _mensagem)
 {
 
     GP::PacoteBase*
@@ -50,24 +50,45 @@ GerenciadorProcessos::incommingMessage( const int& _id, const QString& _mensagem
 }
 
 void
-GerenciadorProcessos::processoStart( const QString _processo, const QStringList _parametros )
+GerenciadorProcessos::processoStart( int _num_requisicao,
+                                                       QString _processo,
+                                                       QStringList _parametros )
 {
     int
     id_peer_host = this->balancer.getPeerHost();
 
-    this->launcher.processoStart( id_peer_host, GP::GPConfig::getInstance().getMeuId(), _processo, _parametros );
+    this->launcher.processoStart( _num_requisicao, id_peer_host,
+                                  GP::GPConfig::getInstance().getMeuId(),
+                                  _processo,
+                                  _parametros );
 }
 
 void
-GerenciadorProcessos::killProcess( const int& _id_dono, const Q_PID& _processo)
+GerenciadorProcessos::meuId( int _meu_id )
+{
+    GP::GPConfig::getInstance().setMeuId(_meu_id);
+
+    this->balancer.peerNovo(_meu_id);
+}
+
+
+void
+GerenciadorProcessos::killProcess( const int _id_dono, const Q_PID _processo)
 {
 
 }
 
 void
-GerenciadorProcessos::novoProcesso( const int& _id_host, const GP::Processo& _processo )
+GerenciadorProcessos::novoProcesso(int _id_host, const GP::Processo* _processo)
 {
 
 }
 
+void
+GerenciadorProcessos::falhouStartProcesso( int _num_requisicao,
+                                           int _id_dono,
+                                           QString _processo )
+{
+
+}
 

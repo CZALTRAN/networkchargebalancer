@@ -1,6 +1,7 @@
 #include "launcher.h"
 
 #include "gpconfig.h"
+#include "gpconstrutordepacotes.h"
 
 GP::Launcher::Launcher(QObject *parent) :
     QObject(parent)
@@ -16,21 +17,96 @@ GP::Launcher::~Launcher()
 }
 
 void
-GP::Launcher::processoStart( const int& _id_host, const int& _id_dono, const QString&, const QStringList& _parametros )
+GP::Launcher::incommingMessage(const int& _id,
+                               const GP::PacoteBase& _parametros)
 {
 
-    // se o _id_host for o igual ao meu_id, starta um ProcessoLocalOuImportado
-    // senao, envia mensagem através da rede para o _id_host startar um processo
+}
 
-    if( _id_host == GP::GPConfig::getInstance().getMeuId() )
+void
+GP::Launcher::processoStart( const int& _num_requisicao,
+                             const int& _id_host,
+                             const int& _id_dono,
+                             const QString& _nome,
+                             const QStringList& _parametros )
+{
+    if( GP::GPConfig::getInstance().getPossuiAplicacao(_nome) )
     {
+        if( _id_host == GP::GPConfig::getInstance().getMeuId() )
+        {
+            GP::Processo*
+            processo_criado;
 
+            processo_criado = this->startaProcessoLocal( _num_requisicao,
+                                                         _id_dono,
+                                                         _nome,
+                                                         _parametros );
+
+            if( processo_criado != 0 )
+            {
+                emit this->novoProcesso(_id_host, processo_criado);
+            }
+            else
+            {
+                delete processo_criado;
+
+                emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome);
+            }
+        }
+        else
+        {
+            this->startaProcessoRemoto( _num_requisicao, _id_host, _id_dono,
+                                                                   _nome,
+                                                                   _parametros);
+        }
+    }
+}
+
+GP::ProcessoLocalOuImportado*
+GP::Launcher::startaProcessoLocal( const int& _num_requisicao,
+                                   const int& _id_dono,
+                                   const QString& _nome,
+                                   const QStringList& _parametros )
+{
+    GP::ProcessoLocalOuImportado*
+    processo = new GP::ProcessoLocalOuImportado();
+
+    processo->setNumRequisicao(_num_requisicao);
+    processo->setIdDono(_id_dono);
+
+    if( GP::GPConfig::getInstance().getAplicacao(_nome)->usaX11() )
+    {
+        //essa porra vai mudar!
+        processo->start(_nome, _parametros);
+    }
+    else
+    {
+        processo->start(_nome, _parametros);
+    }
+
+    if( processo->waitForStarted() )
+    {
+        return processo;
+    }
+    else
+    {
+        return 0;
     }
 }
 
 void
-GP::Launcher::incommingMessage( const int& _id, const GP::PacoteBase& _parametros )
+GP::Launcher::startaProcessoRemoto( const int& _num_requisicao,
+                                    const int& _id_host,
+                                    const int& _id_dono,
+                                    const QString& _nome,
+                                    const QStringList& _parametros )
 {
+    QString
+    pacote = GP::ConstrutorDePacotes::getInstance().montaStartProcess(
+                                                                _num_requisicao,
+                                                                _id_dono,
+                                                                _nome,
+                                                                _parametros);
 
+    emit this->sendMessage(_id_host, pacote );
 }
-

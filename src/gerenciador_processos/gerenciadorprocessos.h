@@ -50,14 +50,22 @@ public slots:
 
     //slots para comunicação externa
     void
-    processoStart( const QString _processo, const QStringList _parametros );
+    processoStart( int _num_requisicao, QString _processo,
+                                        QStringList _parametros );
 
     void
-    killProcess( const int& _id_dono, const Q_PID& _processo );
+    meuId( int _meu_id );
+
+    void
+    killProcess( int _id_dono, Q_PID _processo );
 
     //slots para comunicação interna
     void
-    novoProcesso( const int& _id_host, const GP::Processo& _processo );
+    novoProcesso( int _id_host, const GP::Processo* _processo );
+
+    void
+    falhouStartProcesso( int _num_requisicao, int _id_dono,
+                                              QString _processo );
 
 signals:
 

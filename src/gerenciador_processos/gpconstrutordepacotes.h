@@ -10,14 +10,22 @@ namespace GP
     class ConstrutorDePacotes
     {
     public:
-        QString
-        montaStartProcess( const QString& _id_dono, const QString& _processo, const QStringList _parametros );
+        static ConstrutorDePacotes&
+        getInstance();
 
         QString
-        montaSuccessStartProcess( const QString& _processo, const Q_PID& _pid );
+        montaStartProcess( const int& _num_requisicao, const int& _id_dono,
+                                                const QString& _processo,
+                                                const QStringList _parametros );
 
         QString
-        montaFailStartProcess( const QString& _processo );
+        montaSuccessStartProcess( const int& _num_requisicao,
+                                  const QString& _processo,
+                                  const Q_PID& _pid );
+
+        QString
+        montaFailStartProcess( const int& _num_requisicao,
+                               const QString& _processo );
 
         QString
         montaStatusPeer( const int& _qtde_processos );
