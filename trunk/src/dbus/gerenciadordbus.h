@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "gpadaptor.h"
+#include "redeadaptor.h"
 
 class GerenciadorDBus : public QObject
 {
@@ -16,13 +17,12 @@ public:
 signals:
 
     void
-    novaSolicitacaoDeProcesso( QString _processo, QString _parametros );
+    novaSolicitacaoDeProcesso( quint64 _id, QString _processo, QString _parametros );
 
 public slots:
 
-    //testes:
     void
-    testeNovoProcesso( QString _processo, QString _parametros);
+    resultStartProcesso( bool _sucesso, QString _processo, quint32 _id );
 
 private:
 
@@ -30,6 +30,7 @@ private:
     interfaceGP;
 
     friend class GPAdaptor;
+    friend class RedeAdaptor;
 };
 
 #endif // GERENCIADORDBUS_H

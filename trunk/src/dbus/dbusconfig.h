@@ -3,28 +3,31 @@
 
 #include <QString>
 
-namespace DBus
+class DBusConfig
 {
-    class DBusConfig
-    {
-    public:
+public:
 
-        QString
-        name_service;
+    QString
+    name_service;
 
-        static DBus::DBusConfig&
-        getInstance();
+    static DBusConfig&
+    getInstance();
 
-    private:
+    quint64
+    getNovoProcId();
 
-        DBusConfig();
+private:
 
-        DBusConfig( const DBusConfig& );
+    DBusConfig();
 
-        DBus::DBusConfig&
-        operator= ( DBus::DBusConfig const& );
-    };
-}
+    DBusConfig( const DBusConfig& );
+
+    DBusConfig&
+    operator= ( DBusConfig const& );
+
+    quint64
+    indice_processo;
+};
 
 
 #endif // DBUSCONFIG_H
