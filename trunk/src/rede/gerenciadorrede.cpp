@@ -131,7 +131,6 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 
         QObject::connect(novo_peer,SIGNAL(incommingMessage(int,QString)),
                          this,SLOT(slotNovaMensagemFromPeer(int,QString)));
-
     break;
     }
 
@@ -215,6 +214,18 @@ GerenciadorRede::slotPeerCaiu( const int& _id)
 }
 
 void
+GerenciadorRede::broadcastGP( const QString& _message )
+{
+    QString
+    pacote = Rede::ConstrutorDePacotes::getInstance().montaGP(
+            Rede::RedeConfig::getInstance().meu_id,
+            _message
+            );
+
+    this->gerenciador_conexoes->emitSignalBroadCast( pacote );
+}
+
+void
 GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
 {
     Rede::PacoteInit*
@@ -285,7 +296,14 @@ GerenciadorRede::enviaPacoteGP( const int& _destinatario_id, const QString& _mes
     Rede::Peer*
     peer_destino = this->gerenciador_conexoes->getPeerById(_destinatario_id);
 
-    peer_destino->sendGP(_destinatario_id, _message);
+    if ( _destinatario_id > 0)
+    {
+        peer_destino->sendGP(_destinatario_id, _message);
+    }
+    else
+    {
+        this->broadcastGP(_message);
+    }
 
 }
 

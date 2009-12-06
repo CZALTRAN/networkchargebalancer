@@ -82,7 +82,6 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
             this->peers.erase(it);
         }
     }
-
 }
 
 void
@@ -93,6 +92,9 @@ Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
 
     QObject::connect( _peer, SIGNAL(perdiConexao(Rede::Peer*const)),
                       this, SLOT(peerCaiu(Rede::Peer*const)));
+
+    QObject::connect( this, SIGNAL(signalBroadCast(QString)),
+                      _peer, SLOT(enviaMensagemGenerica(QString)));
 }
 
 int
@@ -131,6 +133,12 @@ Rede::GerenciadorConexao::debug() const
 
     }
     qDebug() << "********************************";
+}
+
+void
+Rede::GerenciadorConexao::emitSignalBroadCast( const QString& _message )
+{
+    emit this->signalBroadCast(_message);
 }
 
 void

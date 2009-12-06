@@ -101,6 +101,11 @@ signals:
 
     void
     recebePacoteGP( const int& _remetente, const QString& );
+
+protected:
+
+    void
+    broadcastGP( const QString& _message );
 };
 
 #endif // REDE_H

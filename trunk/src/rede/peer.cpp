@@ -160,6 +160,12 @@ Rede::Peer::enviaNovoPeer( const QString& _host, const int& _id )
 }
 
 void
+Rede::Peer::enviaMensagemGenerica( const QString& _mensagem )
+{
+    this->conexao->enviaDado( _mensagem );
+}
+
+void
 Rede::Peer::setId( const int _id )
 {
     this->id = _id;

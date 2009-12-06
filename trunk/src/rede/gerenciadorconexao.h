@@ -49,6 +49,9 @@ namespace Rede
         void
         debug() const;
 
+        void
+        emitSignalBroadCast( const QString& _message );
+
     public slots:
 
         void
@@ -58,6 +61,9 @@ namespace Rede
 
         void
         peerCaiu( const int& _id );
+
+        void
+        signalBroadCast( const QString& _message );
 
     private:
 
