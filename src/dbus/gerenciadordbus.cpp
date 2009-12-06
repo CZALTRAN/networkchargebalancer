@@ -39,7 +39,9 @@ GerenciadorDBus::~GerenciadorDBus()
 void
 GerenciadorDBus::resultStartProcesso( bool _sucesso,
                                       QString _processo,
-                                      quint32 _id )
+                                      quint64 _id )
 {
-
+    emit this->interfaceGP->resultStartProcesso(_sucesso,
+                                                _id,
+                                                _processo);
 }

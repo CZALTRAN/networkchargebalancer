@@ -21,7 +21,12 @@ public slots:
 signals:
 
     void
-    resultStartProcesso( qulonglong _pid, QString _processo );
+    resultStartProcesso( bool ok ,
+                         qulonglong _pid,
+                         QString _processo);
+
+
+    friend class GerenciadorDBus;
 
 };
 
