@@ -71,6 +71,9 @@ namespace Rede
         void
         enviaNovoPeer( const QString& _host, const int& _id );
 
+        void
+        enviaMensagemGenerica( const QString& _mensagem );
+
     signals:
 
         void
