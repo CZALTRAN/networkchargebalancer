@@ -1,9 +1,13 @@
 #include "balanceadorcarga.h"
+
+#include <QDebug>
+
 #include "gpconfig.h"
 
 GP::BalanceadorCarga::BalanceadorCarga(QObject *parent) :
     QObject(parent)
 {
+    this->peer_round_robin = new QHashIterator<const int, const GP::Peer*>(this->peers);
 }
 
 GP::BalanceadorCarga::~BalanceadorCarga()
@@ -29,6 +33,8 @@ GP::BalanceadorCarga::peerNovo( const int& _id )
     if( GP::GPConfig::getInstance().getMeuId() == _id )
     {
         novo_peer->setPossuiRelacao(true);
+        novo_peer->setQtdeProcessos(0);
+        novo_peer->setQtdeProcessosPermitidos(2);
     }
     else
     {
@@ -42,29 +48,32 @@ GP::BalanceadorCarga::incommingMessage( const int& _id, const GP::PacoteBase& _p
 
 }
 
-//void
-//GP::BalanceadorCarga::novoProcesso( const int& _id_peer, const Processo& _processo )
-//{
-//    //se o processo for inicializado com sucesso
-//    //o balancer o insere na hash de processos do peer _id_peer
-//    //que está na hash de peers desta classe!! :D:D:D
-//}
-
 int
 GP::BalanceadorCarga::getPeerHost() const
 {
     QHashIterator<const int, const Peer*>*
     ponto_de_partida = this->peer_round_robin;
 
+    qDebug() << Q_FUNC_INFO << "comecando a partir do ultimo peer selecionado.";
+
     if( this->peer_round_robin->hasNext() )
     {
+        qDebug() << Q_FUNC_INFO << "pulando para o proximo peer.";
+
         this->peer_round_robin->next();
     }
     else
     {
+        qDebug() << Q_FUNC_INFO << "voltando ao comeco da hash.";
+
         this->peer_round_robin->toFront();
-        this->peer_round_robin->next();
+
+        qDebug() << Q_FUNC_INFO << "avancando para o primeiro termo.";
+
+        //this->peer_round_robin->next();
     }
+
+    qDebug() << Q_FUNC_INFO << "iterando ate encontrar um peer disponivel.";
 
     while( this->peer_round_robin != ponto_de_partida )
     {
@@ -83,7 +92,7 @@ GP::BalanceadorCarga::getPeerHost() const
         else
         {
             this->peer_round_robin->toFront();
-            this->peer_round_robin->next();
+            //this->peer_round_robin->next();
         }
     }
 
