@@ -10,6 +10,12 @@ GP::Processo::~Processo()
 
 }
 
+Q_PID
+GP::Processo::getPid()
+{
+    return this->pid;
+}
+
 int
 GP::Processo::getIdDono()
 {
@@ -20,6 +26,12 @@ int
 GP::Processo::getNumRequisicao()
 {
     return this->num_requisicao;
+}
+
+void
+GP::Processo::setPid( const Q_PID& _pid )
+{
+    this->id_dono = _pid;
 }
 
 void

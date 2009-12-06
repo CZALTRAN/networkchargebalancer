@@ -2,6 +2,7 @@
 #define PROCESSO_H
 
 #include <QObject>
+#include <QProcess>
 #include <QString>
 
 namespace GP{
@@ -11,6 +12,9 @@ namespace GP{
     Q_OBJECT
 
     private:
+        Q_PID
+        pid;
+
         int
         id_dono;
 
@@ -23,11 +27,17 @@ namespace GP{
         virtual
         ~Processo();
 
+        Q_PID
+        getPid();
+
         int
         getIdDono();
 
         int
         getNumRequisicao();
+
+        void
+        setPid( const Q_PID& _pid );
 
         void
         setIdDono( const int& _id_dono );

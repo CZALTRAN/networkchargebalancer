@@ -61,7 +61,7 @@ public slots:
 
     //slots para comunicação interna
     void
-    novoProcesso( int _id_host, const GP::Processo* _processo );
+    novoProcesso( int _id_host, GP::Processo* _processo );
 
     void
     falhouStartProcesso( int _num_requisicao, int _id_dono,

@@ -19,10 +19,4 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
 
     QObject::connect( this->grede, SIGNAL(peerCaiu(int)),
                       this->gprocessos, SLOT(peerCaiu(int)));
-
-    qDebug() << "startando o firefox";
-
-    this->gprocessos->processoStart(123, "firefox", "");
-
-    qDebug() << "startei o firefox!";
 }
