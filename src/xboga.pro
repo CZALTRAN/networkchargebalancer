@@ -1,4 +1,4 @@
-QT += network
+QT += network dbus
 QT -= gui
 TARGET = xboga
 TEMPLATE = app
@@ -27,7 +27,11 @@ SOURCES += main.cpp \
     gerenciador_processos/processoexportado.cpp \
     gerenciador_processos/processo.cpp \
     gerenciador_processos/gpconfig.cpp \
-    gerenciador_processos/aplicacao.cpp
+    gerenciador_processos/aplicacao.cpp \
+    dbus/dbusconfig.cpp \
+    dbus/gerenciadordbus.cpp \
+    dbus/gpadaptor.cpp \
+    dbus/redeadaptor.cpp
 HEADERS += xbogainittializer.h \
     rede/structpacotes.h \
     rede/redeconfig.h \
@@ -53,4 +57,8 @@ HEADERS += xbogainittializer.h \
     gerenciador_processos/gppeer.h \
     gerenciador_processos/gpconfig.h \
     gerenciador_processos/aplicacao.h \
-    gerenciador_processos/aplicacao.h
+    gerenciador_processos/aplicacao.h \
+    dbus/dbusconfig.h \
+    dbus/gerenciadordbus.h \
+    dbus/gpadaptor.h \
+    dbus/redeadaptor.h
