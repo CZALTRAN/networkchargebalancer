@@ -51,7 +51,7 @@ public slots:
     //slots para comunicação externa
     void
     processoStart( int _num_requisicao, QString _processo,
-                                        QStringList _parametros );
+                                        QString _parametros );
 
     void
     meuId( int _meu_id );
