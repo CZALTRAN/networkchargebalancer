@@ -5,6 +5,7 @@
 
 #include "rede/gerenciadorrede.h"
 #include "gerenciador_processos/gerenciadorprocessos.h"
+#include "dbus/gerenciadordbus.h"
 
 class XBogaInittializer : public QObject
 {
@@ -23,6 +24,10 @@ private:
 
     GerenciadorRede*
     grede;
+
+    GerenciadorDBus*
+    dbus;
+
 };
 
 #endif // XBOGAINITTIALIZER_H
