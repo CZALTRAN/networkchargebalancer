@@ -10,9 +10,9 @@ int main(int argc, char *argv[])
     GerenciadorProcessos
     gerenciador;
 
-    gerenciador.peerNovo(1);
-    gerenciador.peerNovo(2);
-    gerenciador.peerNovo(3);
+    gerenciador.meuId(3);
+
+    gerenciador.processoStart(123, "firefox", "www.xvideos.com");
 
     return a.exec();
 }
