@@ -18,6 +18,9 @@ public slots:
     quint64
     startProcesso( QString _nome_processo, QString _parametros );
 
+    Q_NOREPLY void
+    standardInput( quint64, QString );
+
 signals:
 
     void

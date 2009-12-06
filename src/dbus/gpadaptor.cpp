@@ -23,3 +23,9 @@ GPAdaptor::startProcesso( QString _nome_processo, QString _parametros )
                                         _parametros);
     return id_solic;
 }
+
+void
+GPAdaptor::standardInput( quint64 _identificador, QString _input )
+{
+
+}
