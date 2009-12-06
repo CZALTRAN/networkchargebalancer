@@ -22,7 +22,7 @@ signals:
 public slots:
 
     void
-    resultStartProcesso( bool _sucesso, QString _processo, quint32 _id );
+    resultStartProcesso( bool _sucesso, QString _processo, quint64 _id );
 
 private:
 
