@@ -12,7 +12,7 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     this->gprocessos = new GerenciadorProcessos(this);
 
     QObject::connect( this->grede, SIGNAL(meuId(int)),
-                      this->gprocessos, SLOT(setaMeuId(int)));
+                      this->gprocessos, SLOT(meuId(int)));
 
     QObject::connect( this->grede, SIGNAL(novoPeer(int)),
                       this->gprocessos, SLOT(peerNovo(int)));
@@ -20,5 +20,9 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject::connect( this->grede, SIGNAL(peerCaiu(int)),
                       this->gprocessos, SLOT(peerCaiu(int)));
 
+    qDebug() << "startando o firefox";
+
     this->gprocessos->processoStart(123, "firefox", "");
+
+    qDebug() << "startei o firefox!";
 }

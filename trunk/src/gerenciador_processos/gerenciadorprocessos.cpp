@@ -1,5 +1,7 @@
 #include "gerenciadorprocessos.h"
 
+#include <QDebug>
+
 #include "gpparserdepacotes.h"
 #include "gpconfig.h"
 
@@ -54,10 +56,17 @@ GerenciadorProcessos::processoStart( int _num_requisicao,
                                                        QString _processo,
                                                        QString _parametros )
 {
+    qDebug() << Q_FUNC_INFO << "parseando os parametros.";
+
     QStringList
     parametros = _parametros.split(" ");
+
+    qDebug() << Q_FUNC_INFO << "pegando id do peer q vai processar.";
+
     int
     id_peer_host = this->balancer.getPeerHost();
+
+    qDebug() << Q_FUNC_INFO << "solicitando que o launcher inicie o processo.";
 
     this->launcher.processoStart( _num_requisicao, id_peer_host,
                                   GP::GPConfig::getInstance().getMeuId(),
