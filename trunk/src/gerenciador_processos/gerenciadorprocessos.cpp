@@ -4,11 +4,22 @@
 
 #include "gpparserdepacotes.h"
 #include "gpconfig.h"
+#include "gpconstrutordepacotes.h"
 
 GerenciadorProcessos::GerenciadorProcessos(QObject * _parent )
     : QObject(_parent)
 {
+    QObject::connect(&this->balancer, SIGNAL(sendMessage(int, QString)),
+                     this, SLOT(enviaMensagem(int, QString)));
 
+    QObject::connect(&this->launcher, SIGNAL(sendMessage(int, QString)),
+                     this, SLOT(enviaMensagem(int,QString)));
+
+    QObject::connect(&this->launcher, SIGNAL(novoProcesso(int, GP::Processo*)),
+                     this, SLOT(novoProcesso(int,GP::Processo*)));
+
+    QObject::connect(&this->launcher, SIGNAL(falhouStartProcesso(int, int, QString)),
+                     this, SLOT(falhouStartProcesso(int,int,QString)));
 }
 
 GerenciadorProcessos::~GerenciadorProcessos()
@@ -94,7 +105,25 @@ GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 {
     if( GP::GPConfig::getInstance().getMeuId() == _id_host )
     {
+        qDebug() << Q_FUNC_INFO << "adcionando processo na hash";
         this->processos.insert(_processo->getPid(), _processo);
+
+        emit this->sucessoProcessoStart(_processo->getNumRequisicao(),
+                                        _processo->getNome(),
+                                        _processo->getPid());
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "adcionando processo na hash";
+        this->processos.insert(_processo->getPid(), _processo);
+
+        QString
+        pacote = GP::ConstrutorDePacotes::getInstance().montaSuccessStartProcess(
+                                                  _processo->getNumRequisicao(),
+                                                  _processo->getNome(),
+                                                  _processo->getPid() );
+
+        emit this->sendMessage(_processo->getIdDono(), pacote);
     }
 }
 
@@ -103,6 +132,27 @@ GerenciadorProcessos::falhouStartProcesso( int _num_requisicao,
                                            int _id_dono,
                                            QString _processo )
 {
+    if( GP::GPConfig::getInstance().getMeuId() == _id_dono )
+    {
+        //emit this->processoStartFalhou(int _num_requisicao, QString _processo);
+        qDebug() << Q_FUNC_INFO << "Falhou startar processo!";
+
+        emit this->falhouProcessoStart(_num_requisicao, _processo);
+    }
+    else
+    {
+        QString
+        pacote = GP::ConstrutorDePacotes::getInstance().montaFailStartProcess(
+                                                                _num_requisicao,
+                                                                _processo);
+
+        emit this->sendMessage(_id_dono, pacote);
+    }
 
 }
 
+void
+GerenciadorProcessos::enviaMensagem( int _id_destino, QString _mensagem )
+{
+    emit this->sendMessage(_id_destino, _mensagem);
+}

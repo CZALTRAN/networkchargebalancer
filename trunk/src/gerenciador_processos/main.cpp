@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
     gerenciador.meuId(3);
 
-    gerenciador.processoStart(123, "firefox", "www.xvideos.com");
+    gerenciador.processoStart(123, "firefoxx", "www.xvideos.com");
 
     return a.exec();
 }

@@ -16,6 +16,12 @@ GP::Processo::getPid()
     return this->pid;
 }
 
+QString
+GP::Processo::getNome()
+{
+    return this->nome;
+}
+
 int
 GP::Processo::getIdDono()
 {
@@ -32,6 +38,12 @@ void
 GP::Processo::setPid( const Q_PID& _pid )
 {
     this->id_dono = _pid;
+}
+
+void
+GP::Processo::setNome(const QString& _nome)
+{
+    this->nome = _nome;
 }
 
 void

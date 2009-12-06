@@ -39,11 +39,11 @@ namespace GP
     signals:
         //sinais de comunicação externa
         void
-        sendMessage( const int& _id_destino, QString _message );
+        sendMessage( int _id_destino, QString _message );
 
         //sinais de comunicação interna
         void
-        novoProcesso( const int& _id_host, const Processo* _processo );
+        novoProcesso( int _id_host, GP::Processo* _processo );
 
         void
         falhouStartProcesso(int _num_requisicao, int _id_dono, QString _nome);

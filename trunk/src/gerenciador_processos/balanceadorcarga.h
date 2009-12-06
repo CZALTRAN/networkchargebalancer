@@ -44,15 +44,12 @@ namespace GP
         getPeerHost() const;
 
     public slots:
-//        void
-//        novoProcesso( const int& _id_peer, const Processo& _processo );
 
     signals:
-        //sinais para comunicação externa
-        void
-        sendMessage( const int& _id_destino, const QString& _message );
-
         //sinais para comunicação interna
+        void
+        sendMessage( int _id_destino, QString _message );
+
     };
 }
 
