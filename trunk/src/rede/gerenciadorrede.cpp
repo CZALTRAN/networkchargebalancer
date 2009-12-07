@@ -98,15 +98,15 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 
         novo_peer->sendInit( this->gerenciador_conexoes->getTotalConn() );
 
-        this->gerenciador_conexoes->debug();
-
-        emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
+//        this->gerenciador_conexoes->debug();
 
         QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
                          novo_peer,SLOT(enviaNovoPeer(const QString&, const int&)));
 
         QObject::connect(novo_peer,SIGNAL(incommingMessage(int,QString)),
                          this,SLOT(slotNovaMensagemFromPeer(int,QString)));
+
+        emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
     break;
     }
 
