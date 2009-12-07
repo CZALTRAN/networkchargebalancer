@@ -32,25 +32,18 @@ GP::ParserDePacotes::parseiaPacote(const QString& _pacote) const
 
     if( campos[2] == "START_PROCESS" )
     {
-        qDebug() << Q_FUNC_INFO << "start_process";
         return this->parseiaStartProcess(campos);
     }
     else if( campos[2] == "SUCCESS_START_PROCESS" )
     {
-        qDebug() << Q_FUNC_INFO << "success_start_process";
-
         return this->parseiaSuccessStartProcess(campos);
     }
     else if( campos[2] == "FAIL_START_PROCESS" )
     {
-        qDebug() << Q_FUNC_INFO << "fail_start_process";
-
         return this->parseiaFailStartProcess(campos);
     }
     else if( campos[2] == "STATUS_PEER" )
     {
-        qDebug() << Q_FUNC_INFO << "status_peer";
-
         return this->parseiaPacoteStatusPeer(campos);
     }
     else
@@ -103,15 +96,9 @@ GP::ParserDePacotes::parseiaPacoteStatusPeer(
     GP::PacoteStatusPeer*
     pacote = new GP::PacoteStatusPeer;
 
-    qDebug() << Q_FUNC_INFO << "setando nome";
-
     pacote->nome = GP::STATUS_PEER;
 
-    qDebug() << Q_FUNC_INFO << "setando dono" << GP::BALANCER;
-
     pacote->dono = GP::BALANCER;
-
-    qDebug() << Q_FUNC_INFO << "setando qtde_processos e qtde_processos_permitidos";
 
     this->setaInteiroDePacote(_lista_parametros, 3, pacote->qtde_processos);
 

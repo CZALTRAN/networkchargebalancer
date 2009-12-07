@@ -34,15 +34,9 @@ GP::BalanceadorCarga::peerNovo( const int& _id )
 
     if( GP::GPConfig::getInstance().getMeuId() == _id )
     {
-        qDebug() << Q_FUNC_INFO << "setando as configuracoes do peer";
-
         novo_peer->setPossuiRelacao(true);
         novo_peer->setQtdeProcessos(0);
         novo_peer->setQtdeProcessosPermitidos(2);
-
-        qDebug() << Q_FUNC_INFO << "construindo pacote e enviando para a rede";
-
-        qDebug() << Q_FUNC_INFO << "inserindo peer na hash";
 
         this->peers.insert(_id, novo_peer);
     }
@@ -74,8 +68,6 @@ GP::BalanceadorCarga::insereCarga( const int& _id )
         GP::Peer*
         peer = this->peers.value(_id);
 
-        qDebug() << Q_FUNC_INFO << "inserindo carga no peer" << peer->getId();
-
         int
         carga_peer = peer->getQtdeProcessos();
 
@@ -93,10 +85,6 @@ GP::BalanceadorCarga::insereCarga( const int& _id )
 int
 GP::BalanceadorCarga::getPeerHost()
 {
-    qDebug() << Q_FUNC_INFO << "posicionando marcador para a iteracao";
-
-    qDebug() << Q_FUNC_INFO << "criando peer marcador";
-
     GP::Peer*
     ponto_partida;
 
@@ -112,41 +100,27 @@ GP::BalanceadorCarga::getPeerHost()
         ponto_partida = iterador_temp.value();
     }
 
-    qDebug() << Q_FUNC_INFO << "iterando ate encontrar um peer disponivel.";
-
     while( true )
     {
-        qDebug() << Q_FUNC_INFO << "iteracao";
-
         if( this->peer_round_robin != this->peers.end() )
         {
-            qDebug() << Q_FUNC_INFO << "incrementando iterador";
             this->peer_round_robin++;
         }
         else
         {
-            qDebug() << Q_FUNC_INFO << "o iterador esta no final. voltando..";
             this->peer_round_robin = this->peers.begin();
         }
 
-        qDebug() << Q_FUNC_INFO << "atribuindo valor ao peer de iteracao";
-
         GP::Peer*
         peer_atual = this->peer_round_robin.value();
-
-        qDebug() << Q_FUNC_INFO << "testando peer de iteracao";
 
         if( this->peers.contains( this->peers.key(peer_atual) ) )
         {
 
             if( ( peer_atual->getQtdeProcessosPermitidos() - peer_atual->getQtdeProcessos() ) > 0 )
             {
-                qDebug() << Q_FUNC_INFO << "id do peer_atual" << peer_atual->getId();
-
                 return peer_atual->getId();
             }
-
-            qDebug() << Q_FUNC_INFO << "testando se o round-robin acabou";
 
             if( peer_atual->getId() == ponto_partida->getId() )
             {
@@ -162,8 +136,6 @@ GP::BalanceadorCarga::setStatusPeer( const int _id,
 {
     GP::Peer*
     peer;
-
-    qDebug() << Q_FUNC_INFO << "ID_PEER" << _id;
 
     if( this->peers.contains(_id) )
     {
@@ -189,6 +161,18 @@ GP::BalanceadorCarga::setStatusPeer( const int _id,
     {
         qDebug() << Q_FUNC_INFO << "Peer nao foi encontrado";
     }
+}
+
+bool
+GP::BalanceadorCarga::getPermissaoProcessar()
+{
+    if( (GP::GPConfig::getInstance().getQtdeProcessosPermitidos()
+                         - GP::GPConfig::getInstance().getQtdeProcessos()) > 0 )
+    {
+        return true;
+    }
+
+    return false;
 }
 
 

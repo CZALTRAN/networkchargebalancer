@@ -52,8 +52,6 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
     GP::PacoteBase*
     _pacote = GP::ParserDePacotes::getInstance().parseiaPacote(_mensagem);
 
-    qDebug() << Q_FUNC_INFO << "ta parseada";
-
     switch( _pacote->dono )
     {
         case GP::BALANCER:
@@ -79,12 +77,8 @@ GerenciadorProcessos::processoStart( int _num_requisicao,
                                                        QString _processo,
                                                        QString _parametros )
 {
-    qDebug() << Q_FUNC_INFO << "parseando os parametros.";
-
     QStringList
     parametros = _parametros.split(" ");
-
-    qDebug() << Q_FUNC_INFO << "pegando id do peer q vai processar.";
 
     int
     id_peer_host = this->balancer.getPeerHost();
