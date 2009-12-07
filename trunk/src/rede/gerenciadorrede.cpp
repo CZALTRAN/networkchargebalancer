@@ -218,10 +218,10 @@ GerenciadorRede::recebeInit( Rede::PacoteBase* const _pacote )
     this->gerenciador_conexoes->addConexao( eu_mesmo );
     Rede::RedeConfig::getInstance().meu_id = pacote->id;
 
-    emit( this->novoPeer(
-            Rede::RedeConfig::getInstance().server_host->getId()
-            )
-          );
+//    emit( this->novoPeer(
+//            Rede::RedeConfig::getInstance().server_host->getId()
+//            )
+//          );
 
     emit( this->meuId( pacote->id ) );
 }

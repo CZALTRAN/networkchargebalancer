@@ -95,7 +95,7 @@ signals:
     meuId( int _id );
 
     void
-    recebePacoteGP( const int& _remetente, const QString& );
+    recebePacoteGP( int _remetente, const QString& );
 
 protected:
 
