@@ -15,7 +15,7 @@ DBusConfig::getInstance()
     return instance;
 }
 
-quint64
+int
 DBusConfig::getNovoProcId()
 {
     ++ this->indice_processo;

@@ -17,12 +17,12 @@ public:
 signals:
 
     void
-    novaSolicitacaoDeProcesso( quint64 _id, QString _processo, QString _parametros );
+    novaSolicitacaoDeProcesso( int _id, QString _processo, QString _parametros );
 
 public slots:
 
     void
-    resultStartProcesso( bool _sucesso, QString _processo, quint64 _id );
+    resultStartProcesso( bool _sucesso, QString _processo, int _id );
 
 private:
 

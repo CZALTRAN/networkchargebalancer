@@ -21,6 +21,12 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject::connect( this->grede, SIGNAL(peerCaiu(int)),
                       this->gprocessos, SLOT(peerCaiu(int)));
 
-//    QObject::connect( this->dbus, SIGNAL(novaSolicitacaoDeProcesso(quint64,QString,QString)),
-//                      this->gprocessos, SLOT(processoStart(int,QString,QString)));
+    QObject::connect( this->dbus, SIGNAL(novaSolicitacaoDeProcesso(int,QString,QString)),
+                      this->gprocessos, SLOT(processoStart(int,QString,QString)));
+
+    QObject::connect( this->gprocessos,SIGNAL(sendMessage(int,QString)),
+                      this->grede, SLOT(enviaPacoteGP(int,QString)));
+
+    QObject::connect( this->grede, SIGNAL(recebePacoteGP(int,QString)),
+                      this->gprocessos,SLOT(incommingMessage(int,QString)));
 }
