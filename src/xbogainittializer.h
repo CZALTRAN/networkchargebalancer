@@ -20,6 +20,8 @@ public slots:
     void
     teste(int);
 
+    void
+    incommingMessage(int,QString);
 private:
 
     GerenciadorProcessos*

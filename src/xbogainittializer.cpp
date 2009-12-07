@@ -21,6 +21,9 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject::connect( this->grede, SIGNAL(novoPeer(int)),
                       this->gprocessos, SLOT(peerNovo(int)));
 
+    QObject::connect( this->grede, SIGNAL( novoPeer(int) ),
+                      this, SLOT(teste(int)));
+
     QObject::connect( this->grede, SIGNAL(peerCaiu(int)),
                       this->gprocessos, SLOT(peerCaiu(int)));
 
@@ -32,6 +35,9 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
 
     QObject::connect( this->grede, SIGNAL(recebePacoteGP(int,QString)),
                       this->gprocessos,SLOT(incommingMessage(int,QString)));
+
+    QObject::connect( this->grede, SIGNAL(recebePacoteGP(int,QString)),
+                      this, SLOT(incommingMessage(int,QString)));
 
     if (argc == 3)
     {
@@ -52,5 +58,11 @@ void
 XBogaInittializer::teste(int bla)
 {
 
-    qDebug() << bla;
+    qDebug() << Q_FUNC_INFO << bla;
+}
+
+void
+XBogaInittializer::incommingMessage(int bla ,QString ble)
+{
+    qDebug() << Q_FUNC_INFO << bla << ble;
 }
