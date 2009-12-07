@@ -107,7 +107,6 @@ Rede::GerenciadorConexao::getNextId() const
 
     foreach( tmp_peer, this->peers )
     {
-        qDebug () << Q_FUNC_INFO << ": teste novo id:" << tmp_peer->getId();
         if ( tmp_peer->getId() > max_id )
         {
             max_id = tmp_peer->getId();
@@ -153,7 +152,6 @@ Rede::GerenciadorConexao::setNextServer() const
 
     foreach( tmp_server, this->peers)
     {
-        qDebug() << Q_FUNC_INFO << ": testando ids cadastrados " << tmp_server->getId();
         if ( tmp_server->getId() < proximo_server->getId() &&
              tmp_server != Rede::RedeConfig::getInstance().server_host )
         {
@@ -163,13 +161,13 @@ Rede::GerenciadorConexao::setNextServer() const
 
     if ( proximo_server->getId() == Rede::RedeConfig::getInstance().meu_id )
     {
-        qDebug() << Q_FUNC_INFO << ": fui eleito server";
+//        qDebug() << Q_FUNC_INFO << ": fui eleito server";
         Rede::RedeConfig::getInstance().estado_atual = Rede::SERVER;
     }
     else
     {
-        qDebug() << "O server agora eh o host " << proximo_server->getHost()
-                 << " com o id: " << proximo_server->getId();
+//        qDebug() << "O server agora eh o host " << proximo_server->getHost()
+//                 << " com o id: " << proximo_server->getId();
     }
 
     Rede::RedeConfig::getInstance().server_host = proximo_server;
