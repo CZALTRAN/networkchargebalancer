@@ -64,8 +64,6 @@ Rede::GerenciadorConexao::getTotalConn() const
 void
 Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 {
-    emit this->peerCaiu(_peer->getId() );
-
     if( _peer == Rede::RedeConfig::getInstance().server_host )
     {
         this->setNextServer();
@@ -73,25 +71,35 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 
     -- Rede::RedeConfig::getInstance().qtdePeers;
 
-    for( QList<Rede::Peer*>::iterator it = this->peers.begin();
-         it != this->peers.end();
-         it++)
-    {
-        if ( *it == _peer )
-        {
-            this->peers.erase(it);
-        }
-    }
+//    for( QList<Rede::Peer*>::iterator it = this->peers.begin();
+//         it != this->peers.end();
+//         it++)
+//    {
+//        if ( (*it)->getId() == _peer->getId() )
+//        {
+//            qDebug() << "achei o capeta!!!" << (*it)->getId();
+//            this->peers.erase(it);
+//        }
+//    }
+
+    int
+    index = this->peers.indexOf( _peer );
+
+    this->peers.removeAt( index );
+
+    emit this->peerCaiu(_peer->getId() );
 }
 
 void
 Rede::GerenciadorConexao::indexaPeer( const int _id, Rede::Peer* const _peer )
 {
+    Q_UNUSED(_id)
+
     this->peers.push_back(_peer);
     ++ Rede::RedeConfig::getInstance().qtdePeers;
 
-    QObject::connect( _peer, SIGNAL(perdiConexao(Rede::Peer*const)),
-                      this, SLOT(peerCaiu(Rede::Peer*const)));
+    QObject::connect( _peer, SIGNAL( perdiConexao(Rede::Peer* )),
+                      this, SLOT( peerCaiu( Rede::Peer* ) ));
 
     QObject::connect( this, SIGNAL(signalBroadCast(QString)),
                       _peer, SLOT(enviaMensagemGenerica(QString)));

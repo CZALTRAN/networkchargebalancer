@@ -55,7 +55,7 @@ namespace Rede
     public slots:
 
         void
-        peerCaiu( Rede::Peer* const _peer );
+        peerCaiu( Rede::Peer* _peer );
 
     signals:
 
