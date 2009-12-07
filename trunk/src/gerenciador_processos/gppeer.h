@@ -22,7 +22,9 @@ namespace GP
     public:
         Peer();
 
-        Peer( const int& _id, const bool& _possui_relacao, const int& _qtde_processos, const int& _qtde_processos_permitidos );
+        Peer( const int& _id, const bool& _possui_relacao,
+                              const int& _qtde_processos,
+                              const int& _qtde_processos_permitidos );
 
         virtual
         ~Peer();
@@ -31,7 +33,7 @@ namespace GP
         setId(const int& _id);
 
         void
-        setPossuiRelacao(const int& _possui_relacao);
+        setPossuiRelacao(const bool& _possui_relacao);
 
         void
         setQtdeProcessos(const int& _qtde_processos);

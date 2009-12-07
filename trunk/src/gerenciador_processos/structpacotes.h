@@ -34,6 +34,9 @@ namespace GP
 
     typedef struct PacoteStartProcess : public PacoteBase
     {
+        int
+        num_requisicao;
+
         QString
         processo;
 
@@ -44,6 +47,9 @@ namespace GP
 
     typedef struct PacoteSuccessStartProcess : public PacoteBase
     {
+        int
+        num_requisicao;
+
         QString
         processo;
 
@@ -54,8 +60,14 @@ namespace GP
 
     typedef struct PacoteFailStartProcess : public PacoteBase
     {
+        int
+        num_requisicao;
+
         QString
         processo;
+
+        QStringList
+        parametros;
 
     } PacoteFailStartProcess;
 
@@ -63,6 +75,9 @@ namespace GP
     {
         int
         qtde_processos;
+
+        int
+        qtde_processos_permitidos;
 
     } PacoteStatusPeer;
 }

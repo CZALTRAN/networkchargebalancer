@@ -50,7 +50,9 @@ GP::Launcher::processoStart( const int& _num_requisicao,
             {
                 delete processo_criado;
 
-                emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome);
+                emit this->falhouStartProcesso(_num_requisicao, _id_dono,
+                                                                _nome,
+                                                                _parametros);
             }
         }
         else
@@ -60,8 +62,11 @@ GP::Launcher::processoStart( const int& _num_requisicao,
                                                                    _parametros);
         }
     }
-
-    emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome);
+    else
+    {
+        emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome,
+                                                                  _parametros);
+    }
 }
 
 GP::ProcessoLocalOuImportado*
@@ -106,7 +111,6 @@ GP::Launcher::startaProcessoRemoto( const int& _num_requisicao,
     QString
     pacote = GP::ConstrutorDePacotes::getInstance().montaStartProcess(
                                                                 _num_requisicao,
-                                                                _id_dono,
                                                                 _nome,
                                                                 _parametros);
 

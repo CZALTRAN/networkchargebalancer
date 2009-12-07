@@ -32,6 +32,10 @@ namespace GP
 
         PacoteStatusPeer*
         parseiaPacoteStatusPeer( const QStringList& _lista_parametros ) const;
+
+        void
+        setaInteiroDePacote( const QStringList& _pacote, int _posicao,
+                                                         int& campo) const;
     };
 }
 

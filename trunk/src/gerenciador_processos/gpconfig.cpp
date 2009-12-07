@@ -22,6 +22,18 @@ GP::GPConfig::getMeuId()
     return this->meu_id;
 }
 
+int
+GP::GPConfig::getQtdeProcessos()
+{
+    return this->qtde_processos;
+}
+
+int
+GP::GPConfig::getQtdeProcessosPermitidos()
+{
+    return this->qtde_processos_permitidos;
+}
+
 GP::Aplicacao*
 GP::GPConfig::getAplicacao(const QString& _nome)
 {
@@ -52,6 +64,19 @@ GP::GPConfig::setMeuId(const int& _meu_id)
 {
     this->meu_id = _meu_id;
 }
+
+void
+GP::GPConfig::setQtdeProcessos( const int& _qtde )
+{
+    this->qtde_processos = _qtde;
+}
+
+void
+GP::GPConfig::setQdeProcessosPermitidos( const int& _qtde )
+{
+    this->qtde_processos_permitidos = _qtde;
+}
+
 
 GP::GPConfig&
 GP::GPConfig::getInstance()

@@ -12,12 +12,24 @@ namespace GP
         int
         meu_id;
 
+        int
+        qtde_processos;
+
+        int
+        qtde_processos_permitidos;
+
         QHash<QString,const Aplicacao*>
         aplicacoes;
 
     public:
         int
         getMeuId();
+
+        int
+        getQtdeProcessos();
+
+        int
+        getQtdeProcessosPermitidos();
 
         Aplicacao*
         getAplicacao(const QString& _nome);
@@ -27,6 +39,12 @@ namespace GP
 
         void
         setMeuId(const int& _meu_id);
+
+        void
+        setQtdeProcessos( const int& _qtde );
+
+        void
+        setQdeProcessosPermitidos( const int& _qtde );
 
         static GPConfig&
         getInstance();

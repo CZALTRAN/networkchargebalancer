@@ -5,6 +5,10 @@
 #include <QStringList>
 #include <QProcess>
 
+#ifndef SEPARADOR_DE_CAMPO
+#define SEPARADOR_DE_CAMPO QString(":")
+#endif //SEPARADOR_DE_CAMPO
+
 namespace GP
 {
     class ConstrutorDePacotes
@@ -14,9 +18,9 @@ namespace GP
         getInstance();
 
         QString
-        montaStartProcess( const int& _num_requisicao, const int& _id_dono,
-                                                const QString& _processo,
-                                                const QStringList _parametros );
+        montaStartProcess( const int& _num_requisicao,
+                           const QString& _processo,
+                           const QStringList _parametros );
 
         QString
         montaSuccessStartProcess( const int& _num_requisicao,
@@ -25,10 +29,12 @@ namespace GP
 
         QString
         montaFailStartProcess( const int& _num_requisicao,
-                               const QString& _processo );
+                               const QString& _processo,
+                               const QStringList& _parametros );
 
         QString
-        montaStatusPeer( const int& _qtde_processos );
+        montaStatusPeer( const int& _qtde_processos,
+                         const int& _qtde_processos_permitidos );
 
     private:
         ConstrutorDePacotes();

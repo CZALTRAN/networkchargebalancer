@@ -46,7 +46,9 @@ namespace GP
         novoProcesso( int _id_host, GP::Processo* _processo );
 
         void
-        falhouStartProcesso(int _num_requisicao, int _id_dono, QString _nome);
+        falhouStartProcesso(int _num_requisicao, int _id_dono,
+                                                 QString _nome,
+                                                 QStringList _parametros);
 
     private:
         ProcessoLocalOuImportado*
