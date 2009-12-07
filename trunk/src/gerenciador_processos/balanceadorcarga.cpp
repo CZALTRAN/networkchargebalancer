@@ -42,12 +42,6 @@ GP::BalanceadorCarga::peerNovo( const int& _id )
 
         qDebug() << Q_FUNC_INFO << "construindo pacote e enviando para a rede";
 
-        QString
-        pacote_status_peer =
-        GP::ConstrutorDePacotes::getInstance().montaStatusPeer(0, NUM_MAX_PROCESSOS);
-
-        emit this->sendMessage(0, pacote_status_peer);
-
         qDebug() << Q_FUNC_INFO << "inserindo peer na hash";
 
         this->peers.insert(_id, novo_peer);
@@ -59,6 +53,11 @@ GP::BalanceadorCarga::peerNovo( const int& _id )
         //novo_peer->setQtdeProcessosPermitidos(NUM_MAX_PROCESSOS);
         this->peers.insert(_id, novo_peer);
     }
+    QString
+    pacote_status_peer =
+    GP::ConstrutorDePacotes::getInstance().montaStatusPeer(0, NUM_MAX_PROCESSOS);
+
+    emit this->sendMessage(0, pacote_status_peer);
 }
 
 void
