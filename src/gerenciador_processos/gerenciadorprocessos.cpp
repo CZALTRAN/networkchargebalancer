@@ -57,7 +57,7 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
     switch( _pacote->dono )
     {
         case GP::BALANCER:
-            qDebug() << Q_FUNC_INFO << "eh do balancer";
+            qDebug() << Q_FUNC_INFO << "eh do balancer" << _id;
             this->trataMensagemBalancer(_id, _pacote);
         break;
 
