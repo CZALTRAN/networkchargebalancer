@@ -164,6 +164,8 @@ GP::BalanceadorCarga::setStatusPeer( const int& _id,
     GP::Peer*
     peer;
 
+    qDebug() << Q_FUNC_INFO << "ID_PEER" << _id;
+
     if( this->peers.contains(_id) )
     {
         peer = this->peers.value(_id);
