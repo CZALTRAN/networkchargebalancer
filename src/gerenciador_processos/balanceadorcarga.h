@@ -51,6 +51,9 @@ namespace GP
         void
         setStatusPeer( const int _id, const PacoteStatusPeer* _pacote );
 
+        bool
+        getPermissaoProcessar();
+
     public slots:
 
     signals:
