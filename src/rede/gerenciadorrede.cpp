@@ -96,7 +96,6 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
         Rede::Peer*
         novo_peer = this->gerenciador_conexoes->novaConexao( _socket_descriptor );
 
-//        this->gerenciador_conexoes->debug();
         QObject::connect(novo_peer,SIGNAL(incommingMessage(int,QString)),
                          this,SLOT(slotNovaMensagemFromPeer(int,QString)));
 
@@ -108,6 +107,7 @@ GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
         QObject::connect(this,SIGNAL(novoPeer(const QString&, const int&)),
                          novo_peer,SLOT(enviaNovoPeer(const QString&, const int&)));
 
+        this->gerenciador_conexoes->debug();
     break;
     }
 
