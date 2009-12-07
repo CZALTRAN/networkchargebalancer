@@ -13,7 +13,7 @@ public:
     static DBusConfig&
     getInstance();
 
-    quint64
+    int
     getNovoProcId();
 
 private:
@@ -25,7 +25,7 @@ private:
     DBusConfig&
     operator= ( DBusConfig const& );
 
-    quint64
+    int
     indice_processo;
 };
 
