@@ -1,7 +1,7 @@
 #ifndef CONSTRUTORDEPACOTES_H
 #define CONSTRUTORDEPACOTES_H
 
-#define SEPARADOR_DE_CAMPO QString(":")
+#define SEPARADOR_DE_CAMPO QString(";")
 
 #include <QString>
 
