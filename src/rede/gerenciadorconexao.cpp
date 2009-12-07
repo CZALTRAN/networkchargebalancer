@@ -143,7 +143,7 @@ Rede::GerenciadorConexao::emitSignalBroadCast( const QString& _message )
 void
 Rede::GerenciadorConexao::setNextServer() const
 {
-    this->debug();
+//    this->debug();
     Rede::Peer*
     proximo_server = this->getPeerById( Rede::RedeConfig::getInstance().meu_id );
 
