@@ -4,11 +4,13 @@
 #include <QObject>
 #include <QQueue>
 #include <QHash>
-#include <QHashIterator>
+#include <QMutableHashIterator>
 
 #include "structpacotes.h"
 #include "gppeer.h"
 #include "processo.h"
+
+#define NUM_MAX_PROCESSOS 3
 
 namespace GP
 {
@@ -17,13 +19,13 @@ namespace GP
     Q_OBJECT
 
     private:
-        QHash<const int, const Peer*>
+        QHash<int, Peer*>
         peers;
 
         int
         qtde_peers;
 
-        QHashIterator<const int, const Peer*>*
+        QHash<int, Peer*>::iterator
         peer_round_robin;
 
     public:
@@ -38,10 +40,16 @@ namespace GP
         peerNovo( const int& _id );
 
         void
-        incommingMessage( const int& _id, const PacoteBase& _pacote );
+        incommingMessage( const int& _id, const PacoteBase* _pacote );
+
+        void
+        insereCarga( const int& _id );
 
         int
-        getPeerHost() const;
+        getPeerHost();
+
+        void
+        setStatusPeer( const int& _id, const PacoteStatusPeer* _pacote );
 
     public slots:
 

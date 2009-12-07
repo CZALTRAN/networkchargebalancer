@@ -17,7 +17,7 @@ namespace GP{
 
         QString
         nome;
-
+        
         int
         id_dono;
 

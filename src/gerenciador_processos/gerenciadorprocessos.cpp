@@ -18,8 +18,12 @@ GerenciadorProcessos::GerenciadorProcessos(QObject * _parent )
     QObject::connect(&this->launcher, SIGNAL(novoProcesso(int, GP::Processo*)),
                      this, SLOT(novoProcesso(int,GP::Processo*)));
 
-    QObject::connect(&this->launcher, SIGNAL(falhouStartProcesso(int, int, QString)),
-                     this, SLOT(falhouStartProcesso(int,int,QString)));
+    QObject::connect(&this->launcher, SIGNAL(falhouStartProcesso(int,
+                                                                 int,
+                                                                 QString,
+                                                                 QStringList)),
+                     this, SLOT(falhouStartProcesso(int,int,QString,
+                                                            QStringList)));
 }
 
 GerenciadorProcessos::~GerenciadorProcessos()
@@ -30,7 +34,7 @@ GerenciadorProcessos::~GerenciadorProcessos()
 void
 GerenciadorProcessos::peerNovo( const int& _id )
 {
-
+    this->balancer.peerNovo(_id);
 }
 
 void
@@ -40,23 +44,31 @@ GerenciadorProcessos::peerCaiu( const int& _id )
 }
 
 void
-GerenciadorProcessos::incommingMessage(const int& _id, const QString& _mensagem)
+GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
 {
+
+    qDebug() << Q_FUNC_INFO << "chegou mensagem";
 
     GP::PacoteBase*
     _pacote = GP::ParserDePacotes::getInstance().parseiaPacote(_mensagem);
 
+    qDebug() << Q_FUNC_INFO << "ta parseada";
+
     switch( _pacote->dono )
     {
         case GP::BALANCER:
-            this->balancer.incommingMessage( _id, *_pacote );
+            qDebug() << Q_FUNC_INFO << "eh do balancer";
+            this->trataMensagemBalancer(_id, _pacote);
         break;
 
         case GP::LAUNCHER:
-            this->launcher.incommingMessage( _id, *_pacote );
+            qDebug() << Q_FUNC_INFO << "eh do launcher";
+            this->trataMensagemLauncher( _id, _pacote );
         break;
 
         case GP::GP:
+            qDebug() << Q_FUNC_INFO << "eh minha" << GP::GP;
+            qDebug() << Q_FUNC_INFO << _mensagem.toStdString().c_str();
         break;
     }
 
@@ -77,7 +89,7 @@ GerenciadorProcessos::processoStart( int _num_requisicao,
     int
     id_peer_host = this->balancer.getPeerHost();
 
-    qDebug() << Q_FUNC_INFO << "solicitando que o launcher inicie o processo.";
+    qDebug() << Q_FUNC_INFO << "solicitando que o launcher inicie o processo no host" << QString::number(id_peer_host);
 
     this->launcher.processoStart( _num_requisicao, id_peer_host,
                                   GP::GPConfig::getInstance().getMeuId(),
@@ -89,6 +101,8 @@ void
 GerenciadorProcessos::meuId( int _meu_id )
 {
     GP::GPConfig::getInstance().setMeuId(_meu_id);
+
+    qDebug() << Q_FUNC_INFO << "avisando o balancer sobre o novo peer";
 
     this->balancer.peerNovo(_meu_id);
 }
@@ -125,12 +139,15 @@ GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 
         emit this->sendMessage(_processo->getIdDono(), pacote);
     }
+
+    this->balancer.insereCarga(_id_host);
 }
 
 void
 GerenciadorProcessos::falhouStartProcesso( int _num_requisicao,
                                            int _id_dono,
-                                           QString _processo )
+                                           QString _processo,
+                                           QStringList _parametros )
 {
     if( GP::GPConfig::getInstance().getMeuId() == _id_dono )
     {
@@ -144,7 +161,8 @@ GerenciadorProcessos::falhouStartProcesso( int _num_requisicao,
         QString
         pacote = GP::ConstrutorDePacotes::getInstance().montaFailStartProcess(
                                                                 _num_requisicao,
-                                                                _processo);
+                                                                _processo,
+                                                                _parametros);
 
         emit this->sendMessage(_id_dono, pacote);
     }
@@ -155,4 +173,83 @@ void
 GerenciadorProcessos::enviaMensagem( int _id_destino, QString _mensagem )
 {
     emit this->sendMessage(_id_destino, _mensagem);
+    qDebug() << Q_FUNC_INFO << "enviando mensagem para a rede" << _mensagem.toStdString().c_str();
+}
+
+void
+GerenciadorProcessos::trataMensagemBalancer( const int& _id,
+                                             GP::PacoteBase* _pacote )
+{
+    switch( _pacote->nome )
+    {
+        case GP::STATUS_PEER :
+             GP::PacoteStatusPeer*
+             pacote = static_cast<GP::PacoteStatusPeer*>(_pacote);
+
+             qDebug() << Q_FUNC_INFO << "setando status do peer" << _id;
+
+             this->balancer.setStatusPeer(_id, pacote);
+        break;
+    }
+}
+
+void
+GerenciadorProcessos::trataMensagemLauncher( const int& _id,
+                                             GP::PacoteBase* _pacote )
+{
+    switch( _pacote->nome )
+    {
+        case GP::START_PROCESS :
+            this->trataStartProcess(_id, _pacote);
+        break;
+
+        case GP::SUCCESS_START_PROCESS :
+            this->trataSucessStartProcess(_id, _pacote);
+        break;
+
+        case GP::FAIL_START_PROCESS :
+            this->trataFailStartProcess(_id, _pacote);
+        break;
+    }
+}
+
+void
+GerenciadorProcessos::trataStartProcess(const int& _id, GP::PacoteBase* _pacote)
+{
+    GP::PacoteStartProcess*
+    pacote_start_process = static_cast<GP::PacoteStartProcess*>(_pacote);
+
+    this->launcher.processoStart( pacote_start_process->num_requisicao,
+                                         GP::GPConfig::getInstance().getMeuId(),
+                                         _id,
+                                         pacote_start_process->processo,
+                                         pacote_start_process->parametros);
+}
+
+void
+GerenciadorProcessos::trataSucessStartProcess( const int& _id,
+                                               GP::PacoteBase* _pacote )
+{
+    GP::PacoteSuccessStartProcess*
+    pacote_success_start_process =
+                    static_cast<GP::PacoteSuccessStartProcess*>(_pacote);
+
+    emit this->sucessoProcessoStart(
+                            pacote_success_start_process->num_requisicao,
+                            pacote_success_start_process->processo,
+                            pacote_success_start_process->pid);
+}
+
+void
+GerenciadorProcessos::trataFailStartProcess( const int& _id,
+                                             GP::PacoteBase* _pacote )
+{
+    GP::PacoteFailStartProcess*
+    pacote_fail_start_process =
+                       static_cast<GP::PacoteFailStartProcess*>(_pacote);
+
+    this->processoStart(pacote_fail_start_process->num_requisicao,
+                        pacote_fail_start_process->processo,
+                        pacote_fail_start_process->parametros.join("") );
+
 }
