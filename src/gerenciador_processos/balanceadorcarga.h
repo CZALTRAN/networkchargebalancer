@@ -49,7 +49,7 @@ namespace GP
         getPeerHost();
 
         void
-        setStatusPeer( const int& _id, const PacoteStatusPeer* _pacote );
+        setStatusPeer( const int _id, const PacoteStatusPeer* _pacote );
 
     public slots:
 

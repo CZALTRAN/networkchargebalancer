@@ -158,7 +158,7 @@ GP::BalanceadorCarga::getPeerHost()
 }
 
 void
-GP::BalanceadorCarga::setStatusPeer( const int& _id,
+GP::BalanceadorCarga::setStatusPeer( const int _id,
                                      const GP::PacoteStatusPeer* _pacote )
 {
     GP::Peer*
