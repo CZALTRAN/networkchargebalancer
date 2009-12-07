@@ -27,6 +27,9 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject::connect( this->grede, SIGNAL(peerCaiu(int)),
                       this->gprocessos, SLOT(peerCaiu(int)));
 
+    QObject::connect( this->grede, SIGNAL( peerCaiu(int) ),
+                      this, SLOT(teste(int)));
+
     QObject::connect( this->dbus, SIGNAL(novaSolicitacaoDeProcesso(int,QString,QString)),
                       this->gprocessos, SLOT(processoStart(int,QString,QString)));
 
@@ -57,7 +60,6 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
 void
 XBogaInittializer::teste(int bla)
 {
-
     qDebug() << Q_FUNC_INFO << bla;
 }
 
