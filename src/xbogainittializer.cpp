@@ -1,19 +1,22 @@
 #include "xbogainittializer.h"
 
+#include <QDebug>
+
+#include "rede/peer.h"
+
 XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject(parent)
 {
 
-    if (argc == 3)
-        this->grede = new GerenciadorRede( argv[1],argv[2],this);
-    else
-        this->grede = new GerenciadorRede( argv[1],0,this);
-
+    this->grede = new GerenciadorRede( argv[1],this);
     this->gprocessos = new GerenciadorProcessos(this);
     this->dbus = new GerenciadorDBus(this);
 
     QObject::connect( this->grede, SIGNAL(meuId(int)),
                       this->gprocessos, SLOT(meuId(int)));
+
+    QObject::connect( this->grede, SIGNAL( meuId(int)),
+                      this, SLOT(teste(int)));
 
     QObject::connect( this->grede, SIGNAL(novoPeer(int)),
                       this->gprocessos, SLOT(peerNovo(int)));
@@ -29,4 +32,25 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
 
     QObject::connect( this->grede, SIGNAL(recebePacoteGP(int,QString)),
                       this->gprocessos,SLOT(incommingMessage(int,QString)));
+
+    if (argc == 3)
+    {
+        Rede::Peer*
+        primeiro_peer = new Rede::Peer();;
+
+        primeiro_peer->setHost( argv[2] );
+
+        this->grede->buscaPorServer(primeiro_peer);
+    }
+    else
+    {
+        this->grede->startComoServer();
+    }
+}
+
+void
+XBogaInittializer::teste(int bla)
+{
+
+    qDebug() << bla;
 }

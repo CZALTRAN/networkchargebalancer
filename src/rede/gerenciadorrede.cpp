@@ -8,7 +8,6 @@
 
 
 GerenciadorRede::GerenciadorRede( const QString& _interface,
-                                  Rede::Peer* _primeiro_peer,
                                   QObject* _parent )
             : QObject(_parent)
 {
@@ -28,28 +27,8 @@ GerenciadorRede::GerenciadorRede( const QString& _interface,
     QObject::connect(this->ouvinte_procura, SIGNAL(novaConn(int)),
                      this,SLOT(informaServerInfo(int)));
 
-    if ( _primeiro_peer == NULL )
-    {
-        this->startComoServer();
-    }
-    else
-    {
-        this->buscaPorServer(_primeiro_peer);
-    }
-
 }
 
-GerenciadorRede::GerenciadorRede( const QString& _interface,
-                                  const QString& _host,
-                                  QObject* _parent)
-{
-    Rede::Peer*
-    primeiro_peer = new Rede::Peer();;
-
-    primeiro_peer->setHost( _host );
-
-    GerenciadorRede::GerenciadorRede(_interface,primeiro_peer, _parent);
-}
 
 GerenciadorRede::~GerenciadorRede()
 {
@@ -71,9 +50,6 @@ GerenciadorRede::startComoServer()
 
     this->gerenciador_conexoes->addConexao( eu_mesmo );
 
-    emit this->novoPeer(
-            Rede::RedeConfig::getInstance().meu_id
-            );
     emit this->meuId(
             Rede::RedeConfig::getInstance().meu_id
             );

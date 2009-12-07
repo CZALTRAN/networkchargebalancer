@@ -32,12 +32,7 @@ public:
      *        conectar em ninguem iniciando uma nova rede.
      */
     GerenciadorRede( const QString& _interface,
-                     Rede::Peer* _primeiro_peer = NULL,
                      QObject* _parent = NULL);
-
-    GerenciadorRede( const QString& _interface,
-                     const QString& _host,
-                     QObject* _parent = NULL );
 
     virtual
     ~GerenciadorRede();
@@ -45,13 +40,13 @@ public:
     QStringList
     pingPeer( QString _host );
 
-private:
-
     void
     startComoServer();
 
     void
     buscaPorServer( Rede::Peer* _primeiro_peer );
+
+private:
 
     void
     recebeInit( Rede::PacoteBase* const _pacote );
@@ -97,7 +92,7 @@ signals:
     peerCaiu( const int& _id );
 
     void
-    meuId( const int& _id );
+    meuId( int _id );
 
     void
     recebePacoteGP( const int& _remetente, const QString& );

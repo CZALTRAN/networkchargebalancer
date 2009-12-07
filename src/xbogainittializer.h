@@ -17,6 +17,9 @@ signals:
 
 public slots:
 
+    void
+    teste(int);
+
 private:
 
     GerenciadorProcessos*
