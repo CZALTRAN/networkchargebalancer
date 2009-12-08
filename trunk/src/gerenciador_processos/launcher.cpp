@@ -1,5 +1,8 @@
 #include "launcher.h"
 
+#include <QDebug>
+
+#include "aplicacao.h"
 #include "gpconfig.h"
 #include "gpconstrutordepacotes.h"
 
@@ -30,8 +33,8 @@ GP::Launcher::processoStart( const int& _num_requisicao,
                              const QString& _nome,
                              const QStringList& _parametros )
 {
-    if( GP::GPConfig::getInstance().getPossuiAplicacao(_nome) )
-    {
+//    if( GP::GPConfig::getInstance().getPossuiAplicacao(_nome) )
+//    {
         if( _id_host == GP::GPConfig::getInstance().getMeuId() )
         {
             GP::Processo*
@@ -59,13 +62,13 @@ GP::Launcher::processoStart( const int& _num_requisicao,
                                                                    _nome,
                                                                    _parametros);
         }
-    }
-    else
-    {
-
-        emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome,
-                                                                  _parametros);
-    }
+//    }
+//    else
+//    {
+//
+//        emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome,
+//                                                                  _parametros);
+//    }
 }
 
 GP::ProcessoLocalOuImportado*
@@ -82,10 +85,21 @@ GP::Launcher::startaProcessoLocal( const int& _num_requisicao,
     processo->setNome(_nome);
     processo->setIdHost(GP::GPConfig::getInstance().getMeuId());
 
-    if( GP::GPConfig::getInstance().getAplicacao(_nome)->usaX11() )
+    GP::Aplicacao*
+    aplicacao = GP::GPConfig::getInstance().getAplicacao(_nome);
+
+    if( aplicacao != 0 )
     {
-        //essa porra vai mudar!
-        processo->start(_nome, _parametros);
+
+        if( aplicacao->usaX11() )
+        {
+            //essa porra vai mudar!
+            processo->start(_nome, _parametros);
+        }
+        else
+        {
+            processo->start(_nome, _parametros);
+        }
     }
     else
     {
@@ -94,12 +108,6 @@ GP::Launcher::startaProcessoLocal( const int& _num_requisicao,
 
     if( processo->waitForStarted() )
     {
-        QString
-        pacote_status = GP::ConstrutorDePacotes::getInstance().montaStatusPeer(
-                        GP::GPConfig::getInstance().getQtdeProcessos(),
-                        GP::GPConfig::getInstance().getQtdeProcessosPermitidos());
-
-        emit this->sendMessage(0, pacote_status);
         return processo;
     }
     else

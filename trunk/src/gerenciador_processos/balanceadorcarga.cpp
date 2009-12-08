@@ -50,6 +50,8 @@ GP::BalanceadorCarga::peerNovo( const int& _id )
         novo_peer->setPossuiRelacao(false);
         novo_peer->setQtdeProcessos(0);
 
+        qDebug() << Q_FUNC_INFO << "Enviando status peer ao novo peer!";
+
         this->peers.insert(_id, novo_peer);
 
         QString
@@ -87,9 +89,14 @@ GP::BalanceadorCarga::insereCarga( const int& _id )
         if( _id == GP::GPConfig::getInstance().getMeuId() )
         {
             GP::GPConfig::getInstance().setQtdeProcessos(carga_peer  + 1);
-        }
 
-        qDebug() << Q_FUNC_INFO << "NOVA CARGA: " << this->peers.value(_id)->getQtdeProcessos();
+            QString
+            pacote_status = GP::ConstrutorDePacotes::getInstance().montaStatusPeer(
+                            GP::GPConfig::getInstance().getQtdeProcessos(),
+                            GP::GPConfig::getInstance().getQtdeProcessosPermitidos());
+
+            emit this->sendMessage(0, pacote_status);
+        }
 
     }
     else
@@ -126,8 +133,6 @@ GP::BalanceadorCarga::getPeerHost()
 
     do
     {
-        qDebug() << Q_FUNC_INFO << "Peer Iteracao: " << peer_atual->getId();
-
         if( this->peers.contains( this->peers.key(peer_atual) ) )
         {
 
@@ -166,8 +171,6 @@ GP::BalanceadorCarga::setStatusPeer( const int _id,
 
         peer->setQtdeProcessos(_pacote->qtde_processos);
         peer->setQtdeProcessosPermitidos(_pacote->qtde_processos_permitidos);
-
-        qDebug() << Q_FUNC_INFO << "atualizando carga no peer" << peer->getId();
 
         if( _id == GP::GPConfig::getInstance().getMeuId() )
         {
