@@ -80,10 +80,7 @@ signals:
     terminoDeProcesso( motivoFimProcesso _motivo );
 
     void
-    falhouProcessoStart( int _num_requisicao, QString _processo );
-
-    void
-    sucessoProcessoStart( int _num_requisicao, QString _processo, Q_PID _pid );
+    resultadoProcessoStart( int _num_requisicao, QString _processo, Q_PID _pid );
 
 private:
     void
