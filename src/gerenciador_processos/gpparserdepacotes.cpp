@@ -79,14 +79,51 @@ GP::PacoteSuccessStartProcess*
 GP::ParserDePacotes::parseiaSuccessStartProcess(
                                     const QStringList& _lista_parametros ) const
 {
+    GP::PacoteSuccessStartProcess*
+    pacote = new GP::PacoteSuccessStartProcess;
 
+    pacote->nome = GP::SUCCESS_START_PROCESS;
+    pacote->dono = GP::LAUNCHER;
+
+    this->setaInteiroDePacote(_lista_parametros, 3, pacote->num_requisicao);
+
+    bool sucesso_ao_converter;
+
+    int
+    campo = _lista_parametros.value(4).toLongLong( &sucesso_ao_converter, 10 ) ;
+    if( sucesso_ao_converter == false )
+    {
+        qDebug() << Q_FUNC_INFO << "Ocorreu um erro ao parsear pacote.";
+        exit(1);
+    }
+
+    pacote->pid = campo;
+
+    pacote->processo = _lista_parametros[5];
+
+    return pacote;
 }
 
 GP::PacoteFailStartProcess*
 GP::ParserDePacotes::parseiaFailStartProcess(
                                     const QStringList& _lista_parametros ) const
 {
+    GP::PacoteFailStartProcess*
+    pacote = new GP::PacoteFailStartProcess;
 
+    pacote->nome = GP::FAIL_START_PROCESS;
+    pacote->dono = GP::LAUNCHER;
+
+    this->setaInteiroDePacote(_lista_parametros, 3, pacote->num_requisicao);
+
+    pacote->processo = _lista_parametros[4];
+
+    for( int parametro = 5; parametro < _lista_parametros.size(); parametro++ )
+    {
+        pacote->parametros.append(_lista_parametros[parametro]);
+    }
+
+    return pacote;
 }
 
 GP::PacoteStatusPeer*

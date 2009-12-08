@@ -80,16 +80,16 @@ GP::BalanceadorCarga::insereCarga( const int& _id )
         int
         carga_peer = peer->getQtdeProcessos();
 
-        peer->setQtdeProcessos(carga_peer + 1);
+        this->peers.value(_id)->setQtdeProcessos(carga_peer + 1);
 
-        peer->setPossuiRelacao(true);
+        this->peers.value(_id)->setPossuiRelacao(true);
 
-        if( peer->getId() == GP::GPConfig::getInstance().getMeuId() )
+        if( _id == GP::GPConfig::getInstance().getMeuId() )
         {
             GP::GPConfig::getInstance().setQtdeProcessos(carga_peer  + 1);
         }
 
-        qDebug() << Q_FUNC_INFO << "NOVA CARGA: " << peer->getQtdeProcessos();
+        qDebug() << Q_FUNC_INFO << "NOVA CARGA: " << this->peers.value(_id)->getQtdeProcessos();
 
     }
     else

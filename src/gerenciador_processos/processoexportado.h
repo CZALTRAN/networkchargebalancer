@@ -11,19 +11,10 @@ namespace GP
     {
     Q_OBJECT
 
-        int
-        id_host;
-
     public:
         ProcessoExportado();
 
         ProcessoExportado( Q_PID _pid, int _id_host );
-
-        int
-        getIdHost();
-
-        void
-        setIdHost( const int& _id_host );
 
         void
         stdIn(const QString& _entrada);
