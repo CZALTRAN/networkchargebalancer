@@ -1,5 +1,7 @@
 #include "gpconstrutordepacotes.h"
 
+#include <QDebug>
+
 #include "structpacotes.h"
 
 GP::ConstrutorDePacotes::ConstrutorDePacotes()
@@ -36,7 +38,17 @@ GP::ConstrutorDePacotes::montaSuccessStartProcess( const int& _num_requisicao,
                                                    const QString& _processo,
                                                    const Q_PID& _pid )
 {
+    qDebug() << Q_FUNC_INFO << "valor do nome do processo: " << _processo.toStdString().c_str();
 
+    QString
+    pacote = "GP" + SEPARADOR_DE_CAMPO;
+    pacote += "LAUNCHER" + SEPARADOR_DE_CAMPO;
+    pacote += "SUCCESS_START_PROCESS" + SEPARADOR_DE_CAMPO;
+    pacote += QString::number(_num_requisicao) + SEPARADOR_DE_CAMPO;
+    pacote += QString::number(_pid) + SEPARADOR_DE_CAMPO;
+    pacote += _processo + SEPARADOR_DE_CAMPO;
+
+    return pacote;
 }
 
 QString
@@ -44,7 +56,15 @@ GP::ConstrutorDePacotes::montaFailStartProcess( const int& _num_requisicao,
                                                 const QString& _processo,
                                                 const QStringList& _parametros )
 {
+    QString
+    pacote = "GP" + SEPARADOR_DE_CAMPO;
+    pacote += "LAUNCHER" + SEPARADOR_DE_CAMPO;
+    pacote += "FAIL_START_PROCESS" + SEPARADOR_DE_CAMPO;
+    pacote += QString::number(_num_requisicao) + SEPARADOR_DE_CAMPO;
+    pacote += _processo + SEPARADOR_DE_CAMPO;
+    pacote += _parametros.join(SEPARADOR_DE_CAMPO);
 
+    return pacote;
 }
 
 QString

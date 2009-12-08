@@ -79,6 +79,8 @@ GP::Launcher::startaProcessoLocal( const int& _num_requisicao,
 
     processo->setNumRequisicao(_num_requisicao);
     processo->setIdDono(_id_dono);
+    processo->setNome(_nome);
+    processo->setIdHost(GP::GPConfig::getInstance().getMeuId());
 
     if( GP::GPConfig::getInstance().getAplicacao(_nome)->usaX11() )
     {

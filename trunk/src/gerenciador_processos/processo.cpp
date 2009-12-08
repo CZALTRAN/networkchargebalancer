@@ -29,6 +29,12 @@ GP::Processo::getIdDono()
 }
 
 int
+GP::Processo::getIdHost()
+{
+    return this->id_host;
+}
+
+int
 GP::Processo::getNumRequisicao()
 {
     return this->num_requisicao;
@@ -57,3 +63,10 @@ GP::Processo::setNumRequisicao( const int& _num_requisicao )
 {
     this->num_requisicao = _num_requisicao;
 }
+
+void
+GP::Processo::setIdHost( const int& _id_host )
+{
+    this->id_host = _id_host;
+}
+

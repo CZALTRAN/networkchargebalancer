@@ -49,6 +49,8 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
 
     qDebug() << Q_FUNC_INFO << "chegou mensagem";
 
+    qDebug() << Q_FUNC_INFO << _mensagem.toStdString().c_str();
+
     GP::PacoteBase*
     _pacote = GP::ParserDePacotes::getInstance().parseiaPacote(_mensagem);
 
@@ -66,8 +68,7 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
 
         case GP::GP:
             qDebug() << Q_FUNC_INFO << "eh minha" << GP::GP;
-            qDebug() << Q_FUNC_INFO << _mensagem.toStdString().c_str();
-        break;
+       break;
     }
 
 }
@@ -111,18 +112,37 @@ GerenciadorProcessos::killProcess( const int _id_dono, const Q_PID _processo)
 void
 GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 {
+    this->balancer.insereCarga(_id_host);
+
     if( GP::GPConfig::getInstance().getMeuId() == _id_host )
     {
         qDebug() << Q_FUNC_INFO << "adcionando processo na hash";
         this->processos.insert(_processo->getPid(), _processo);
 
-        emit this->sucessoProcessoStart(_processo->getNumRequisicao(),
-                                        _processo->getNome(),
-                                        _processo->getPid());
+        qDebug() << Q_FUNC_INFO << "emitindo sinal ou pacote:";
+
+        if( _processo->getIdDono() == GP::GPConfig::getInstance().getMeuId() )
+        {
+            emit this->sucessoProcessoStart(_processo->getNumRequisicao(),
+                                                           _processo->getNome(),
+                                                           _processo->getPid());
+        }
+        else
+        {
+            QString
+            pacote = GP::ConstrutorDePacotes::getInstance().montaSuccessStartProcess(
+                                                      _processo->getNumRequisicao(),
+                                                      _processo->getNome(),
+                                                      _processo->getPid() );
+
+            qDebug() << Q_FUNC_INFO << pacote;
+
+            emit this->sendMessage(_processo->getIdDono(), pacote);
+        }
     }
     else
     {
-        qDebug() << Q_FUNC_INFO << "adcionando processo na hash";
+        qDebug() << Q_FUNC_INFO << "adcionando processo na hash 2";
         this->processos.insert(_processo->getPid(), _processo);
 
         QString
@@ -132,9 +152,15 @@ GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
                                                   _processo->getPid() );
 
         emit this->sendMessage(_processo->getIdDono(), pacote);
+        
+        QString
+        pacote_status= GP::ConstrutorDePacotes::getInstance().montaStatusPeer(
+                      GP::GPConfig::getInstance().getQtdeProcessos(), 
+                      GP::GPConfig::getInstance().getQtdeProcessosPermitidos());
+
+        emit this->sendMessage(0, pacote_status);
     }
 
-    this->balancer.insereCarga(_id_host);
 }
 
 void
@@ -237,7 +263,7 @@ GerenciadorProcessos::trataSucessStartProcess( const int& _id,
 {
     GP::PacoteSuccessStartProcess*
     pacote_success_start_process =
-                    static_cast<GP::PacoteSuccessStartProcess*>(_pacote);
+                           static_cast<GP::PacoteSuccessStartProcess*>(_pacote);
 
     this->balancer.insereCarga(_id);
 
@@ -248,7 +274,8 @@ GerenciadorProcessos::trataSucessStartProcess( const int& _id,
     processo_exportado->setIdDono(GP::GPConfig::getInstance().getMeuId());
     processo_exportado->setIdHost(_id);
     processo_exportado->setNome(pacote_success_start_process->processo);
-    processo_exportado->setNumRequisicao(pacote_success_start_process->num_requisicao);
+    processo_exportado->setNumRequisicao(
+                                  pacote_success_start_process->num_requisicao);
 
     this->processos.insert(pacote_success_start_process->pid,
                            processo_exportado);

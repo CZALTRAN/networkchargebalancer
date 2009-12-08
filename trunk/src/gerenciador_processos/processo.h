@@ -22,6 +22,9 @@ namespace GP{
         id_dono;
 
         int
+        id_host;
+
+        int
         num_requisicao;
 
     public:
@@ -53,6 +56,12 @@ namespace GP{
 
         void
         setNumRequisicao( const int& _num_requisicao );
+
+        int
+        getIdHost();
+
+        void
+        setIdHost( const int& _id_host );
 
         virtual void
         stdIn(const QString& _entrada)=0;

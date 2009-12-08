@@ -25,19 +25,29 @@ int main(int argc, char *argv[])
     gerenciador.incommingMessage(7, "GP:BALANCER:STATUS_PEER:0:1:");
     gerenciador.incommingMessage(8, "GP:BALANCER:STATUS_PEER:0:1:");
 
+/*********************** teste1 **********************************/
+//    gerenciador.processoStart(1, "firefox", "www.google.com");
+//    gerenciador.processoStart(4, "firefox", "www.google.com");
+//    gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:4:123:firefox:");
+//    gerenciador.incommingMessage(6, "GP:BALANCER:STATUS_PEER:1:1:");
+//    gerenciador.processoStart(5, "firefox", "www.google.com");
+//    gerenciador.incommingMessage(7, "GP:LAUNCHER:SUCCESS_START_PROCESS:5:123:firefox:");
+//    gerenciador.incommingMessage(7, "GP:BALANCER:STATUS_PEER:1:1:");
+//    gerenciador.processoStart(2, "firefox", "www.youtube.com");
+//    gerenciador.incommingMessage(8, "GP:LAUNCHER:SUCCESS_START_PROCESS:2:123:firefox:");
+//    gerenciador.incommingMessage(8, "GP:BALANCER:STATUS_PEER:1:1:");
+//    gerenciador.processoStart(3, "firefox", "www.uol.com.br");
+//    gerenciador.processoStart(3, "firefox", "www.redtube.com");
+//    gerenciador.incommingMessage(6, "GP:BALANCER:STATUS_PEER:0:1:");
+//    gerenciador.processoStart(3, "firefox", "www.tube8.com");
+//    gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:3:123:firefox:");
 
-    gerenciador.processoStart(1, "firefox", "www.google.com");
-    gerenciador.processoStart(4, "firefox", "www.google.com");
-    gerenciador.incommingMessage(6, "GP:BALANCER:STATUS_PEER:1:1:");
-    gerenciador.processoStart(5, "firefox", "www.google.com");
-    gerenciador.incommingMessage(7, "GP:BALANCER:STATUS_PEER:1:1:");
-    gerenciador.processoStart(2, "firefox", "www.youtube.com");
-    gerenciador.incommingMessage(8, "GP:BALANCER:STATUS_PEER:1:1:");
-    gerenciador.processoStart(3, "firefox", "www.uol.com.br");
-    gerenciador.processoStart(3, "firefox", "www.redtube.com");
-    gerenciador.incommingMessage(6, "GP:BALANCER:STATUS_PEER:0:1:");
-    gerenciador.processoStart(3, "firefox", "www.tube8.com");
 
+/*********************** teste2 **********************************/
+    gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:3:firefox:www.google.com");
+    gerenciador.incommingMessage(7, "GP:LAUNCHER:START_PROCESS:3:firefox:www.uel.br");
+    gerenciador.incommingMessage(8, "GP:LAUNCHER:START_PROCESS:3:firefox:docs.google.com");
+    gerenciador.incommingMessage(7, "GP:LAUNCHER:START_PROCESS:3:firefox:www.mundocanibal.com.br");
 
     return a.exec();
 }
