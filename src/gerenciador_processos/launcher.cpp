@@ -48,8 +48,6 @@ GP::Launcher::processoStart( const int& _num_requisicao,
             }
             else
             {
-                delete processo_criado;
-
                 emit this->falhouStartProcesso(_num_requisicao, _id_dono,
                                                                 _nome,
                                                                 _parametros);
