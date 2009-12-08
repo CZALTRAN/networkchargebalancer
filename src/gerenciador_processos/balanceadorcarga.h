@@ -18,7 +18,6 @@ namespace GP
     {
     Q_OBJECT
 
-    private:
         QHash<int, Peer*>
         peers;
 
@@ -61,6 +60,9 @@ namespace GP
         void
         sendMessage( int _id_destino, QString _message );
 
+    private:
+        void
+        avancaPeerRR();
     };
 }
 

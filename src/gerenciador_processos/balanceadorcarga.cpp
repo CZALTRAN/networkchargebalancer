@@ -10,6 +10,9 @@ GP::BalanceadorCarga::BalanceadorCarga(QObject *parent) :
 {
     this->peer_round_robin = this->peers.begin();
 
+    GP::GPConfig::getInstance().setQtdeProcessos(0);
+    GP::GPConfig::getInstance().setQtdeProcessosPermitidos(NUM_MAX_PROCESSOS);
+
 }
 
 GP::BalanceadorCarga::~BalanceadorCarga()
@@ -35,8 +38,10 @@ GP::BalanceadorCarga::peerNovo( const int& _id )
     if( GP::GPConfig::getInstance().getMeuId() == _id )
     {
         novo_peer->setPossuiRelacao(true);
-        novo_peer->setQtdeProcessos(0);
-        novo_peer->setQtdeProcessosPermitidos(2);
+        novo_peer->setQtdeProcessos(
+                                GP::GPConfig::getInstance().getQtdeProcessos());
+        novo_peer->setQtdeProcessosPermitidos(
+                      GP::GPConfig::getInstance().getQtdeProcessosPermitidos());
 
         this->peers.insert(_id, novo_peer);
     }
@@ -44,18 +49,22 @@ GP::BalanceadorCarga::peerNovo( const int& _id )
     {
         novo_peer->setPossuiRelacao(false);
         novo_peer->setQtdeProcessos(0);
-        //novo_peer->setQtdeProcessosPermitidos(NUM_MAX_PROCESSOS);
-        this->peers.insert(_id, novo_peer);
-    }
-    QString
-    pacote_status_peer =
-    GP::ConstrutorDePacotes::getInstance().montaStatusPeer(0, NUM_MAX_PROCESSOS);
 
-    emit this->sendMessage(0, pacote_status_peer);
+        this->peers.insert(_id, novo_peer);
+
+        QString
+        pacote_status_peer =
+        GP::ConstrutorDePacotes::getInstance().montaStatusPeer(
+                      GP::GPConfig::getInstance().getQtdeProcessos(),
+                      GP::GPConfig::getInstance().getQtdeProcessosPermitidos());
+
+        emit this->sendMessage(_id, pacote_status_peer);
+    }
 }
 
 void
-GP::BalanceadorCarga::incommingMessage( const int& _id, const GP::PacoteBase* _pacote )
+GP::BalanceadorCarga::incommingMessage( const int& _id,
+                                        const GP::PacoteBase* _pacote )
 {
 
 }
@@ -75,6 +84,13 @@ GP::BalanceadorCarga::insereCarga( const int& _id )
 
         peer->setPossuiRelacao(true);
 
+        if( peer->getId() == GP::GPConfig::getInstance().getMeuId() )
+        {
+            GP::GPConfig::getInstance().setQtdeProcessos(carga_peer  + 1);
+        }
+
+        qDebug() << Q_FUNC_INFO << "NOVA CARGA: " << peer->getQtdeProcessos();
+
     }
     else
     {
@@ -88,46 +104,53 @@ GP::BalanceadorCarga::getPeerHost()
     GP::Peer*
     ponto_partida;
 
+    GP::Peer*
+    peer_atual;
+
+    qDebug() << Q_FUNC_INFO << "Tamanho da hash: " << this->peers.size();
+
     if( this->peer_round_robin != this->peers.end() )
     {
         ponto_partida = this->peer_round_robin.value();
+
+        peer_atual = this->peer_round_robin.value();
     }
     else
     {
-        QHash<int, Peer*>::iterator
-        iterador_temp = this->peers.begin();
+        this->peer_round_robin = this->peers.begin();
 
-        ponto_partida = iterador_temp.value();
+        ponto_partida = this->peer_round_robin.value();
+
+        peer_atual = this->peer_round_robin.value();
     }
 
-    while( true )
+    do
     {
-        if( this->peer_round_robin != this->peers.end() )
-        {
-            this->peer_round_robin++;
-        }
-        else
-        {
-            this->peer_round_robin = this->peers.begin();
-        }
-
-        GP::Peer*
-        peer_atual = this->peer_round_robin.value();
+        qDebug() << Q_FUNC_INFO << "Peer Iteracao: " << peer_atual->getId();
 
         if( this->peers.contains( this->peers.key(peer_atual) ) )
         {
 
-            if( ( peer_atual->getQtdeProcessosPermitidos() - peer_atual->getQtdeProcessos() ) > 0 )
+            if( ( peer_atual->getQtdeProcessosPermitidos()
+                                        - peer_atual->getQtdeProcessos() ) > 0 )
             {
+                this->avancaPeerRR();
                 return peer_atual->getId();
             }
 
-            if( peer_atual->getId() == ponto_partida->getId() )
-            {
-                return GP::GPConfig::getInstance().getMeuId();
-            }
         }
-    }
+        else
+        {
+            qDebug() << Q_FUNC_INFO << "UM PEER QUE A HASH NÃO POSSUI!";
+        }
+
+        this->avancaPeerRR();
+
+        peer_atual = this->peer_round_robin.value();
+
+    }while( ponto_partida->getId() != peer_atual->getId() );
+
+    return GP::GPConfig::getInstance().getMeuId();
 }
 
 void
@@ -175,5 +198,16 @@ GP::BalanceadorCarga::getPermissaoProcessar()
     return false;
 }
 
-
+void
+GP::BalanceadorCarga::avancaPeerRR()
+{
+    if( this->peer_round_robin != this->peers.end() )
+    {
+        this->peer_round_robin++;
+    }
+    else
+    {
+        this->peer_round_robin = this->peers.begin();
+    }
+}
 

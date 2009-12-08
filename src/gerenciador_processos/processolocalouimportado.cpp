@@ -12,7 +12,8 @@ GP::ProcessoLocalOuImportado::~ProcessoLocalOuImportado()
 }
 
 void
-GP::ProcessoLocalOuImportado::start(const QString& _processo, const QStringList& _parametros)
+GP::ProcessoLocalOuImportado::start(const QString& _processo,
+                                    const QStringList& _parametros)
 {
     this->processo = new QProcess(this);
 
