@@ -64,6 +64,7 @@ GP::Launcher::processoStart( const int& _num_requisicao,
     }
     else
     {
+
         emit this->falhouStartProcesso(_num_requisicao, _id_dono, _nome,
                                                                   _parametros);
     }
@@ -93,10 +94,20 @@ GP::Launcher::startaProcessoLocal( const int& _num_requisicao,
 
     if( processo->waitForStarted() )
     {
+        QString
+        pacote_status = GP::ConstrutorDePacotes::getInstance().montaStatusPeer(
+                        GP::GPConfig::getInstance().getQtdeProcessos(),
+                        GP::GPConfig::getInstance().getQtdeProcessosPermitidos());
+
+        emit this->sendMessage(0, pacote_status);
         return processo;
     }
     else
     {
+        emit this->falhouStartProcesso( _num_requisicao,
+                                        _id_dono,
+                                        _nome,
+                                        _parametros );
         return 0;
     }
 }

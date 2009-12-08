@@ -72,7 +72,7 @@ GP::GPConfig::setQtdeProcessos( const int& _qtde )
 }
 
 void
-GP::GPConfig::setQdeProcessosPermitidos( const int& _qtde )
+GP::GPConfig::setQtdeProcessosPermitidos( const int& _qtde )
 {
     this->qtde_processos_permitidos = _qtde;
 }

@@ -44,7 +44,7 @@ namespace GP
         setQtdeProcessos( const int& _qtde );
 
         void
-        setQdeProcessosPermitidos( const int& _qtde );
+        setQtdeProcessosPermitidos( const int& _qtde );
 
         static GPConfig&
         getInstance();

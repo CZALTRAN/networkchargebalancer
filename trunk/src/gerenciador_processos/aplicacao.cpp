@@ -4,7 +4,8 @@ GP::Aplicacao::Aplicacao()
 {
 }
 
-GP::Aplicacao::Aplicacao( const QString& _nome, const QString& _diretorio, const bool& _x11 )
+GP::Aplicacao::Aplicacao( const QString& _nome, const QString& _diretorio,
+                                                const bool& _x11 )
 {
     this->nome = _nome;
     this->diretorio = _diretorio;
