@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     gerenciador.incommingMessage(8, "GP:BALANCER:STATUS_PEER:1:1:");
     gerenciador.processoStart(3, "firefox", "www.uol.com.br");
     gerenciador.processoStart(3, "firefox", "www.redtube.com");
-    gerenciador.incommingMessage(7, "GP:BALANCER:STATUS_PEER:0:1:");
+    gerenciador.incommingMessage(6, "GP:BALANCER:STATUS_PEER:0:1:");
     gerenciador.processoStart(3, "firefox", "www.tube8.com");
 
 
