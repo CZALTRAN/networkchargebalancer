@@ -213,11 +213,22 @@ GerenciadorProcessos::trataStartProcess(const int& _id, GP::PacoteBase* _pacote)
     GP::PacoteStartProcess*
     pacote_start_process = static_cast<GP::PacoteStartProcess*>(_pacote);
 
-    this->launcher.processoStart( pacote_start_process->num_requisicao,
+    if( this->balancer.getPermissaoProcessar() )
+    {
+        this->launcher.processoStart( pacote_start_process->num_requisicao,
                                          GP::GPConfig::getInstance().getMeuId(),
                                          _id,
                                          pacote_start_process->processo,
                                          pacote_start_process->parametros);
+    }
+    else
+    {
+        emit this->sendMessage(_id, GP::ConstrutorDePacotes::
+                                    getInstance().montaFailStartProcess(
+                                           pacote_start_process->num_requisicao,
+                                           pacote_start_process->processo,
+                                           pacote_start_process->parametros));
+    }
 }
 
 void
@@ -227,6 +238,20 @@ GerenciadorProcessos::trataSucessStartProcess( const int& _id,
     GP::PacoteSuccessStartProcess*
     pacote_success_start_process =
                     static_cast<GP::PacoteSuccessStartProcess*>(_pacote);
+
+    this->balancer.insereCarga(_id);
+
+    GP::ProcessoExportado*
+    processo_exportado = new GP::ProcessoExportado();
+
+    processo_exportado->setPid(pacote_success_start_process->pid);
+    processo_exportado->setIdDono(GP::GPConfig::getInstance().getMeuId());
+    processo_exportado->setIdHost(_id);
+    processo_exportado->setNome(pacote_success_start_process->processo);
+    processo_exportado->setNumRequisicao(pacote_success_start_process->num_requisicao);
+
+    this->processos.insert(pacote_success_start_process->pid,
+                           processo_exportado);
 
     emit this->sucessoProcessoStart(
                             pacote_success_start_process->num_requisicao,

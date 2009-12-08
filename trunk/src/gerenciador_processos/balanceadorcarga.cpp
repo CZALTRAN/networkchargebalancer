@@ -144,7 +144,7 @@ GP::BalanceadorCarga::getPeerHost()
             qDebug() << Q_FUNC_INFO << "UM PEER QUE A HASH NÃO POSSUI!";
         }
 
-        this->avancaPeerRR();
+        this->avancaPeerAtual();
 
         peer_atual = this->peer_round_robin.value();
 
@@ -206,6 +206,17 @@ GP::BalanceadorCarga::avancaPeerRR()
         this->peer_round_robin++;
     }
     else
+    {
+        this->peer_round_robin = this->peers.begin();
+    }
+}
+
+void
+GP::BalanceadorCarga::avancaPeerAtual()
+{
+    this->peer_round_robin++;
+
+    if( this->peer_round_robin == this->peers.end() )
     {
         this->peer_round_robin = this->peers.begin();
     }
