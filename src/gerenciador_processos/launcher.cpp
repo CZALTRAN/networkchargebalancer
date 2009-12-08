@@ -102,10 +102,6 @@ GP::Launcher::startaProcessoLocal( const int& _num_requisicao,
     }
     else
     {
-        emit this->falhouStartProcesso( _num_requisicao,
-                                        _id_dono,
-                                        _nome,
-                                        _parametros );
         return 0;
     }
 }

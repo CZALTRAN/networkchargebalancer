@@ -11,7 +11,7 @@ namespace GP{
     {
     Q_OBJECT
 
-    private:
+    protected:
         Q_PID
         pid;
 

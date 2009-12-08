@@ -63,6 +63,9 @@ namespace GP
     private:
         void
         avancaPeerRR();
+
+        void
+        avancaPeerAtual();
     };
 }
 
