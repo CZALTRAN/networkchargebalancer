@@ -116,7 +116,7 @@ GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 
         if( _processo->getIdDono() == GP::GPConfig::getInstance().getMeuId() )
         {
-            emit this->sucessoProcessoStart(_processo->getNumRequisicao(),
+            emit this->resultadoProcessoStart(_processo->getNumRequisicao(),
                                                            _processo->getNome(),
                                                            _processo->getPid());
         }
@@ -164,7 +164,7 @@ GerenciadorProcessos::falhouStartProcesso( int _num_requisicao,
     {
         qDebug() << Q_FUNC_INFO << "Falhou startar processo!";
 
-        emit this->falhouProcessoStart(_num_requisicao, _processo);
+        emit this->resultadoProcessoStart(_num_requisicao, _processo, 0);
     }
     else
     {
@@ -269,7 +269,7 @@ GerenciadorProcessos::trataSucessStartProcess( const int& _id,
     this->processos.insertMulti(pacote_success_start_process->pid,
                            processo_exportado);
 
-    emit this->sucessoProcessoStart(
+    emit this->resultadoProcessoStart(
                             pacote_success_start_process->num_requisicao,
                             pacote_success_start_process->processo,
                             pacote_success_start_process->pid);
