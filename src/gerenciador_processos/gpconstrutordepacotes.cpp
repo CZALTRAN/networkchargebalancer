@@ -38,8 +38,6 @@ GP::ConstrutorDePacotes::montaSuccessStartProcess( const int& _num_requisicao,
                                                    const QString& _processo,
                                                    const Q_PID& _pid )
 {
-    qDebug() << Q_FUNC_INFO << "valor do nome do processo: " << _processo.toStdString().c_str();
-
     QString
     pacote = "GP" + SEPARADOR_DE_CAMPO;
     pacote += "LAUNCHER" + SEPARADOR_DE_CAMPO;
