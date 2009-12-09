@@ -21,10 +21,16 @@ public slots:
     int
     getServer();
 
+    Q_SCRIPTABLE void
+    slotNovoPeer(  QString _novo_peer_host, int _novo_peer_id );
+
+    Q_SCRIPTABLE void
+    slotPeerCaiu( int _peer_caiu_id );
+
 signals:
 
     void
-    novoPeer( int _novo_peer_id, QString _novo_peer_host );
+    novoPeer(  QString _novo_peer_host, int _novo_peer_id );
 
     void
     peerCaiu( int _peer_caiu_id );
