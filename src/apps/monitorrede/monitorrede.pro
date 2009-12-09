@@ -8,8 +8,10 @@ MOC_DIR = build
 INCLUDEPATH += ../ \
     ../listapeer
 HEADERS += ../listapeer/listapeerwidget.h \
-    ../redeinterface.h
+    ../redeinterface.h \
+    monitorrede.h
 SOURCES += ../listapeer/listapeerwidget.cpp \
     ../redeinterface.cpp \
-    main.cpp
+    main.cpp \
+    monitorrede.cpp
 FORMS += monitor_rede.ui
