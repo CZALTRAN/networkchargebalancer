@@ -146,7 +146,13 @@ GerenciadorRede::slotNovaMensagemFromPeer( const int& _remetente, const QString&
            this->recebePacoteNovoPeer(pacote);
         break;
         case Rede::GP:
-            emit this->recebePacoteGP(_remetente, _message);
+
+            Rede::PacoteGP*
+            pacote_cast = static_cast<Rede::PacoteGP*>(pacote);
+
+            qDebug() << Q_FUNC_INFO << pacote_cast->mensagem;
+
+            emit this->recebePacoteGP(_remetente, pacote_cast->mensagem);
         break;
     }
 }
