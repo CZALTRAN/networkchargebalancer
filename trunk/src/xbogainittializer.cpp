@@ -31,9 +31,6 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject::connect( this->grede, SIGNAL(recebePacoteGP(int,QString)),
                       this->gprocessos,SLOT(incommingMessage(int,QString)));
 
-    QObject::connect( this->grede, SIGNAL(recebePacoteGP(int,QString)),
-                      this, SLOT(incommingMessage(int,QString)));
-
     this->criarERegistrarGPAdaptor();
     this->criarERegistrarRedeAdaptor();
 
@@ -56,12 +53,6 @@ void
 XBogaInittializer::teste(int bla)
 {
     qDebug() << Q_FUNC_INFO << bla;
-}
-
-void
-XBogaInittializer::incommingMessage(int bla ,QString ble)
-{
-    qDebug() << Q_FUNC_INFO << bla << ble;
 }
 
 void
@@ -88,6 +79,12 @@ XBogaInittializer::criarERegistrarRedeAdaptor()
 {
     RedeAdaptor*
     adaptador = new RedeAdaptor( this->grede );
+
+    QObject::connect( this->grede, SIGNAL(novoPeer(QString,int)),
+                      adaptador,SLOT(slotNovoPeer(QString,int)));
+
+    QObject::connect( this->grede,SIGNAL(peerCaiu(int)),
+                      adaptador,SLOT(slotPeerCaiu(int)));
 
     if (! this->dbus->registrarNovoAdaptador(adaptador,"/rede"))
     {
