@@ -11,7 +11,8 @@ namespace GP
     {
         GP,
         BALANCER,
-        LAUNCHER
+        LAUNCHER,
+        PROCESSO
     };
 
     enum TipoPacote
@@ -19,7 +20,9 @@ namespace GP
         START_PROCESS,
         FAIL_START_PROCESS,
         SUCCESS_START_PROCESS,
-        STATUS_PEER
+        STATUS_PEER,
+        STANDARD_INPUT,
+        STANDARD_OUTPUT
     };
 
     typedef struct PacoteBase
@@ -80,6 +83,30 @@ namespace GP
         qtde_processos_permitidos;
 
     } PacoteStatusPeer;
+
+    typedef struct PacoteStdIn : public PacoteBase
+    {
+        Q_PID
+        pid;
+
+        int
+        num_requisicao;
+
+        QString
+        entrada;
+    } PacoteStdIn;
+
+    typedef struct PacoteStdOut : public PacoteBase
+    {
+        Q_PID
+        pid;
+
+        int
+        num_requisicao;
+
+        QString
+        saida;
+    } PacoteStdOut;
 }
 
 #endif // STRUCTPACOTES_H

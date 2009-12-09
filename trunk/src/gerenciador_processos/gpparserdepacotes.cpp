@@ -46,6 +46,14 @@ GP::ParserDePacotes::parseiaPacote(const QString& _pacote) const
     {
         return this->parseiaPacoteStatusPeer(campos);
     }
+    else if( campos[2] == "STANDARD_INPUT")
+    {
+        return this->parseiaStdIn(campos);
+    }
+    else if( campos[2] == "STANDARD_OUTPUT")
+    {
+        return this->parseiaStdOut(campos);
+    }
     else
     {
         qDebug() << Q_FUNC_INFO << "Nao foi possivel parsear o pacote";
@@ -89,15 +97,7 @@ GP::ParserDePacotes::parseiaSuccessStartProcess(
 
     bool sucesso_ao_converter;
 
-    int
-    campo = _lista_parametros.value(4).toLongLong( &sucesso_ao_converter, 10 ) ;
-    if( sucesso_ao_converter == false )
-    {
-        qDebug() << Q_FUNC_INFO << "Ocorreu um erro ao parsear pacote.";
-        exit(1);
-    }
-
-    pacote->pid = campo;
+    this->setaInt64DePacote(_lista_parametros, 4, pacote->pid );
 
     pacote->processo = _lista_parametros[5];
 
@@ -146,6 +146,37 @@ GP::ParserDePacotes::parseiaPacoteStatusPeer(
     return pacote;
 }
 
+GP::PacoteStdIn*
+GP::ParserDePacotes::parseiaStdIn( const QStringList& _lista_parametros ) const
+{
+    GP::PacoteStdIn*
+    pacote = new GP::PacoteStdIn;
+
+    pacote->nome = GP::STANDARD_INPUT;
+    pacote->dono = GP::PROCESSO;
+
+    this->setaInt64DePacote(_lista_parametros, 3, pacote->pid);
+    this->setaInteiroDePacote(_lista_parametros, 4, pacote->num_requisicao);
+
+    return pacote;
+}
+
+GP::PacoteStdOut*
+GP::ParserDePacotes::parseiaStdOut( const QStringList& _lista_parametros ) const
+{
+    GP::PacoteStdOut*
+    pacote = new GP::PacoteStdOut;
+
+    pacote->nome = GP::STANDARD_INPUT;
+    pacote->dono = GP::PROCESSO;
+
+    this->setaInt64DePacote(_lista_parametros, 3, pacote->pid);
+    this->setaInteiroDePacote(_lista_parametros, 4, pacote->num_requisicao);
+
+    return pacote;
+}
+
+
 void
 GP::ParserDePacotes::setaInteiroDePacote( const QStringList& _pacote,
                                             int _posicao,
@@ -154,6 +185,21 @@ GP::ParserDePacotes::setaInteiroDePacote( const QStringList& _pacote,
     bool sucesso_ao_converter;
 
     campo = _pacote.value(_posicao).toInt( &sucesso_ao_converter, 10 ) ;
+    if( sucesso_ao_converter == false )
+    {
+        qDebug() << Q_FUNC_INFO << "Ocorreu um erro ao parsear pacote.";
+        exit(1);
+    }
+}
+
+void
+GP::ParserDePacotes::setaInt64DePacote( const QStringList& _pacote,
+                                            int _posicao,
+                                            qint64& campo) const
+{
+    bool sucesso_ao_converter;
+
+    campo = _pacote.value(_posicao).toLongLong( &sucesso_ao_converter, 10 ) ;
     if( sucesso_ao_converter == false )
     {
         qDebug() << Q_FUNC_INFO << "Ocorreu um erro ao parsear pacote.";

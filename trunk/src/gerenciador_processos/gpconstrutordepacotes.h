@@ -17,6 +17,7 @@ namespace GP
         static ConstrutorDePacotes&
         getInstance();
 
+        //pacotes do Launcher
         QString
         montaStartProcess( const int& _num_requisicao,
                            const QString& _processo,
@@ -32,9 +33,19 @@ namespace GP
                                const QString& _processo,
                                const QStringList& _parametros );
 
+        //pacotes do Balancer
         QString
         montaStatusPeer( const int& _qtde_processos,
                          const int& _qtde_processos_permitidos );
+
+        //pacotes de Processos
+        QString
+        montaStdIn( const Q_PID& _pid, const int& _num_requisicao,
+                                       const QString& _entrada );
+
+        QString
+        montaStdOut( const Q_PID& _pid, const int& _num_requisicao,
+                                        const QString& _saida );
 
     private:
         ConstrutorDePacotes();

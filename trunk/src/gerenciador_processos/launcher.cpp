@@ -37,9 +37,9 @@ GP::Launcher::processoStart( const int& _num_requisicao,
 //    {
         if( _id_host == GP::GPConfig::getInstance().getMeuId() )
         {
-            GP::Processo*
-            processo_criado;
+            qDebug() << Q_FUNC_INFO << "startando_processo_local";
 
+            GP::Processo*
             processo_criado = this->startaProcessoLocal( _num_requisicao,
                                                          _id_dono,
                                                          _nome,
@@ -103,6 +103,7 @@ GP::Launcher::startaProcessoLocal( const int& _num_requisicao,
     }
     else
     {
+        qDebug() << Q_FUNC_INFO << "Startando processo nao registrado.";
         processo->start(_nome, _parametros);
     }
 

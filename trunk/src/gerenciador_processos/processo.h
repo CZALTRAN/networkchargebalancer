@@ -68,7 +68,7 @@ namespace GP{
 
     signals:
         QString
-        stdOutAndErr();
+        stdOutAndErr(Q_PID _pid, int, QString _saida);
 
     };
 
