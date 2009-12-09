@@ -266,6 +266,7 @@ GerenciadorRede::recebePacoteNovoPeer( Rede::PacoteBase* const _pacote )
                      novo_peer, SLOT(enviaNovoPeer(const QString&, const int&)));
 
     emit( this->novoPeer( novo_peer->getId() ) );
+    emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
 }
 
 void
@@ -283,6 +284,7 @@ GerenciadorRede::recebeConexaoPeerVeterano( const int& _socket_descriptor )
     this->gerenciador_conexoes->addConexao(novo_peer);
 
     emit this->novoPeer( novo_peer->getId() );
+    emit this->novoPeer( novo_peer->getHost(), novo_peer->getId() );
 
 }
 
