@@ -29,6 +29,7 @@ GP::ConstrutorDePacotes::montaStartProcess( const int& _num_requisicao,
     pacote += QString::number(_num_requisicao) + SEPARADOR_DE_CAMPO;
     pacote += _processo + SEPARADOR_DE_CAMPO;
     pacote += _parametros.join(SEPARADOR_DE_CAMPO);
+    pacote += SEPARADOR_DE_CAMPO;
 
     return pacote;
 }
@@ -45,6 +46,7 @@ GP::ConstrutorDePacotes::montaSuccessStartProcess( const int& _num_requisicao,
     pacote += QString::number(_num_requisicao) + SEPARADOR_DE_CAMPO;
     pacote += QString::number(_pid) + SEPARADOR_DE_CAMPO;
     pacote += _processo + SEPARADOR_DE_CAMPO;
+    pacote += SEPARADOR_DE_CAMPO;
 
     return pacote;
 }
@@ -61,6 +63,7 @@ GP::ConstrutorDePacotes::montaFailStartProcess( const int& _num_requisicao,
     pacote += QString::number(_num_requisicao) + SEPARADOR_DE_CAMPO;
     pacote += _processo + SEPARADOR_DE_CAMPO;
     pacote += _parametros.join(SEPARADOR_DE_CAMPO);
+    pacote += SEPARADOR_DE_CAMPO;
 
     return pacote;
 }
