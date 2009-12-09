@@ -16,20 +16,23 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <widget class="ListaPeers" name="tableWidget">
+  <widget class="ListaPeerWidget" name="tableWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>191</width>
+     <width>241</width>
      <height>341</height>
     </rect>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOn</enum>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>300</x>
      <y>50</y>
      <width>91</width>
      <height>21</height>
@@ -39,20 +42,20 @@
     <string>ID do server:</string>
    </property>
   </widget>
-  <widget class="QLCDNumber" name="lcdNumber">
+  <widget class="QLCDNumber" name="server_id">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>400</x>
      <y>50</y>
      <width>64</width>
      <height>23</height>
     </rect>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioButton">
+  <widget class="QRadioButton" name="status_rede">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>300</x>
      <y>100</y>
      <width>181</width>
      <height>23</height>
@@ -68,7 +71,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ListaPeers</class>
+   <class>ListaPeerWidget</class>
    <extends>QTableWidget</extends>
    <header>../listapeer/listapeerwidget.h</header>
   </customwidget>

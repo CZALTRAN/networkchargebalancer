@@ -18,6 +18,9 @@ public:
     int
     getServerId();
 
+    bool
+    redeOk() const;
+
 signals:
 
     void
