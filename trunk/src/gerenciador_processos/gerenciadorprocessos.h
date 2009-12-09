@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QHash>
 #include <QProcess>
+#include <QList>
 
 #include "balanceadorcarga.h"
 #include "launcher.h"
@@ -35,20 +36,17 @@ public:
     virtual
     ~GerenciadorProcessos();
 
-    public slots:
+public slots:
+    //slots para comunicação externa
+    void
+    processoStart( int _num_requisicao, QString _processo,
+                                        QString _parametros );
 
     void
     peerNovo( const int& _id );
 
     void
     peerCaiu( const int& _id );
-
-public slots:
-
-    //slots para comunicação externa
-    void
-    processoStart( int _num_requisicao, QString _processo,
-                                        QString _parametros );
 
     void
     meuId( int _meu_id );
@@ -78,7 +76,6 @@ public slots:
     pegaSaidaProcesso( Q_PID _pid, int _num_requisicao, QString _saida );
 
 signals:
-
     void
     stdOut( Q_PID _pid, int _num_requisicao, QString _saida );
 
@@ -86,7 +83,8 @@ signals:
     sendMessage( int _id_destino, QString _mensagem);
 
     void
-    terminoDeProcesso( motivoFimProcesso _motivo );
+    terminoDeProcesso( Q_PID _pid, int num_requisicao,
+                                   motivoFimProcesso _motivo );
 
     void
     resultadoProcessoStart( int _num_requisicao, QString _processo, Q_PID _pid );
@@ -115,6 +113,12 @@ private:
 
     void
     trataStdOut( const int& _id, GP::PacoteBase* _pacote );
+
+    QList<GP::Processo*>
+    buscaProcessosPorIdHost( const int& _id );
+
+    QList<GP::Processo*>
+    buscaProcessosPorIdDono( const int& _id );
 };
 
 #endif // GERENCIADORPROCESSOS_H

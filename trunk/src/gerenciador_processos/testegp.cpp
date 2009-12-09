@@ -57,6 +57,5 @@ TesteGP::saidaDeMensagensGP(int _id, QString _mensagem)
         this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + this->pid + ":" + this->num_requisicao + ":" + "p:");
         this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + this->pid + ":" + this->num_requisicao + ":" + "v:");
         this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + this->pid + ":" + this->num_requisicao + ":" + "b:");
-
     }
 }

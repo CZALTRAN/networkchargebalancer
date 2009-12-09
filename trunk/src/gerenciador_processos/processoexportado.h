@@ -16,6 +16,8 @@ namespace GP
 
         ProcessoExportado( Q_PID _pid, int _id_host );
 
+        ~ProcessoExportado();
+
         void
         stdIn(const QString& _entrada);
 

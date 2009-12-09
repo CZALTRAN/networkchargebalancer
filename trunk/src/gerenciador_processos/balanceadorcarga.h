@@ -44,6 +44,9 @@ namespace GP
         void
         insereCarga( const int& _id );
 
+        void
+        removeCarga( const int& _id );
+
         int
         getPeerHost();
 

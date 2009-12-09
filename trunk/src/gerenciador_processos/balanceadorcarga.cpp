@@ -22,9 +22,12 @@ GP::BalanceadorCarga::~BalanceadorCarga()
 }
 
 void
-GP::BalanceadorCarga::peerCaiu( const int& )
+GP::BalanceadorCarga::peerCaiu( const int& _id )
 {
+    QHash<int, GP::Peer*>::iterator
+    iterador = this->peers.find(_id);
 
+    this->peers.erase(iterador);
 }
 
 void
@@ -89,6 +92,40 @@ GP::BalanceadorCarga::insereCarga( const int& _id )
         if( _id == GP::GPConfig::getInstance().getMeuId() )
         {
             GP::GPConfig::getInstance().setQtdeProcessos(carga_peer  + 1);
+
+            QString
+            pacote_status = GP::ConstrutorDePacotes::getInstance().montaStatusPeer(
+                            GP::GPConfig::getInstance().getQtdeProcessos(),
+                            GP::GPConfig::getInstance().getQtdeProcessosPermitidos());
+
+            emit this->sendMessage(0, pacote_status);
+        }
+
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "Peer nao foi encontrado.";
+    }
+}
+
+void
+GP::BalanceadorCarga::removeCarga( const int& _id )
+{
+    if( this->peers.contains(_id) )
+    {
+        GP::Peer*
+        peer = this->peers.value(_id);
+
+        int
+        carga_peer = peer->getQtdeProcessos();
+
+        this->peers.value(_id)->setQtdeProcessos(carga_peer - 1);
+
+        this->peers.value(_id)->setPossuiRelacao(true);
+
+        if( _id == GP::GPConfig::getInstance().getMeuId() )
+        {
+            GP::GPConfig::getInstance().setQtdeProcessos(carga_peer - 1);
 
             QString
             pacote_status = GP::ConstrutorDePacotes::getInstance().montaStatusPeer(

@@ -10,6 +10,7 @@ GP::ProcessoLocalOuImportado::ProcessoLocalOuImportado(QObject* _parent)
 
 GP::ProcessoLocalOuImportado::~ProcessoLocalOuImportado()
 {
+    qDebug() << Q_FUNC_INFO << "matando processo";
     this->processo->kill();
 }
 

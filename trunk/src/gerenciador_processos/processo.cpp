@@ -43,7 +43,7 @@ GP::Processo::getNumRequisicao()
 void
 GP::Processo::setPid( const Q_PID& _pid )
 {
-    this->id_dono = _pid;
+    this->pid = _pid;
 }
 
 void
