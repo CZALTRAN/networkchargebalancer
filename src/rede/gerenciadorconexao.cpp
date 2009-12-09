@@ -73,17 +73,6 @@ Rede::GerenciadorConexao::peerCaiu( Rede::Peer* const _peer )
 
     -- Rede::RedeConfig::getInstance().qtdePeers;
 
-//    for( QList<Rede::Peer*>::iterator it = this->peers.begin();
-//         it != this->peers.end();
-//         it++)
-//    {
-//        if ( (*it)->getId() == _peer->getId() )
-//        {
-//            qDebug() << "achei o capeta!!!" << (*it)->getId();
-//            this->peers.erase(it);
-//        }
-//    }
-
     int
     index = this->peers.indexOf( _peer );
 

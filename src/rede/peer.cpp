@@ -131,6 +131,9 @@ Rede::Peer::conectado()
         break;
 
     case Rede::CONECTADO:
+
+        emit this->conectado(this->host, this->id );
+
         if ( Rede::RedeConfig::getInstance().meu_id != 0 )
         {
             QString
