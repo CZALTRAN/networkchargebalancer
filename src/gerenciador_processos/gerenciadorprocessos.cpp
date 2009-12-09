@@ -38,10 +38,88 @@ GerenciadorProcessos::peerNovo( const int& _id )
     this->balancer.peerNovo(_id);
 }
 
+//MÉTODO SUPER_GAMBIARRA MODE ON
+//PRECISO ENCONTRAR UMA SOLUÇÃO MELHOR DEPOIS
 void
 GerenciadorProcessos::peerCaiu( const int& _id )
 {
+    qDebug() << Q_FUNC_INFO << "Removendo os meus processos que estao sendo processados pelo peer " << _id;
 
+    QList<GP::Processo*>
+    processos_exportados_para_o_peer = this->buscaProcessosPorIdDono(
+            GP::GPConfig::getInstance().getMeuId());
+
+    for( int processo = 0;
+         processo < processos_exportados_para_o_peer.size();
+         processo++ )
+    {
+        QHash<Q_PID, GP::Processo*>::iterator
+        iterador = this->processos.find(
+                          processos_exportados_para_o_peer[processo]->getPid());
+
+        while( iterador != this->processos.end() )
+        {
+            if( iterador.value()->getPid()
+                    == processos_exportados_para_o_peer[processo]->getPid())
+            {
+                if( iterador.value()->getIdHost()
+                    == processos_exportados_para_o_peer[processo]->getIdHost() )
+                {
+                    emit this->terminoDeProcesso(
+                                           iterador.value()->getPid(),
+                                           iterador.value()->getNumRequisicao(),
+                                           PEER_CAIU);
+
+                    qDebug() << Q_FUNC_INFO << "Removido o processo: " << iterador.value()->getNome();
+                    delete iterador.value();
+                    this->processos.erase(iterador);
+
+                    iterador = this->processos.end();
+                }
+            }
+            if( iterador != this->processos.end() )
+            {
+                iterador++;
+            }
+        }
+    }
+
+    QList<GP::Processo*>
+    processos_do_peer = this->buscaProcessosPorIdDono(_id);
+
+    qDebug() << Q_FUNC_INFO << "Removendo os processos do peer " << _id;
+
+    for( int processo = 0; processo < processos_do_peer.size(); processo++ )
+    {
+        QHash<Q_PID, GP::Processo*>::iterator
+        iterador = this->processos.find(processos_do_peer[processo]->getPid());
+
+        while( iterador != this->processos.end() )
+        {
+            if( iterador.value()->getPid()
+                    == processos_do_peer[processo]->getPid() )
+            {
+                if( iterador.value()->getIdDono()
+                                   == processos_do_peer[processo]->getIdDono() )
+                {
+                    qDebug() << Q_FUNC_INFO << "Removi o processo: " << iterador.value()->getNome();
+                    delete iterador.value();
+                    this->processos.erase(iterador);
+
+                    this->balancer.removeCarga(
+                                        GP::GPConfig::getInstance().getMeuId());
+
+                    iterador = this->processos.end();
+                }
+            }
+            if( iterador != this->processos.end() )
+            {
+                iterador++;
+            }
+        }
+    }
+
+    this->balancer.peerCaiu(_id);
 }
 
 void
@@ -231,7 +309,9 @@ GerenciadorProcessos::enviaMensagem( int _id_destino, QString _mensagem )
 }
 
 void
-GerenciadorProcessos::pegaSaidaProcesso( Q_PID _pid, int _num_requisicao, QString _saida )
+GerenciadorProcessos::pegaSaidaProcesso( Q_PID _pid,
+                                         int _num_requisicao,
+                                         QString _saida )
 {
     GP::Processo*
     processo = static_cast<GP::Processo*>(this->sender());
@@ -399,4 +479,46 @@ GerenciadorProcessos::trataStdOut( const int& _id, GP::PacoteBase* _pacote )
     this->stdOut( pacote_std_out->pid,
                  pacote_std_out->num_requisicao,
                  pacote_std_out->saida );
+}
+
+QList<GP::Processo*>
+GerenciadorProcessos::buscaProcessosPorIdHost( const int& _id )
+{
+    QList<GP::Processo*>
+    lista_de_processos;
+
+    QHash<Q_PID, GP::Processo*>::iterator
+    iterador = this->processos.begin();
+
+    for( ; iterador != this->processos.end(); iterador++ )
+    {
+        if( iterador.value()->getIdHost() == _id )
+        {
+            qDebug() << Q_FUNC_INFO << "encontrei um processo: " << iterador.value()->getPid();
+            lista_de_processos.append(iterador.value());
+        }
+    }
+
+    return lista_de_processos;
+}
+
+QList<GP::Processo*>
+GerenciadorProcessos::buscaProcessosPorIdDono( const int& _id )
+{
+    QList<GP::Processo*>
+    lista_de_processos;
+
+    QHash<Q_PID, GP::Processo*>::iterator
+    iterador = this->processos.begin();
+
+    for( ; iterador != this->processos.end(); iterador++ )
+    {
+        if( iterador.value()->getIdDono() == _id )
+        {
+            qDebug() << Q_FUNC_INFO << "encontrei um processo: " << iterador.value()->getPid();
+            lista_de_processos.append(iterador.value());
+        }
+    }
+
+    return lista_de_processos;
 }

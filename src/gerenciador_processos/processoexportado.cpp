@@ -16,3 +16,8 @@ GP::ProcessoExportado::stdIn(const QString& _entrada)
                                                            _entrada);
     //parei aquii
 }
+
+GP::ProcessoExportado::~ProcessoExportado()
+{
+
+}
