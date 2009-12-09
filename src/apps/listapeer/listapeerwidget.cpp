@@ -42,18 +42,20 @@ ListaPeerWidget::ListaPeerWidget( QWidget* _parent )
         this->setItem(this->rowCount() -1 , 1 ,tmp_item);
 
     }
-    QObject::connect( this->interface_rede, SIGNAL(novoPeer(int,QString)),
-                      this,SLOT(novoPeer(int,QString)));
+    QObject::connect( this->interface_rede, SIGNAL(novoPeer(QString,int)),
+                      this,SLOT(novoPeer(QString,int)));
+
+    QObject::connect( this->interface_rede,SIGNAL(peerCaiu(int)),
+                      this,SLOT(peerCaiu(int)));
 }
 
 ListaPeerWidget::~ListaPeerWidget()
 {
 
-
 }
 
 void
-ListaPeerWidget::novoPeer(int _id, QString _host )
+ListaPeerWidget::novoPeer( QString _host, int _id )
 {
     QTableWidgetItem*
     nova_celula;
@@ -65,4 +67,13 @@ ListaPeerWidget::novoPeer(int _id, QString _host )
 
     nova_celula = new QTableWidgetItem( _host, 0);
     this->setItem( this->rowCount() - 1, 1, nova_celula);
+}
+
+void
+ListaPeerWidget::peerCaiu( int _id )
+{
+    QList<QTableWidgetItem*>
+    itens_encontrados = this->findItems(QString::number(_id),Qt::MatchExactly);
+
+    this->removeRow( this->row(itens_encontrados[0]) );
 }
