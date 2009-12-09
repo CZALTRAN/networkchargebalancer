@@ -26,7 +26,7 @@ Q_OBJECT
     GP::Launcher
     launcher;
 
-    QHash<const Q_PID, const GP::Processo*>
+    QHash<Q_PID, GP::Processo*>
     processos;
 
 public:
@@ -59,6 +59,9 @@ public slots:
     void
     killProcess( int _id_dono, Q_PID _processo );
 
+    void
+    stdIn( Q_PID _pid, int _num_requisicao, QString _entrada );
+
     //slots para comunicação interna
     void
     novoProcesso( int _id_host, GP::Processo* _processo );
@@ -71,7 +74,13 @@ public slots:
     void
     enviaMensagem( int _id_destino, QString _mensagem );
 
+    void
+    pegaSaidaProcesso( Q_PID _pid, int _num_requisicao, QString _saida );
+
 signals:
+
+    void
+    stdOut( Q_PID _pid, int _num_requisicao, QString _saida );
 
     void
     sendMessage( int _id_destino, QString _mensagem);
@@ -90,6 +99,9 @@ private:
     trataMensagemLauncher( const int& _id, GP::PacoteBase* _pacote );
 
     void
+    trataMensagemProcesso( const int& _id, GP::PacoteBase* _pacote );
+
+    void
     trataStartProcess( const int& _id, GP::PacoteBase* _pacote );
 
     void
@@ -97,6 +109,12 @@ private:
 
     void
     trataFailStartProcess( const int& _id, GP::PacoteBase* _pacote );
+
+    void
+    trataStdIn( const int& _id, GP::PacoteBase* _pacote );
+
+    void
+    trataStdOut( const int& _id, GP::PacoteBase* _pacote );
 };
 
 #endif // GERENCIADORPROCESSOS_H

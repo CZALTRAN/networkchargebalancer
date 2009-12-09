@@ -30,6 +30,10 @@ namespace GP
 
         void
         stdIn(const QString& _entrada);
+
+    public slots:
+        void
+        pegaSaidaProcesso();
    };
 }
 

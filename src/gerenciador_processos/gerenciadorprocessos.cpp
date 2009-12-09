@@ -1,6 +1,7 @@
 #include "gerenciadorprocessos.h"
 
 #include <QDebug>
+#include <QList>
 
 #include "gpparserdepacotes.h"
 #include "gpconfig.h"
@@ -56,6 +57,10 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
 
     switch( _pacote->dono )
     {
+        case GP::GP:
+            qDebug() << Q_FUNC_INFO << "eh minha" << GP::GP;
+        break;
+
         case GP::BALANCER:
             this->trataMensagemBalancer(_id, _pacote);
         break;
@@ -64,9 +69,9 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
             this->trataMensagemLauncher( _id, _pacote );
         break;
 
-        case GP::GP:
-            qDebug() << Q_FUNC_INFO << "eh minha" << GP::GP;
-       break;
+        case GP::PROCESSO:
+            this->trataMensagemProcesso( _id, _pacote );
+        break;
     }
 
 }
@@ -106,12 +111,38 @@ GerenciadorProcessos::killProcess( const int _id_dono, const Q_PID _processo)
 }
 
 void
+GerenciadorProcessos::stdIn( Q_PID _pid, int _num_requisicao, QString _entrada )
+{
+    QList<GP::Processo*>
+    _processos = this->processos.values(_pid);
+
+    for( int processo = 0; processo < _processos.size(); processo++ )
+    {
+        if( _processos[processo]->getNumRequisicao() == _num_requisicao
+            && _processos[processo]->getIdDono()
+               == GP::GPConfig::getInstance().getMeuId())
+        {
+            qDebug() << Q_FUNC_INFO << "processo encontrado. enviando entrada";
+            _processos[processo]->stdIn(_entrada);
+            return;
+        }
+    }
+
+    qDebug() << Q_FUNC_INFO << "nao foi encontrado processo com esse pid e num_requisicao.";
+}
+
+void
 GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 {
     this->balancer.insereCarga(_id_host);
 
     if( GP::GPConfig::getInstance().getMeuId() == _id_host )
     {
+        QObject::connect(_processo,
+                         SIGNAL(stdOutAndErr(Q_PID,int,QString)),
+                         this,
+                         SLOT(pegaSaidaProcesso(Q_PID,int,QString)));
+
         this->processos.insertMulti(_processo->getPid(), _processo);
 
         if( _processo->getIdDono() == GP::GPConfig::getInstance().getMeuId() )
@@ -186,6 +217,30 @@ GerenciadorProcessos::enviaMensagem( int _id_destino, QString _mensagem )
 }
 
 void
+GerenciadorProcessos::pegaSaidaProcesso( Q_PID _pid, int _num_requisicao, QString _saida )
+{
+    GP::Processo*
+    processo = static_cast<GP::Processo*>(this->sender());
+
+    if( processo != 0 )
+    {
+        if( processo->getIdDono() == GP::GPConfig::getInstance().getMeuId() )
+        {
+            emit this->stdOut(_pid, _num_requisicao, _saida);
+        }
+        else
+        {
+            QString
+            stdOut = GP::ConstrutorDePacotes::getInstance().montaStdOut(
+                                                                _pid,
+                                                                _num_requisicao,
+                                                                _saida);
+            emit this->sendMessage(processo->getIdDono(), stdOut);
+        }
+    }
+}
+
+void
 GerenciadorProcessos::trataMensagemBalancer( const int& _id,
                                              GP::PacoteBase* _pacote )
 {
@@ -217,6 +272,21 @@ GerenciadorProcessos::trataMensagemLauncher( const int& _id,
         case GP::FAIL_START_PROCESS :
             this->trataFailStartProcess(_id, _pacote);
         break;
+    }
+}
+
+void
+GerenciadorProcessos::trataMensagemProcesso( const int& _id,
+                                             GP::PacoteBase* _pacote )
+{
+    switch( _pacote->nome )
+    {
+    case GP::STANDARD_INPUT:
+        this->trataStdIn(_id, _pacote);
+    break;
+
+    case GP::STANDARD_OUTPUT:
+        this->trataStdOut(_id, _pacote);
     }
 }
 
@@ -279,6 +349,8 @@ void
 GerenciadorProcessos::trataFailStartProcess( const int& _id,
                                              GP::PacoteBase* _pacote )
 {
+    Q_UNUSED(_id)
+
     GP::PacoteFailStartProcess*
     pacote_fail_start_process =
                        static_cast<GP::PacoteFailStartProcess*>(_pacote);
@@ -287,4 +359,26 @@ GerenciadorProcessos::trataFailStartProcess( const int& _id,
                         pacote_fail_start_process->processo,
                         pacote_fail_start_process->parametros.join("") );
 
+}
+
+void
+GerenciadorProcessos::trataStdIn( const int& _id, GP::PacoteBase* _pacote )
+{
+    GP::PacoteStdIn*
+    pacote_std_in = static_cast<GP::PacoteStdIn*>(_pacote);
+
+    this->stdIn( pacote_std_in->pid,
+                 pacote_std_in->num_requisicao,
+                 pacote_std_in->entrada );
+}
+
+void
+GerenciadorProcessos::trataStdOut( const int& _id, GP::PacoteBase* _pacote )
+{
+    GP::PacoteStdOut*
+    pacote_std_out = static_cast<GP::PacoteStdOut*>(_pacote);
+
+    this->stdOut( pacote_std_out->pid,
+                 pacote_std_out->num_requisicao,
+                 pacote_std_out->saida );
 }
