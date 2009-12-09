@@ -23,7 +23,7 @@ namespace GP
 
         //PACOTES DO LAUNCHER
         PacoteStartProcess*
-        parseiaStartProcess( const QStringList& _lista_parametros ) const;
+        parseiaStartProcess( QStringList _lista_parametros ) const;
 
         PacoteSuccessStartProcess*
         parseiaSuccessStartProcess( const QStringList& _lista_parametros ) const;
