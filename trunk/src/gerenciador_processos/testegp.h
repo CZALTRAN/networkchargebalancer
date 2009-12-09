@@ -19,9 +19,21 @@ class TesteGP : public QObject
         GerenciadorProcessos
         gerenciador;
 
+        QString
+        pid;
+
+        QString
+        num_requisicao;
+
     public slots:
         void
         stdOut(Q_PID _pid, int _num_requisicao, QString _saida);
+
+        void
+        resultadoProcessoStart(int _num_requisicao, QString _processo, Q_PID _pid);
+
+        void
+        saidaDeMensagensGP(int _id, QString _mensagem);
 };
 
 #endif // TESTEGP_H

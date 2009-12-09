@@ -63,7 +63,7 @@ GP::ParserDePacotes::parseiaPacote(const QString& _pacote) const
 
 GP::PacoteStartProcess*
 GP::ParserDePacotes::parseiaStartProcess(
-                                    const QStringList& _lista_parametros ) const
+                                    QStringList _lista_parametros ) const
 {
     GP::PacoteStartProcess*
     pacote = new GP::PacoteStartProcess;
@@ -75,9 +75,12 @@ GP::ParserDePacotes::parseiaStartProcess(
 
     pacote->processo = _lista_parametros[4];
 
+    _lista_parametros.pop_back();
+
     for( int parametro = 5; parametro < _lista_parametros.size(); parametro++ )
     {
         pacote->parametros.append(_lista_parametros[parametro]);
+        qDebug() << Q_FUNC_INFO << _lista_parametros[parametro];
     }
 
     return pacote;
@@ -158,6 +161,8 @@ GP::ParserDePacotes::parseiaStdIn( const QStringList& _lista_parametros ) const
     this->setaInt64DePacote(_lista_parametros, 3, pacote->pid);
     this->setaInteiroDePacote(_lista_parametros, 4, pacote->num_requisicao);
 
+    pacote->entrada = _lista_parametros[5];
+
     return pacote;
 }
 
@@ -172,6 +177,8 @@ GP::ParserDePacotes::parseiaStdOut( const QStringList& _lista_parametros ) const
 
     this->setaInt64DePacote(_lista_parametros, 3, pacote->pid);
     this->setaInteiroDePacote(_lista_parametros, 4, pacote->num_requisicao);
+
+    pacote->saida = _lista_parametros[5];
 
     return pacote;
 }

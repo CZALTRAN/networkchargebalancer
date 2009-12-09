@@ -70,6 +70,7 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
         break;
 
         case GP::PROCESSO:
+            qDebug() << Q_FUNC_INFO << "eh do processo";
             this->trataMensagemProcesso( _id, _pacote );
         break;
     }
@@ -118,12 +119,25 @@ GerenciadorProcessos::stdIn( Q_PID _pid, int _num_requisicao, QString _entrada )
 
     for( int processo = 0; processo < _processos.size(); processo++ )
     {
-        if( _processos[processo]->getNumRequisicao() == _num_requisicao
-            && _processos[processo]->getIdDono()
-               == GP::GPConfig::getInstance().getMeuId())
+        if( _processos[processo]->getNumRequisicao() == _num_requisicao )
         {
             qDebug() << Q_FUNC_INFO << "processo encontrado. enviando entrada";
-            _processos[processo]->stdIn(_entrada);
+            if( _processos[processo]->getIdHost()
+                                     == GP::GPConfig::getInstance().getMeuId() )
+            {
+                _processos[processo]->stdIn(_entrada);
+            }
+            else
+            {
+                QString
+                pacote = GP::ConstrutorDePacotes::getInstance().montaStdIn(
+                                       _processos[processo]->getPid(),
+                                       _processos[processo]->getNumRequisicao(),
+                                       _entrada);
+
+                emit this->sendMessage(_processos[processo]->getIdDono(),
+                                       pacote);
+            }
             return;
         }
     }
@@ -279,6 +293,8 @@ void
 GerenciadorProcessos::trataMensagemProcesso( const int& _id,
                                              GP::PacoteBase* _pacote )
 {
+    qDebug() << Q_FUNC_INFO << "tratando msg de processo";
+
     switch( _pacote->nome )
     {
     case GP::STANDARD_INPUT:
@@ -364,6 +380,8 @@ GerenciadorProcessos::trataFailStartProcess( const int& _id,
 void
 GerenciadorProcessos::trataStdIn( const int& _id, GP::PacoteBase* _pacote )
 {
+    qDebug() << Q_FUNC_INFO << "tratando StdIn";
+
     GP::PacoteStdIn*
     pacote_std_in = static_cast<GP::PacoteStdIn*>(_pacote);
 
