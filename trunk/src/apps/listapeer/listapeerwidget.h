@@ -7,6 +7,7 @@
 
 class ListaPeerWidget : public QTableWidget
 {
+Q_OBJECT
 public:
     ListaPeerWidget( QWidget* _parent = 0);
 
@@ -15,7 +16,10 @@ public:
 public slots:
 
     void
-    novoPeer(int _id, QString _host );
+    novoPeer(QString _host, int _id );
+
+    void
+    peerCaiu( int _id );
 
 private:
 

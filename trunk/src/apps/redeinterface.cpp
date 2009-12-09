@@ -21,11 +21,11 @@ RedeInterface::RedeInterface( QObject* _parent )
         exit(1);
     }
 
-    QObject::connect(this->interface_rede, SIGNAL(novoPeer( int,QString)),
-                     this, SLOT(slotNovoPeer(int,QString)));
+    this->connect(this->interface_rede, SIGNAL(novoPeer(QString, int)),
+                  SLOT(slotNovoPeer(QString,int)));
 
-    QObject::connect(this->interface_rede, SIGNAL(peerCaiu( int )),
-                     this,SLOT(slotPeerCaiu(int)));
+    this->connect(this->interface_rede, SIGNAL(peerCaiu( int )),
+                  SLOT(slotPeerCaiu(int)));
 }
 
 RedeInterface::~RedeInterface()
@@ -87,8 +87,8 @@ RedeInterface::slotPeerCaiu( int _id_caido )
 }
 
 void
-RedeInterface::slotNovoPeer(int _novo_id, QString _novo_host)
+RedeInterface::slotNovoPeer(QString _novo_host,int _novo_id)
 {
-    emit this->novoPeer( _novo_id, _novo_host );
+    emit this->novoPeer( _novo_host, _novo_id );
 }
 

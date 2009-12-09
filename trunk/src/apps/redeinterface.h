@@ -21,7 +21,7 @@ public:
 signals:
 
     void
-    novoPeer(int _novo_id, QString _novo_host );
+    novoPeer( QString _novo_host ,int _novo_id );
 
     void
     peerCaiu( int _id_caido );
@@ -32,7 +32,7 @@ protected slots:
     slotPeerCaiu( int _id_caido );
 
     void
-    slotNovoPeer(int _novo_id, QString _novo_host);
+    slotNovoPeer(QString _novo_host,int _novo_id);
 
 private:
 
