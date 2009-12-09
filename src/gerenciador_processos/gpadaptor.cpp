@@ -4,9 +4,10 @@
 #include <QDBusConnection>
 #include <QDBusMessage>
 
+#include "gerenciadorprocessos.h"
 #include "../dbus/dbusconfig.h"
 
-GPAdaptor::GPAdaptor( QObject* _parent )
+GPAdaptor::GPAdaptor( GerenciadorProcessos* _parent )
     : QDBusAbstractAdaptor(_parent)
 {
 }

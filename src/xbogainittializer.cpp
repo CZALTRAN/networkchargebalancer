@@ -59,7 +59,7 @@ void
 XBogaInittializer::criarERegistrarGPAdaptor()
 {
     GPAdaptor*
-    adaptador = new GPAdaptor(this);
+    adaptador = new GPAdaptor(this->gprocessos);
     
     QObject::connect( adaptador, SIGNAL(signalStartProcesso(int,QString,QString)),
                       this->gprocessos, SLOT(processoStart(int,QString,QString)));
