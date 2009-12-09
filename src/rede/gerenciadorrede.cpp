@@ -80,6 +80,18 @@ GerenciadorRede::buscaPorServer( Rede::Peer* _primeiro_peer )
                      this,SLOT(serverEncontrado(int,QString)));
 }
 
+QString
+GerenciadorRede::getCSVPeers() const
+{
+    return this->gerenciador_conexoes->getCSVAllPeers();
+}
+
+int
+GerenciadorRede::getServer() const
+{
+    return Rede::RedeConfig::getInstance().server_host->getId();
+}
+
 void
 GerenciadorRede::slotNovaConexao( const int& _socket_descriptor )
 {

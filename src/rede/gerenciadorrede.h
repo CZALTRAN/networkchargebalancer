@@ -46,6 +46,12 @@ public:
     void
     buscaPorServer( Rede::Peer* _primeiro_peer );
 
+    QString
+    getCSVPeers() const;
+
+    int
+    getServer() const;
+
 private:
 
     void

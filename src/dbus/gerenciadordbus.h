@@ -2,9 +2,7 @@
 #define GERENCIADORDBUS_H
 
 #include <QObject>
-
-#include "gpadaptor.h"
-#include "redeadaptor.h"
+#include <QDBusAbstractAdaptor>
 
 class GerenciadorDBus : public QObject
 {
@@ -14,26 +12,9 @@ public:
 
     ~GerenciadorDBus();
 
-signals:
+    bool
+    registrarNovoAdaptador( QDBusAbstractAdaptor* adaptador, QString _path);
 
-    void
-    novaSolicitacaoDeProcesso( int _id, QString _processo, QString _parametros );
-
-public slots:
-
-    void
-    resultStartProcesso( bool _sucesso, QString _processo, int _id );
-
-private:
-
-    GPAdaptor*
-    interfaceGP;
-
-    RedeAdaptor*
-    interfaceRede;
-
-    friend class GPAdaptor;
-    friend class RedeAdaptor;
 };
 
 #endif // GERENCIADORDBUS_H
