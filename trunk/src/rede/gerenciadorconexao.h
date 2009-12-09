@@ -52,6 +52,9 @@ namespace Rede
         void
         emitSignalBroadCast( const QString& _message );
 
+        QString
+        getCSVAllPeers() const;
+
     public slots:
 
         void

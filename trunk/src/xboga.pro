@@ -17,6 +17,7 @@ SOURCES += main.cpp \
     rede/lib/ouvinte.cpp \
     rede/lib/getifaddrfromadapter.cpp \
     rede/lib/conexao.cpp \
+    rede/redeadaptor.cpp \
     gerenciador_processos/launcher.cpp \
     gerenciador_processos/gerenciadorprocessos.cpp \
     gerenciador_processos/gppeer.cpp \
@@ -28,10 +29,9 @@ SOURCES += main.cpp \
     gerenciador_processos/processo.cpp \
     gerenciador_processos/gpconfig.cpp \
     gerenciador_processos/aplicacao.cpp \
+    gerenciador_processos/gpadaptor.cpp \
     dbus/dbusconfig.cpp \
-    dbus/gerenciadordbus.cpp \
-    dbus/gpadaptor.cpp \
-    dbus/redeadaptor.cpp
+    dbus/gerenciadordbus.cpp
 HEADERS += xbogainittializer.h \
     rede/structpacotes.h \
     rede/redeconfig.h \
@@ -45,6 +45,7 @@ HEADERS += xbogainittializer.h \
     rede/lib/ouvinte.h \
     rede/lib/getifaddrfromadapter.h \
     rede/lib/conexao.h \
+    rede/redeadaptor.h \
     gerenciador_processos/launcher.h \
     gerenciador_processos/gerenciadorprocessos.h \
     gerenciador_processos/gpparserdepacotes.h \
@@ -58,7 +59,6 @@ HEADERS += xbogainittializer.h \
     gerenciador_processos/gpconfig.h \
     gerenciador_processos/aplicacao.h \
     gerenciador_processos/aplicacao.h \
+    gerenciador_processos/gpadaptor.h \
     dbus/dbusconfig.h \
-    dbus/gerenciadordbus.h \
-    dbus/gpadaptor.h \
-    dbus/redeadaptor.h
+    dbus/gerenciadordbus.h

@@ -4,6 +4,10 @@
 
 #include "rede/peer.h"
 
+//adaptadores do dbus
+#include "rede/redeadaptor.h"
+#include "gerenciador_processos/gpadaptor.h"
+
 XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject(parent)
 {
@@ -15,23 +19,11 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     QObject::connect( this->grede, SIGNAL(meuId(int)),
                       this->gprocessos, SLOT(meuId(int)));
 
-    QObject::connect( this->grede, SIGNAL( meuId(int)),
-                      this, SLOT(teste(int)));
-
     QObject::connect( this->grede, SIGNAL(novoPeer(int)),
                       this->gprocessos, SLOT(peerNovo(int)));
 
-    QObject::connect( this->grede, SIGNAL( novoPeer(int) ),
-                      this, SLOT(teste(int)));
-
     QObject::connect( this->grede, SIGNAL(peerCaiu(int)),
                       this->gprocessos, SLOT(peerCaiu(int)));
-
-    QObject::connect( this->grede, SIGNAL( peerCaiu(int) ),
-                      this, SLOT(teste(int)));
-
-    QObject::connect( this->dbus, SIGNAL(novaSolicitacaoDeProcesso(int,QString,QString)),
-                      this->gprocessos, SLOT(processoStart(int,QString,QString)));
 
     QObject::connect( this->gprocessos,SIGNAL(sendMessage(int,QString)),
                       this->grede, SLOT(enviaPacoteGP(int,QString)));
@@ -41,6 +33,9 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
 
     QObject::connect( this->grede, SIGNAL(recebePacoteGP(int,QString)),
                       this, SLOT(incommingMessage(int,QString)));
+
+    this->criarERegistrarGPAdaptor();
+    this->criarERegistrarRedeAdaptor();
 
     if (argc == 3)
     {
@@ -67,4 +62,36 @@ void
 XBogaInittializer::incommingMessage(int bla ,QString ble)
 {
     qDebug() << Q_FUNC_INFO << bla << ble;
+}
+
+void
+XBogaInittializer::criarERegistrarGPAdaptor()
+{
+    GPAdaptor*
+    adaptador = new GPAdaptor(this);
+    
+    QObject::connect( adaptador, SIGNAL(signalStartProcesso(int,QString,QString)),
+                      this->gprocessos, SLOT(processoStart(int,QString,QString)));
+
+    QObject::connect( this->gprocessos, SIGNAL(resultadoProcessoStart(int,QString,Q_PID)),
+                      adaptador,SIGNAL(resultStartProcesso(int,QString,Q_PID)));
+
+    if ( ! this->dbus->registrarNovoAdaptador(adaptador, "/gp") )
+    {
+        qDebug() << "nao consegui registrar o gp";
+        exit(1);
+    }
+}
+
+void
+XBogaInittializer::criarERegistrarRedeAdaptor()
+{
+    RedeAdaptor*
+    adaptador = new RedeAdaptor( this->grede );
+
+    if (! this->dbus->registrarNovoAdaptador(adaptador,"/rede"))
+    {
+        qDebug() << "nao consegui registrar o rede";
+        exit(1);
+    }
 }

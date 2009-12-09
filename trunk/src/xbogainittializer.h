@@ -27,11 +27,18 @@ private:
     GerenciadorProcessos*
     gprocessos;
 
+
     GerenciadorRede*
     grede;
 
     GerenciadorDBus*
     dbus;
+
+    void
+    criarERegistrarGPAdaptor();
+
+    void
+    criarERegistrarRedeAdaptor();
 
 };
 

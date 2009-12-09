@@ -1,5 +1,7 @@
 #include "gerenciadorconexao.h"
 
+#include <QStringList>
+
 #include "redeconfig.h"
 
 Rede::GerenciadorConexao::GerenciadorConexao()
@@ -146,6 +148,25 @@ void
 Rede::GerenciadorConexao::emitSignalBroadCast( const QString& _message )
 {
     emit this->signalBroadCast(_message);
+}
+
+QString
+Rede::GerenciadorConexao::getCSVAllPeers() const
+{
+    QStringList
+    all_peers;
+
+    Rede::Peer*
+    tmp_peer;
+
+    foreach( tmp_peer, this->peers )
+    {
+        all_peers.push_back( QString::number( tmp_peer->getId() ) +
+                             ";" +
+                             tmp_peer->getHost() );
+    }
+
+    return all_peers.join(":");
 }
 
 void
