@@ -82,6 +82,9 @@ namespace Rede
         void
         perdiConexao( Rede::Peer* _peer );
 
+        void
+        conectado( QString _host, int id);
+
     private:
 
         void

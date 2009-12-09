@@ -92,6 +92,9 @@ signals:
 
     //sinais para outros modulos
     void
+    novoPeerWithHost( QString, int );
+
+    void
     novoPeer( const int& _id );
 
     void

@@ -86,7 +86,7 @@ XBogaInittializer::criarERegistrarRedeAdaptor()
     RedeAdaptor*
     adaptador = new RedeAdaptor( this->grede );
 
-    QObject::connect( this->grede, SIGNAL(novoPeer(QString,int)),
+    QObject::connect( this->grede, SIGNAL(novoPeerWithHost(QString,int)),
                       adaptador,SLOT(slotNovoPeer(QString,int)));
 
     QObject::connect( this->grede,SIGNAL(peerCaiu(int)),
