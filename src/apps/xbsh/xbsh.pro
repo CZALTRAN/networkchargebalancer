@@ -14,7 +14,9 @@ TEMPLATE = app
 SOURCES += main.cpp \
     ../gpinterface.cpp \
     xbsh.cpp \
-    ../standardinput.cpp
+    standardinput.cpp \
+    gerenciadorlancamento.cpp
 HEADERS += ../gpinterface.h \
     xbsh.h \
-    ../standardinput.h
+    standardinput.h \
+    gerenciadorlancamento.h
