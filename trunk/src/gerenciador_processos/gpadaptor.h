@@ -29,6 +29,9 @@ public slots:
     Q_SCRIPTABLE void
     slotResultStartProcesso( int _id_requisicao, QString _processo, qint64 _pid );
 
+    Q_SCRIPTABLE void
+    slotProcessoTerminou( qint64 _processo, int _registro, int retorno);
+
 signals:
 
     //sinais exportados
@@ -38,12 +41,19 @@ signals:
     void
     standardOutput( qint64 _processo, int _registro, QString _mensagem );
 
+    void
+    processoTerminou( qint64 _processo, int _registro, int retorno);
+
     Q_SCRIPTABLE void
     signalStartProcesso( int _registro, QString _processo, QString _parametros );
 
     Q_SCRIPTABLE void
     signalStandardInput( qint64 _processo, int _registro, QString _mensagem );
 
+private:
+
+    void
+    sendSignal( QString _metodo, QList<QVariant> _argumentos);
 };
 
 #endif // GPADAPTOR_H

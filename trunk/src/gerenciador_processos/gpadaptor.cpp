@@ -32,14 +32,6 @@ GPAdaptor::standardInput( Q_PID _processo, int _identificador, QString _input )
 void
 GPAdaptor::slotStandardOutput( Q_PID _processo, int _registro, QString _mensagem )
 {
-    QDBusMessage
-    sinal_standard_output;
-
-    sinal_standard_output = QDBusMessage::createSignal(
-            "/gp",
-            "uel.computacao.xboga.gp",
-            "standardOutput");
-
     QList<QVariant>
     argumentos;
 
@@ -47,9 +39,7 @@ GPAdaptor::slotStandardOutput( Q_PID _processo, int _registro, QString _mensagem
     argumentos.push_back(_registro);
     argumentos.push_back(_mensagem);
 
-    sinal_standard_output.setArguments(argumentos);
-
-    QDBusConnection::sessionBus().send( sinal_standard_output );
+    this->sendSignal( "standardOutput", argumentos );
 }
 
 void
@@ -57,14 +47,6 @@ GPAdaptor::slotResultStartProcesso( int _id_requisicao,
                                 QString _processo,
                                 Q_PID _pid )
 {
-    QDBusMessage
-    sinal_standard_output;
-
-    sinal_standard_output = QDBusMessage::createSignal(
-            "/gp",
-            "uel.computacao.xboga.gp",
-            "resultStartProcesso");
-
     QList<QVariant>
     argumentos;
 
@@ -72,7 +54,34 @@ GPAdaptor::slotResultStartProcesso( int _id_requisicao,
     argumentos.push_back(_processo);
     argumentos.push_back(_pid);
 
-    sinal_standard_output.setArguments(argumentos);
+    this->sendSignal( "resultStartProcesso", argumentos );
+}
 
-    QDBusConnection::sessionBus().send( sinal_standard_output );
+void
+GPAdaptor::slotProcessoTerminou( qint64 _processo, int _registro, int _retorno)
+{
+    QList<QVariant>
+    argumentos;
+
+    argumentos.push_back(_processo);
+    argumentos.push_back(_registro);
+    argumentos.push_back(_retorno);
+
+    this->sendSignal( "processoTerminou", argumentos );
+}
+
+void
+GPAdaptor::sendSignal( QString _metodo, QList<QVariant> _argumentos)
+{
+    QDBusMessage
+    sinal;
+
+    sinal = QDBusMessage::createSignal(
+            "/gp",
+            "uel.computacao.xboga.gp",
+            _metodo);
+
+    sinal.setArguments( _argumentos );
+
+    QDBusConnection::sessionBus().send( sinal );
 }
