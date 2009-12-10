@@ -65,12 +65,12 @@ XBogaInittializer::criarERegistrarGPAdaptor()
                       this->gprocessos, SLOT(processoStart(int,QString,QString)));
 
     QObject::connect( this->gprocessos, SIGNAL(resultadoProcessoStart(int,QString,Q_PID)),
-                      adaptador,SIGNAL(resultStartProcesso(int,QString,Q_PID)));
+                      adaptador,SIGNAL(resultStartProcesso(int,QString,qint64)));
 
     QObject::connect(this->gprocessos, SIGNAL(stdOut(Q_PID,int,QString)),
-                     adaptador, SLOT(slotStandardOutput(Q_PID,int,QString)));
+                     adaptador, SLOT(slotStandardOutput(qint64,int,QString)));
 
-    QObject::connect(adaptador, SIGNAL(signalStandardInput(Q_PID,int,QString)),
+    QObject::connect(adaptador, SIGNAL(signalStandardInput(qint64,int,QString)),
                      this->gprocessos, SLOT(stdIn(Q_PID,int,QString)));
 
     if ( ! this->dbus->registrarNovoAdaptador(adaptador, "/gp") )

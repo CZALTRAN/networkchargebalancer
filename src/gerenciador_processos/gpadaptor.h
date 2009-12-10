@@ -18,31 +18,31 @@ public:
 public slots:
 
     Q_NOREPLY void
-    standardInput( Q_PID _processo, int _registro, QString _mensagem);
+    standardInput( qint64 _processo, int _registro, QString _mensagem);
 
     quint64
     startProcesso( QString _nome_processo, QString _parametros );
 
     Q_SCRIPTABLE void
-    slotStandardOutput( Q_PID _processo, int _registro, QString _mensagem );
+    slotStandardOutput( qint64 _processo, int _registro, QString _mensagem );
 
     Q_SCRIPTABLE void
-    slotResultStartProcesso( int _id_requisicao, QString _processo, Q_PID _pid );
+    slotResultStartProcesso( int _id_requisicao, QString _processo, qint64 _pid );
 
 signals:
 
     //sinais exportados
     void
-    resultStartProcesso( int _id_requisicao, QString _processo, Q_PID _pid);
+    resultStartProcesso( int _id_requisicao, QString _processo, qint64 _pid);
 
     void
-    standardOutput( Q_PID _processo, int _registro, QString _mensagem );
+    standardOutput( qint64 _processo, int _registro, QString _mensagem );
 
     Q_SCRIPTABLE void
     signalStartProcesso( int _registro, QString _processo, QString _parametros );
 
     Q_SCRIPTABLE void
-    signalStandardInput( Q_PID _processo, int _registro, QString _mensagem );
+    signalStandardInput( qint64 _processo, int _registro, QString _mensagem );
 
 };
 
