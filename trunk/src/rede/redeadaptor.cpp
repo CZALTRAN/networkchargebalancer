@@ -25,6 +25,12 @@ RedeAdaptor::getServer()
 }
 
 void
+RedeAdaptor::pingPeer( int _id )
+{
+    //todo
+}
+
+void
 RedeAdaptor::slotNovoPeer(  QString _novo_peer_host, int _novo_peer_id )
 {
     QDBusMessage

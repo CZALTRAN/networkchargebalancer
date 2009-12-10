@@ -14,7 +14,7 @@ Rede::Ping::Ping( QString _host, QString _interface ) : QObject()
     QStringList
     parametros;
 
-    parametros << "-c" << "4" << "-I" << _interface << _host;
+    parametros << "-c" << "1" << "-I" << _interface << _host;
 
     programa = "ping";
 
@@ -27,7 +27,7 @@ Rede::Ping::Ping( QString _host, QString _interface ) : QObject()
 
     this->ping->start(programa, parametros);
 
-    this->ping->waitForFinished(40000);
+//    this->ping->waitForFinished(40000);
 }
 
 Rede::Ping::~Ping()

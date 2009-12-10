@@ -21,6 +21,9 @@ public slots:
     int
     getServer();
 
+    void
+    pingPeer( int _id );
+
     Q_SCRIPTABLE void
     slotNovoPeer(  QString _novo_peer_host, int _novo_peer_id );
 

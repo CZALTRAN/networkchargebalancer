@@ -38,7 +38,10 @@ public:
     ~GerenciadorRede();
 
     QStringList
-    pingPeer( QString _host );
+    pingPeer( int _id );
+
+    QStringList
+    pingPeer( const QString& _host );
 
     void
     startComoServer();
