@@ -65,8 +65,10 @@ GerenciadorProcessos::peerCaiu( const int& _id )
                 if( iterador.value()->getIdHost()
                     == processos_exportados_para_o_peer[processo]->getIdHost() )
                 {
+                    qint64
+                    pid = static_cast<qint64>(iterador.value()->getPid());
                     emit this->terminoDeProcesso(
-                                           iterador.value()->getPid(),
+                                           pid,
                                            iterador.value()->getNumRequisicao(),
                                            PEER_CAIU);
 
@@ -184,16 +186,82 @@ GerenciadorProcessos::meuId( int _meu_id )
 
 
 void
-GerenciadorProcessos::killProcess( const int _id_dono, const Q_PID _processo)
+GerenciadorProcessos::mataProcesso( qint64 _pid,
+                                    int _id_dono,
+                                    int _num_requisicao)
 {
+    Q_PID
+    pid = static_cast<Q_PID>(_pid);
 
+    QList<GP::Processo*>
+    processos_id = this->buscaProcessosPorIdDono(_id_dono);
+
+    for( int processo = 0;
+         processo < processos_id.size();
+         processo++ )
+    {
+        QHash<Q_PID, GP::Processo*>::iterator
+        iterador = this->processos.find(
+                          processos_id[processo]->getPid());
+
+        while( iterador != this->processos.end() )
+        {
+            if( iterador.value()->getPid()
+                    == processos_id[processo]->getPid())
+            {
+                if( iterador.value()->getNumRequisicao()
+                    == _num_requisicao )
+                {
+                    if( iterador.value()->getIdDono()
+                                     == GP::GPConfig::getInstance().getMeuId() )
+                    {
+                        qint64
+                        pid = static_cast<qint64>(iterador.value()->getPid());
+
+                        emit this->terminoDeProcesso(
+                                           iterador.value()->getPid(),
+                                           iterador.value()->getNumRequisicao(),
+                                           SOLICITADO);
+
+                        qDebug() << Q_FUNC_INFO << "Matei processo meu!";
+                    }
+                    else
+                    {
+                        //envia pacote atraves da rede!
+                        qDebug() << Q_FUNC_INFO << "Matei processo de outro kra!";
+
+                        QString
+                        pacote_kill_process =
+                        GP::ConstrutorDePacotes::getInstance().montaKillProcess(
+                                          iterador.value()->getPid(),
+                                          iterador.value()->getNumRequisicao());
+
+
+                    }
+
+                    qDebug() << Q_FUNC_INFO << "Removido o processo: " << iterador.value()->getNome();
+                    delete iterador.value();
+                    this->processos.erase(iterador);
+
+                    iterador = this->processos.end();
+                }
+            }
+            if( iterador != this->processos.end() )
+            {
+                iterador++;
+            }
+        }
+    }
 }
 
 void
-GerenciadorProcessos::stdIn( Q_PID _pid, int _num_requisicao, QString _entrada )
+GerenciadorProcessos::stdIn( qint64 _pid, int _num_requisicao, QString _entrada )
 {
+    Q_PID
+    pid = static_cast<Q_PID>(_pid);
+
     QList<GP::Processo*>
-    _processos = this->processos.values(_pid);
+    _processos = this->processos.values(pid);
 
     for( int processo = 0; processo < _processos.size(); processo++ )
     {
@@ -320,7 +388,9 @@ GerenciadorProcessos::pegaSaidaProcesso( Q_PID _pid,
     {
         if( processo->getIdDono() == GP::GPConfig::getInstance().getMeuId() )
         {
-            emit this->stdOut(_pid, _num_requisicao, _saida);
+            qint64
+            pid = static_cast<qint64>(_pid);
+            emit this->stdOut(pid, _num_requisicao, _saida);
         }
         else
         {
@@ -465,7 +535,10 @@ GerenciadorProcessos::trataStdIn( const int& _id, GP::PacoteBase* _pacote )
     GP::PacoteStdIn*
     pacote_std_in = static_cast<GP::PacoteStdIn*>(_pacote);
 
-    this->stdIn( pacote_std_in->pid,
+    qint64
+    pid = static_cast<qint64>(pacote_std_in->pid);
+
+    this->stdIn( pid,
                  pacote_std_in->num_requisicao,
                  pacote_std_in->entrada );
 }
@@ -476,7 +549,10 @@ GerenciadorProcessos::trataStdOut( const int& _id, GP::PacoteBase* _pacote )
     GP::PacoteStdOut*
     pacote_std_out = static_cast<GP::PacoteStdOut*>(_pacote);
 
-    this->stdOut( pacote_std_out->pid,
+    qint64
+    pid = static_cast<qint64>(pacote_std_out->pid);
+
+    this->stdOut( pid,
                  pacote_std_out->num_requisicao,
                  pacote_std_out->saida );
 }

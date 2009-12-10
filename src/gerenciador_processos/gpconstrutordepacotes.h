@@ -47,6 +47,13 @@ namespace GP
         montaStdOut( const Q_PID& _pid, const int& _num_requisicao,
                                         const QString& _saida );
 
+        //pacotes do GP
+        QString
+        montaKillProcess( const Q_PID& _pid, const int& _num_requisicao );
+
+        QString
+        montaProcessKilled( const Q_PID& _pid, const int& _num_requisicao );
+
     private:
         ConstrutorDePacotes();
 

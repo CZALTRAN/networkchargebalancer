@@ -20,7 +20,9 @@ namespace GP
     public:
         Aplicacao();
 
-        Aplicacao( const QString& _nome, const QString& _diretorio, const bool& _x11 );
+        Aplicacao( const QString& _nome,
+                   const QString& _diretorio,
+                   const bool& _x11 );
 
         QString
         getNome();
