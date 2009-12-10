@@ -15,7 +15,6 @@ GPAdaptor::GPAdaptor( GerenciadorProcessos* _parent )
 quint64
 GPAdaptor::startProcesso( QString _nome_processo, QString _parametros )
 {
-
     quint64
     id_solic = DBusConfig::getInstance().getNovoProcId();
 
