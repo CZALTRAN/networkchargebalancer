@@ -306,8 +306,18 @@ GerenciadorRede::enviaPacoteGP( const int& _destinatario_id, const QString& _mes
 }
 
 QStringList
-GerenciadorRede::pingPeer( QString _host )
+GerenciadorRede::pingPeer( int _id )
 {
+    QString
+    host = this->gerenciador_conexoes->getPeerById( _id )->getHost();
+
+    return this->pingPeer(host);
+}
+
+QStringList
+GerenciadorRede::pingPeer( const QString& _host )
+{
+
     Rede::Ping*
     ping = new Rede::Ping( _host, this->interface );
 
