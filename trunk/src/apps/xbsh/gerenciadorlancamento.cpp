@@ -54,7 +54,7 @@ GerenciadorLancamento::resultProcessoStart( int _id_requisicao,
         this->processo_rodando = true;
         this->pid_processo_rodando = _pid;
     }
-    else if ( _pid > 0 && _id_requisicao == this->registro_processo_rodando )
+    else if ( _pid == 0 && _id_requisicao == this->registro_processo_rodando )
     {
         this->processo_rodando = false;
         emit this->falhaAoStartProcesso("Erro ao iniciar o processo " + _processo );

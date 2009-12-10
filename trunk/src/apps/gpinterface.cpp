@@ -7,7 +7,7 @@ GPInterface::GPInterface( QObject* _parent)
     this->gp_interface = new QDBusInterface(
             "uel.computacao.xboga",
             "/gp",
-            "uel.computacao.gp",
+            "uel.computacao.xboga.gp",
             QDBusConnection::sessionBus(),
             this);
 
