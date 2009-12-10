@@ -55,10 +55,10 @@ public slots:
     incommingMessage( int _id, QString _mensagem );
 
     void
-    killProcess( int _id_dono, Q_PID _processo );
+    mataProcesso( qint64 _pid, int _id_dono, int _num_requisicao );
 
     void
-    stdIn( Q_PID _pid, int _num_requisicao, QString _entrada );
+    stdIn( qint64 _pid, int _num_requisicao, QString _entrada );
 
     //slots para comunicação interna
     void
@@ -77,13 +77,13 @@ public slots:
 
 signals:
     void
-    stdOut( Q_PID _pid, int _num_requisicao, QString _saida );
+    stdOut( qint64 _pid, int _num_requisicao, QString _saida );
 
     void
     sendMessage( int _id_destino, QString _mensagem);
 
     void
-    terminoDeProcesso( Q_PID _pid, int num_requisicao,
+    terminoDeProcesso( qint64 _pid, int num_requisicao,
                                    motivoFimProcesso _motivo );
 
     void

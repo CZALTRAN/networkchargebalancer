@@ -84,11 +84,15 @@ int main(int argc, char *argv[])
 //    testeGp.gerenciador.peerCaiu(6);
 
 /********************** teste11 ******************************/
-    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:123:pikaloka:");
-    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:456:pikaloka:");
-    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:789:pikaloka:");
+//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:123:pikaloka:");
+//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:456:pikaloka:");
+//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:789:pikaloka:");
+//
+//    testeGp.gerenciador.peerCaiu(6);
 
-    testeGp.gerenciador.peerCaiu(6);
+/********************** teste11 *******************************/
+//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:14:pikaloka::");
+//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:15:pikaloka::");
 
     return a.exec();
 }

@@ -42,6 +42,10 @@ namespace GP
         PacoteStdOut*
         parseiaStdOut( const QStringList& _lista_parametros ) const;
 
+        //PACOTES DO GP
+        PacoteKillProcess*
+        parseiaKillProcess( const QStringList& _lista_parametros ) const;
+
         //LOGICA INTERNA
         void
         setaInteiroDePacote( const QStringList& _pacote, int _posicao,

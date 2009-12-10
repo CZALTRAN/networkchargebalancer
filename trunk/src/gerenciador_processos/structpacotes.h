@@ -22,7 +22,8 @@ namespace GP
         SUCCESS_START_PROCESS,
         STATUS_PEER,
         STANDARD_INPUT,
-        STANDARD_OUTPUT
+        STANDARD_OUTPUT,
+        KILL_PROCESS
     };
 
     typedef struct PacoteBase
@@ -107,6 +108,15 @@ namespace GP
         QString
         saida;
     } PacoteStdOut;
+
+    typedef struct PacoteKillProcess : public PacoteBase
+    {
+        Q_PID
+        pid;
+
+        int
+        num_requisicao;
+    } PacoteKillProcess;
 }
 
 #endif // STRUCTPACOTES_H
