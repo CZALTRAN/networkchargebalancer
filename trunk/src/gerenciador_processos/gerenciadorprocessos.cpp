@@ -307,9 +307,12 @@ GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 
         if( _processo->getIdDono() == GP::GPConfig::getInstance().getMeuId() )
         {
+            qint64
+            pid = static_cast<qint64>(_processo->getPid());
+
             emit this->resultadoProcessoStart(_processo->getNumRequisicao(),
                                                            _processo->getNome(),
-                                                           _processo->getPid());
+                                                           pid);
         }
         else
         {
@@ -505,10 +508,13 @@ GerenciadorProcessos::trataSucessStartProcess( const int& _id,
     this->processos.insertMulti(pacote_success_start_process->pid,
                            processo_exportado);
 
+    qint64
+    pid = static_cast<qint64>(pacote_success_start_process->pid);
+
     emit this->resultadoProcessoStart(
                             pacote_success_start_process->num_requisicao,
                             pacote_success_start_process->processo,
-                            pacote_success_start_process->pid);
+                            pid);
 }
 
 void

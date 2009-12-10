@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 //    testeGp.gerenciador.processoStart(5, "ping", "192.168.1.101");
 
 /********************** teste6 *********************************/
-//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:5:ping:192.168.1.101");
+    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:5:ping:192.168.1.101");
 
 /********************** teste7 *********************************/
 //    testeGp.gerenciador.processoStart(14, "pikaloka", "");

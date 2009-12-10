@@ -87,7 +87,7 @@ signals:
                                    motivoFimProcesso _motivo );
 
     void
-    resultadoProcessoStart( int _num_requisicao, QString _processo, Q_PID _pid );
+    resultadoProcessoStart( int _num_requisicao, QString _processo, qint64 _pid );
 
 private:
     void
