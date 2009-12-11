@@ -243,9 +243,10 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
                                            SOLICITADO);
 
                         qDebug() << Q_FUNC_INFO << "Matei processo meu!";
-
+                        qDebug() << Q_FUNC_INFO << "merda123";
                         if(iterador.value()->getIdHost() != GP::GPConfig::getInstance().getMeuId())
                         {
+                            qDebug() << Q_FUNC_INFO << "enviando kill_process";
                             QString
                             pacote_kill_process =
                             GP::ConstrutorDePacotes::getInstance().montaKillProcess(
@@ -254,6 +255,8 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
 
                             emit this->sendMessage(iterador.value()->getIdHost(), pacote_kill_process);
                         }
+
+                        qDebug() << Q_FUNC_INFO << "merda";
                     }
                     else
                     {
