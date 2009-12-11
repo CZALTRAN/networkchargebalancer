@@ -21,6 +21,9 @@ public:
     int
     startProcesso( QString _nome_processo, QString _parametros );
 
+    QStringList
+    getAllProcesses();
+
 public slots:
 
     void

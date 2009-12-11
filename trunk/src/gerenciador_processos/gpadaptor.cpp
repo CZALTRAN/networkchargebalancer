@@ -31,6 +31,15 @@ GPAdaptor::matarProcesso( int _pid, int _id_dono, int _num_requisicao )
     emit this->signalMatarProcesso( _pid, _id_dono, _num_requisicao );
 }
 
+QString
+GPAdaptor::getProcessos()
+{
+    QString
+    ret = dynamic_cast<GerenciadorProcessos*>(this->parent())->getProcessos();
+
+    return ret;
+}
+
 void
 GPAdaptor::standardInput( Q_PID _processo, int _identificador, QString _input )
 {

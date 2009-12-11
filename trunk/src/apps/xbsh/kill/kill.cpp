@@ -18,7 +18,7 @@ Kill::run()
     {
         this->gp_interface->matarProcesso(
                 this->getIntArgument("-pid"),
-                this->getIntArgument("-peer_id"),
+                this->getIntArgument("-peer"),
                 this->getIntArgument("-req")
                 );
     }

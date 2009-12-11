@@ -22,6 +22,9 @@ XBSh::XBSh(QObject *_parent)
     QObject::connect( this->gerenciador_lancamento, SIGNAL(falhaAoStartProcesso(QString)),
                       this, SLOT(erroAoStart(QString)));
 
+    QObject::connect( this->gerenciador_lancamento, SIGNAL(processoTerminado(int)),
+                      this,SLOT(terminated(int)));
+
     this->displayBoasVindas();
     this->stdin->start();
 }
@@ -58,14 +61,13 @@ XBSh::erroAoStart( const QString& _mensagem )
 void
 XBSh::terminated( int _return_code )
 {
-    //todo
-    this->displayPS1();
+    qDebug() << "Processo terminado com codigo " << _return_code;
 }
 
 void
 XBSh::displayPS1()
 {
-    std::cout << "[ XBoga SHell ] -> ";
+//    std::cout << "[ XBoga SHell ] -> ";
 }
 
 void
