@@ -152,10 +152,6 @@ void
 GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
 {
 
-    qDebug() << Q_FUNC_INFO << "chegou mensagem";
-
-    qDebug() << Q_FUNC_INFO << _mensagem.toStdString().c_str();
-
     GP::PacoteBase*
     _pacote = GP::ParserDePacotes::getInstance().parseiaPacote(_mensagem);
 
@@ -174,7 +170,6 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
         break;
 
         case GP::PROCESSO:
-            qDebug() << Q_FUNC_INFO << "eh do processo";
             this->trataMensagemProcesso( _id, _pacote );
         break;
     }
@@ -191,8 +186,6 @@ GerenciadorProcessos::processoStart( int _num_requisicao,
 
     int
     id_peer_host = this->balancer.getPeerHost();
-
-    qDebug() << Q_FUNC_INFO << "solicitando que o launcher inicie o processo no host" << QString::number(id_peer_host);
 
     this->launcher.processoStart( _num_requisicao, id_peer_host,
                                   GP::GPConfig::getInstance().getMeuId(),
@@ -250,6 +243,17 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
                                            SOLICITADO);
 
                         qDebug() << Q_FUNC_INFO << "Matei processo meu!";
+
+                        if(iterador.value()->getIdHost() != GP::GPConfig::getInstance().getMeuId())
+                        {
+                            QString
+                            pacote_kill_process =
+                            GP::ConstrutorDePacotes::getInstance().montaKillProcess(
+                                    iterador.value()->getPid(),
+                                    iterador.value()->getNumRequisicao());
+
+                            emit this->sendMessage(iterador.value()->getIdHost(), pacote_kill_process);
+                        }
                     }
                     else
                     {
@@ -257,10 +261,12 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
                         qDebug() << Q_FUNC_INFO << "Matei processo de outro kra!";
 
                         QString
-                        pacote_process_killed =
+                        pacote_process_killed=
                         GP::ConstrutorDePacotes::getInstance().montaProcessKilled(
                                           iterador.value()->getPid(),
                                           iterador.value()->getNumRequisicao());
+
+                        qDebug() << Q_FUNC_INFO << pacote_process_killed;
 
                         emit this->sendMessage(_id_dono, pacote_process_killed);
                     }
@@ -295,7 +301,6 @@ GerenciadorProcessos::stdIn( qint64 _pid, int _num_requisicao, QString _entrada 
     {
         if( _processos[processo]->getNumRequisicao() == _num_requisicao )
         {
-            qDebug() << Q_FUNC_INFO << "processo encontrado. enviando entrada";
             if( _processos[processo]->getIdHost()
                                      == GP::GPConfig::getInstance().getMeuId() )
             {
@@ -323,8 +328,6 @@ void
 GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 {
     this->balancer.insereCarga(_id_host);
-
-    qDebug() << Q_FUNC_INFO << "num_req" << _processo->getNumRequisicao();
 
     if( GP::GPConfig::getInstance().getMeuId() == _id_host )
     {
@@ -597,8 +600,6 @@ void
 GerenciadorProcessos::trataMensagemProcesso( const int& _id,
                                              GP::PacoteBase* _pacote )
 {
-    qDebug() << Q_FUNC_INFO << "tratando msg de processo";
-
     switch( _pacote->nome )
     {
     case GP::STANDARD_INPUT:
@@ -680,7 +681,6 @@ GerenciadorProcessos::trataSucessStartProcess( const int& _id,
     qint64
     pid = static_cast<qint64>(pacote_success_start_process->pid);
 
-    qDebug() << Q_FUNC_INFO << "avisando o dbus que foi startado o processo: " << pid;
     emit this->resultadoProcessoStart(
                             pacote_success_start_process->num_requisicao,
                             pacote_success_start_process->processo,

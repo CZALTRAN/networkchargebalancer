@@ -48,11 +48,11 @@ TesteGP::resultadoProcessoStart(int _num_requisicao,
 //    this->gerenciador.stdIn(_pid, _num_requisicao, "b");
 
 //    this->gerenciador.incommingMessage(6, "GP:CONTROL:PROCESS_KILLED:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":");
-    this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_OUTPUT:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":" + "merda1!" );
-    this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_OUTPUT:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":" + "merda2!" );
-    this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_OUTPUT:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":" + "merda3!" );
+//    this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_OUTPUT:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":" + "merda1!" );
+//    this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_OUTPUT:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":" + "merda2!" );
+//    this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_OUTPUT:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":" + "merda3!" );
 
-//    this->gerenciador.mataProcesso( _pid, 5, _num_requisicao);
+    this->gerenciador.mataProcesso( _pid, 5, _num_requisicao);
 }
 
 
@@ -100,6 +100,10 @@ TesteGP::saidaDeMensagensGP(int _id, QString _mensagem)
 //        this->gerenciador.incommingMessage(6, "GP:CONTROL:KILL_PROCESS:" + QString::number(this->pid) + ":" + QString::number(this->num_requisicao) + ":");
     }
     else if( campos[2] == "PROCESS_KILLED" )
+    {
+        qDebug() << Q_FUNC_INFO << _mensagem;
+    }
+    else if( campos[2] == "KILL_PROCESS" )
     {
         qDebug() << Q_FUNC_INFO << _mensagem;
     }
