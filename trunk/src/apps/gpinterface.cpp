@@ -34,6 +34,9 @@ GPInterface::GPInterface( QObject* _parent)
                        SIGNAL(processoTerminou( int, int, int )),
                        this,
                        SLOT(slotProcessoTerminado(int,int,int)));
+
+        this->connect( this, SIGNAL(standardInput(int,int,QString)),
+                       this->gp_interface,SLOT(standardInput( int, int , QString )));
     }
 }
 
@@ -131,6 +134,7 @@ GPInterface::slotProcessoTerminado( int _processo, int _registro, int _retorno )
         emit this->processoTerminado(_processo,
                                      _registro,
                                      _retorno);
+ 
     }
 }
 

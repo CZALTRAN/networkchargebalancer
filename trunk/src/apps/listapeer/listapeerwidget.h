@@ -13,6 +13,9 @@ public:
 
     ~ListaPeerWidget();
 
+    void
+    updateTable();
+
 public slots:
 
     void

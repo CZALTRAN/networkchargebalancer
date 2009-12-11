@@ -29,18 +29,20 @@ Ps::run()
         QStringList
         quebrado;
 
-        if ( processo.size() > 0 )
+        if ( processos.size() > 0 )
         {
             foreach(processo, processos)
             {
                 quebrado = processo.split(':');
 
-
-                qDebug() << quebrado.at(0) << "       "
-                         << quebrado.at(1) << "       "
-                         << quebrado.at(2) << "       "
-                         << quebrado.at(3) << "       "
-                         << quebrado.at(4) << "       ";
+                if ( quebrado.size() >= 5)
+                {
+                    qDebug() << quebrado.at(0) << "       "
+                             << quebrado.at(1) << "       "
+                             << quebrado.at(2) << "       "
+                             << quebrado.at(3) << "       "
+                             << quebrado.at(4) << "       ";
+                }
 
             }
         }

@@ -8,6 +8,23 @@ ListaPeerWidget::ListaPeerWidget( QWidget* _parent )
 {
     this->interface_rede = new RedeInterface(this);
 
+    this->updateTable();
+
+    QObject::connect( this->interface_rede, SIGNAL(novoPeer(QString,int)),
+                      this,SLOT(novoPeer(QString,int)));
+
+    QObject::connect( this->interface_rede,SIGNAL(peerCaiu(int)),
+                      this,SLOT(peerCaiu(int)));
+}
+
+ListaPeerWidget::~ListaPeerWidget()
+{
+
+}
+
+void
+ListaPeerWidget::updateTable()
+{
     QString
     linha;
 
@@ -24,34 +41,31 @@ ListaPeerWidget::ListaPeerWidget( QWidget* _parent )
 
     this->setEnabled(false);
 
-    foreach( linha, this->interface_rede->getListPeers() )
+    if (this->interface_rede->redeOk())
     {
-        id = linha.split(';').at(0);
+        foreach( linha, this->interface_rede->getListPeers() )
+        {
+            id = linha.split(';').at(0);
 
-        host = linha.split(';').at(1);
+            host = linha.split(';').at(1);
 
-        this->setRowCount( this->rowCount() + 1 );
+            this->setRowCount( this->rowCount() + 1 );
 
-        tmp_item = new QTableWidgetItem(id, 0);
+            tmp_item = new QTableWidgetItem(id, 0);
 
-        this->setItem(this->rowCount() -1 , 0 ,tmp_item);
+            this->setItem(this->rowCount() -1 , 0 ,tmp_item);
 
 
-        tmp_item = new QTableWidgetItem(host, 0);
+            tmp_item = new QTableWidgetItem(host, 0);
 
-        this->setItem(this->rowCount() -1 , 1 ,tmp_item);
+            this->setItem(this->rowCount() -1 , 1 ,tmp_item);
 
+        }
     }
-    QObject::connect( this->interface_rede, SIGNAL(novoPeer(QString,int)),
-                      this,SLOT(novoPeer(QString,int)));
-
-    QObject::connect( this->interface_rede,SIGNAL(peerCaiu(int)),
-                      this,SLOT(peerCaiu(int)));
-}
-
-ListaPeerWidget::~ListaPeerWidget()
-{
-
+    else
+    {
+        this->clear();
+    }
 }
 
 void

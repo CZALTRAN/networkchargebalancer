@@ -47,7 +47,7 @@ public slots:
 signals:
 
     void
-    standardInput( qint64 _processo, int _registro, QString _mensagem);
+    standardInput( int _processo, int _registro, QString _mensagem);
 
     void
     resultStartProcesso( int _id_requisicao, QString _processo, qint64 _pid );

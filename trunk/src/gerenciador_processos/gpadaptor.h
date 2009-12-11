@@ -18,7 +18,7 @@ public:
 public slots:
 
     Q_NOREPLY void
-    standardInput( qint64 _processo, int _registro, QString _mensagem);
+    standardInput( int _processo, int _registro, QString _mensagem);
 
     quint64
     startProcesso( QString _nome_processo, QString _parametros );
