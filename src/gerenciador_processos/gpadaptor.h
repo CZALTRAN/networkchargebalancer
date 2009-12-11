@@ -26,6 +26,9 @@ public slots:
     Q_NOREPLY void
     matarProcesso( int _pid, int _id_dono, int _num_requisicao );
 
+    QString
+    getProcessos();
+
     Q_SCRIPTABLE void
     slotStandardOutput( qint64 _processo, int _registro, QString _mensagem );
 

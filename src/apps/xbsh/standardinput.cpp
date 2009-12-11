@@ -24,13 +24,16 @@ StandardInput::run()
 
     forever
     {
+        this->msleep(10);
+
+
         GerenciadorLancamento*
         pai = dynamic_cast<GerenciadorLancamento*>(this->parent());
 
-//        if (! pai->is_processo_rodando )
-//        {
-//            std::cout << "[ XBoga SHell ] -> ";
-//        }
+        if (! pai->is_processo_rodando )
+        {
+            std::cout << "[ XBoga SHell ] -> ";
+        }
         std::cin.getline(input_str, 20000);
         input = input_str;
 

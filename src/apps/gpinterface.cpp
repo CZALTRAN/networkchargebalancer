@@ -1,6 +1,7 @@
 #include "gpinterface.h"
 
 #include <QDebug>
+#include <QStringList>
 
 GPInterface::GPInterface( QObject* _parent)
     : QObject(_parent)
@@ -68,6 +69,15 @@ GPInterface::startProcesso( QString _nome_processo, QString _parametros )
     this->minhas_requisicoes.push_back( requisicao_id);
 
     return requisicao_id;
+}
+
+QStringList
+GPInterface::getAllProcesses()
+{
+    QString
+    from_dbus = this->getArgumentsFromCall("getProcessos").at(0).toString();
+
+    return from_dbus.split(";");
 }
 
 void
