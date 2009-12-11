@@ -36,13 +36,13 @@ signals:
 
     //sinais exportados
     void
-    resultStartProcesso( int _id_requisicao, QString _processo, qint64 _pid);
+    resultStartProcesso( int _id_requisicao, QString _processo, int _pid);
 
     void
-    standardOutput( qint64 _processo, int _registro, QString _mensagem );
+    standardOutput( int _processo, int _registro, QString _mensagem );
 
     void
-    processoTerminou( qint64 _processo, int _registro, int retorno);
+    processoTerminou( int _processo, int _registro, int retorno);
 
     Q_SCRIPTABLE void
     signalStartProcesso( int _registro, QString _processo, QString _parametros );

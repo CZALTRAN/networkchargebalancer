@@ -24,10 +24,10 @@ public:
 public slots:
 
     void
-    slotResultStartProcesso( int _id_requisicao, QString _processo, qint64 _pid);
+    slotResultStartProcesso( int _id_requisicao, QString _processo, int _pid);
 
     void
-    slotStandardOutput( qint64 _processo, int _registro, QString _mensagem );
+    slotStandardOutput( int _processo, int _registro, QString _mensagem );
 
     void
     slotStandardInput(qint64 _processo, int _registro, QString _mensagem);
@@ -44,7 +44,7 @@ signals:
     resultStartProcesso( int _id_requisicao, QString _processo, qint64 _pid );
 
     void
-    standardOutput(  qint64 _processo, int _registro, QString _mensagem );
+    standardOutput(  int _processo, int _registro, QString _mensagem );
 
 private:
 
