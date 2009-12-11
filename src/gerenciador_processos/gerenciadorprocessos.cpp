@@ -67,6 +67,7 @@ GerenciadorProcessos::peerCaiu( const int& _id )
                 {
                     qint64
                     pid = static_cast<qint64>(iterador.value()->getPid());
+
                     emit this->terminoDeProcesso(
                                            pid,
                                            iterador.value()->getNumRequisicao(),
