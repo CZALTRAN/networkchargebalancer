@@ -41,7 +41,7 @@ GPAdaptor::getProcessos()
 }
 
 void
-GPAdaptor::standardInput( Q_PID _processo, int _identificador, QString _input )
+GPAdaptor::standardInput( int _processo, int _identificador, QString _input )
 {
     emit this->signalStandardInput( _processo, _identificador, _input );
 }
