@@ -11,7 +11,7 @@ GerenciadorLancamento::GerenciadorLancamento(QObject *parent) :
     QObject(parent)
 {
 
-    qDebug() << Q_FUNC_INFO << this->thread();
+//    qDebug() << Q_FUNC_INFO << this->thread();
 
     this->is_processo_rodando = false;
     this->gp_interface = new GPInterface(this);

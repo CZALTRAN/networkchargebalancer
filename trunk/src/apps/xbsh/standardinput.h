@@ -3,11 +3,13 @@
 
 #include <QThread>
 
+class GerenciadorLancamento;
+
 class StandardInput : public QThread
 {
 Q_OBJECT
 public:
-    StandardInput( QObject* _parent = 0 );
+    StandardInput( GerenciadorLancamento* _parent = 0 );
 
     void
     run();
