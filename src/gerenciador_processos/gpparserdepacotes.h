@@ -46,6 +46,9 @@ namespace GP
         PacoteKillProcess*
         parseiaKillProcess( const QStringList& _lista_parametros ) const;
 
+        PacoteProcessKilled*
+        parseiaProcessKilled( const QStringList& _lista_parametros ) const;
+
         //LOGICA INTERNA
         void
         setaInteiroDePacote( const QStringList& _pacote, int _posicao,

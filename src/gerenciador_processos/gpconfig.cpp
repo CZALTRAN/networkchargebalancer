@@ -39,10 +39,10 @@ GP::GPConfig::getAplicacao(const QString& _nome)
 {
     if( this->aplicacoes.contains(_nome) )
     {
-        GP::Aplicacao
-        app_retorno = *this->aplicacoes.value(_nome);
+        GP::Aplicacao*
+        app_retorno = this->aplicacoes.value(_nome);
 
-        return &app_retorno;
+        return app_retorno;
     }
 
     return 0;
@@ -85,12 +85,6 @@ GP::GPConfig::getInstance()
     instancia;
 
     return instancia;
-}
-
-GP::GPConfig&
-GP::GPConfig::operator= ( GP::GPConfig const& )
-{
-
 }
 
 

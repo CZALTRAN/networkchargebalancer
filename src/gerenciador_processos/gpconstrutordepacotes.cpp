@@ -127,3 +127,17 @@ GP::ConstrutorDePacotes::montaKillProcess( const Q_PID& _pid,
 
     return pacote;
 }
+
+QString
+GP::ConstrutorDePacotes::montaProcessKilled( const Q_PID& _pid, const int& _num_requisicao )
+{
+    QString
+    pacote = "GP" + SEPARADOR_DE_CAMPO;
+    pacote += "CONTROL" + SEPARADOR_DE_CAMPO;
+    pacote += "PROCESS_KILLED" + SEPARADOR_DE_CAMPO;
+    pacote += QString::number(_pid) + SEPARADOR_DE_CAMPO;
+    pacote += QString::number(_num_requisicao) + SEPARADOR_DE_CAMPO;
+
+    return pacote;
+}
+

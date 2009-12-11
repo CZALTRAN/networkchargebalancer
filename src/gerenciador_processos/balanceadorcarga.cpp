@@ -71,7 +71,8 @@ void
 GP::BalanceadorCarga::incommingMessage( const int& _id,
                                         const GP::PacoteBase* _pacote )
 {
-
+    Q_UNUSED(_id)
+    Q_UNUSED(_pacote)
 }
 
 void

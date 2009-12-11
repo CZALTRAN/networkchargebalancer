@@ -11,7 +11,10 @@ GP::Peer::Peer( const int& _id, const bool& _possui_relacao,
                                 const int& _qtde_processos,
                                 const int& _qtde_processos_permitidos )
 {
-
+    this->id = _id;
+    this->possui_relacao = _possui_relacao;
+    this->qtde_processos = _qtde_processos;
+    this->qtde_processos_permitidos = _qtde_processos_permitidos;
 }
 
 GP::Peer::~Peer()

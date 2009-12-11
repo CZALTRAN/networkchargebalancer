@@ -23,7 +23,8 @@ namespace GP
         STATUS_PEER,
         STANDARD_INPUT,
         STANDARD_OUTPUT,
-        KILL_PROCESS
+        KILL_PROCESS,
+        PROCESS_KILLED
     };
 
     typedef struct PacoteBase
@@ -117,6 +118,15 @@ namespace GP
         int
         num_requisicao;
     } PacoteKillProcess;
+
+    typedef struct PacoteProcessKilled : public PacoteBase
+    {
+        Q_PID
+        pid;
+
+        int
+        num_requisicao;
+    } PacoteProcessKilled;
 }
 
 #endif // STRUCTPACOTES_H

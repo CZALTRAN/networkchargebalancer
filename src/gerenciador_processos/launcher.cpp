@@ -23,7 +23,8 @@ void
 GP::Launcher::incommingMessage(const int& _id,
                                const GP::PacoteBase& _parametros)
 {
-
+    Q_UNUSED(_id)
+    Q_UNUSED(_parametros)
 }
 
 void
@@ -124,6 +125,7 @@ GP::Launcher::startaProcessoRemoto( const int& _num_requisicao,
                                     const QString& _nome,
                                     const QStringList& _parametros )
 {
+    Q_UNUSED(_id_dono)
     QString
     pacote = GP::ConstrutorDePacotes::getInstance().montaStartProcess(
                                                                 _num_requisicao,
