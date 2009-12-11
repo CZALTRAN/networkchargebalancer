@@ -23,4 +23,5 @@ StandardInput::run()
         emit this->entrada(input);
     }
 
+    this->exec();
 }

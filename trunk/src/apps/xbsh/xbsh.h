@@ -30,6 +30,11 @@ public slots:
     void
     displayStdOut(  QString _mensagem );
 
+protected slots:
+
+    void
+    terminated( int _return_code );
+
 private:
 
     StandardInput*

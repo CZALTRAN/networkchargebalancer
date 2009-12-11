@@ -12,7 +12,7 @@ Q_OBJECT
 public:
 
     bool
-    processo_rodando;
+    is_processo_rodando;
 
     GerenciadorLancamento(QObject *parent = 0);
 
@@ -30,13 +30,19 @@ signals:
     void
     falhaAoStartProcesso( QString _erro );
 
+    void
+    processoTerminado( int _return_code );
+
 protected slots:
 
     void
     resultProcessoStart( int _id_requisicao, QString _processo, qint64 _pid );
 
     void
-    startStdOut(  qint64 _processo, int _registro, QString _mensagem );
+    startStdOut(  int _processo, int _registro, QString _mensagem );
+
+    void
+    processoNativoTerminado();
 
 private:
 
@@ -51,6 +57,10 @@ private:
 
     bool
     isProcessoNativo( const QString& _processo_nome );
+
+    void
+    startProcessoNativo( const QString& _processo_nome,
+                         const QStringList& _argumentos );
 };
 
 #endif // GERENCIADORLANCAMENTO_H

@@ -15,8 +15,14 @@ SOURCES += main.cpp \
     ../gpinterface.cpp \
     xbsh.cpp \
     standardinput.cpp \
-    gerenciadorlancamento.cpp
+    gerenciadorlancamento.cpp \
+    processonativopai.cpp \
+    ps/ps.cpp \
+    kill/kill.cpp
 HEADERS += ../gpinterface.h \
     xbsh.h \
     standardinput.h \
-    gerenciadorlancamento.h
+    gerenciadorlancamento.h \
+    processonativopai.h \
+    ps/ps.h \
+    kill/kill.h
