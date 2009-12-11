@@ -26,6 +26,12 @@ GPAdaptor::startProcesso( QString _nome_processo, QString _parametros )
 }
 
 void
+GPAdaptor::matarProcesso( int _pid, int _id_dono, int _num_requisicao )
+{
+    emit this->signalMatarProcesso( _pid, _id_dono, _num_requisicao );
+}
+
+void
 GPAdaptor::standardInput( Q_PID _processo, int _identificador, QString _input )
 {
     emit this->signalStandardInput( _processo, _identificador, _input );
@@ -70,7 +76,6 @@ GPAdaptor::slotResultStartProcesso( int _id_requisicao,
 void
 GPAdaptor::slotProcessoTerminou( qint64 _processo, int _registro, int _retorno)
 {
-    qDebug() << "to aqui to aqui to aqui";
     QList<QVariant>
     argumentos;
 

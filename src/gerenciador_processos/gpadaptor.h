@@ -23,6 +23,9 @@ public slots:
     quint64
     startProcesso( QString _nome_processo, QString _parametros );
 
+    Q_NOREPLY void
+    matarProcesso( int _pid, int _id_dono, int _num_requisicao );
+
     Q_SCRIPTABLE void
     slotStandardOutput( qint64 _processo, int _registro, QString _mensagem );
 
@@ -49,6 +52,9 @@ signals:
 
     Q_SCRIPTABLE void
     signalStandardInput( qint64 _processo, int _registro, QString _mensagem );
+
+    Q_SCRIPTABLE void
+    signalMatarProcesso( qint64 _pid, int _id_dono, int _num_requisicao );
 
 private:
 
