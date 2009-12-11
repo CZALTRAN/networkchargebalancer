@@ -44,6 +44,11 @@ protected slots:
     void
     processoNativoTerminado();
 
+    void
+    processoNaoNativoTerminado(int _processo,
+                               int _registro,
+                               int _retorno);
+
 private:
 
     GPInterface*
