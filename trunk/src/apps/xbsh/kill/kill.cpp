@@ -29,5 +29,5 @@ void
 Kill::printHelp()
 {
     qDebug() << "Modo de usar:";
-    qDebug() << "      kill -pid <pid> -peer <peer_id> -req <id_requisicao>";
+    qDebug() << "      kill -pid <pid> -peer <peer solicitante> -req <id_requisicao>";
 }
