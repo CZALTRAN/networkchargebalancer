@@ -4,6 +4,7 @@ ProcessoNativoPai::ProcessoNativoPai( const QStringList& _args,
                                       QObject* _parent )
     : QThread(_parent)
 {
+    this->args = _args;
     this->gp_interface = new GPInterface(this);
     this->return_code = 0;
 }

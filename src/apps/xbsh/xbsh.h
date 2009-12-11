@@ -30,11 +30,17 @@ public slots:
     void
     displayStdOut(  QString _mensagem );
 
+    void
+    erroAoStart( const QString& _mensagem );
+
 protected slots:
 
     void
     terminated( int _return_code );
 
+    void
+    displayPS1();
+    
 private:
 
     StandardInput*
@@ -46,8 +52,6 @@ private:
     void
     displayBoasVindas();
 
-    void
-    displayPS1();
 };
 
 #endif // XBSH_H

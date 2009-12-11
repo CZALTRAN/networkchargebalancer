@@ -10,28 +10,20 @@
 GerenciadorLancamento::GerenciadorLancamento(QObject *parent) :
     QObject(parent)
 {
+
+    qDebug() << Q_FUNC_INFO << this->thread();
+
     this->is_processo_rodando = false;
     this->gp_interface = new GPInterface(this);
 
-    bool
-    ok;
+    QObject::connect( this->gp_interface, SIGNAL(resultStartProcesso(int,QString,qint64)),
+                      this,SLOT(resultProcessoStart(int,QString,qint64)));
 
-
-    ok = QObject::connect( this->gp_interface, SIGNAL(resultStartProcesso(int,QString,qint64)),
-                           this,SLOT(resultProcessoStart(int,QString,qint64)));
-
-    if ( ! ok )
-    {
-        qDebug() << "deu merda aqui!! resultProcessoStart";
-    }
-
-    ok = QObject::connect( this->gp_interface, SIGNAL(standardOutput(int,int,QString)),
-                           this,SLOT(startStdOut(int,int,QString)));
-
-    if ( ! ok )
-    {
-        qDebug() << "deu merda aqui!! standardOutput";
-    }
+    QObject::connect( this->gp_interface, SIGNAL(standardOutput(int,int,QString)),
+                      this,SLOT(startStdOut(int,int,QString)));
+    
+    QObject::connect( this->gp_interface, SIGNAL(processoTerminado(int,int,int)),
+                      this,SLOT(processoNaoNativoTerminado(int,int,int)));
 }
 
 void
@@ -116,10 +108,25 @@ GerenciadorLancamento::processoNativoTerminado()
     this->is_processo_rodando = false;
 }
 
+void
+GerenciadorLancamento::processoNaoNativoTerminado(int _processo,
+                                                  int _registro,
+                                                  int _retorno)
+{
+    if ( this->pid_processo_rodando == _processo &&
+         this->registro_processo_rodando == _registro )
+    {
+        this->is_processo_rodando = false;
+        emit this->processoTerminado( _retorno );
+    }
+}
+
 bool
 GerenciadorLancamento::isProcessoNativo( const QString& _processo_nome )
 {
-    if ( _processo_nome == "ps" || _processo_nome == "kill")
+    if ( _processo_nome == "ps" ||
+         _processo_nome == "kill" ||
+         _processo_nome == "exit" )
         return true;
     return false;
 }
@@ -133,11 +140,15 @@ GerenciadorLancamento::startProcessoNativo( const QString& _processo_nome,
 
     if ( _processo_nome == "ps")
     {
-        processo_nativo = new Ps(_argumentos, this);
+        processo_nativo = new Ps(_argumentos, 0);
     }
     else if ( _processo_nome == "kill")
     {
-        processo_nativo = new Kill(_argumentos,this);
+        processo_nativo = new Kill(_argumentos, 0);
+    }
+    else if ( _processo_nome == "exit" )
+    {
+        exit(0);
     }
 
     QObject::connect( processo_nativo, SIGNAL(finished()),
