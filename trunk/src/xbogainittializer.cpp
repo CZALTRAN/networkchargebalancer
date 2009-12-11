@@ -76,6 +76,9 @@ XBogaInittializer::criarERegistrarGPAdaptor()
     QObject::connect(this->gprocessos, SIGNAL(terminoDeProcesso(qint64,int,int)),
                      adaptador,SLOT(slotProcessoTerminou(qint64,int,int)));
 
+    QObject::connect(adaptador, SIGNAL(signalMatarProcesso(qint64,int,int)),
+                     this->gprocessos, SLOT(mataProcesso(qint64,int,int)));
+
     if ( ! this->dbus->registrarNovoAdaptador(adaptador, "/gp") )
     {
         qDebug() << "nao consegui registrar o gp";
