@@ -178,7 +178,7 @@ GP::ParserDePacotes::parseiaStdOut( const QStringList& _lista_parametros ) const
     GP::PacoteStdOut*
     pacote = new GP::PacoteStdOut;
 
-    pacote->nome = GP::STANDARD_INPUT;
+    pacote->nome = GP::STANDARD_OUTPUT;
     pacote->dono = GP::PROCESSO;
 
     this->setaInt64DePacote(_lista_parametros, 3, pacote->pid);

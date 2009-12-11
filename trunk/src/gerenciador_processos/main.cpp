@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
 //    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:3:123:firefox:");
 //
 ///*********************** teste2 **********************************/
-    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:3:firefox:www.google.com");
-    testeGp.gerenciador.incommingMessage(7, "GP:LAUNCHER:START_PROCESS:3:firefox:www.uel.br");
+//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:3:firefox:www.google.com");
+//    testeGp.gerenciador.incommingMessage(7, "GP:LAUNCHER:START_PROCESS:3:firefox:www.uel.br");
 //    testeGp.gerenciador.incommingMessage(8, "GP:LAUNCHER:START_PROCESS:3:firefox:docs.google.com");
 //    testeGp.gerenciador.incommingMessage(7, "GP:LAUNCHER:START_PROCESS:3:firefox:www.mundocanibal.com.br");
 //
@@ -59,22 +59,22 @@ int main(int argc, char *argv[])
 //    testeGp.gerenciador.incommingMessage(8, "GP:LAUNCHER:FAIL_START_PROCESS:3:firefox:www.uol.com.br");
 //
 ///**********************  teste4 *********************************/
-    testeGp.gerenciador.processoStart(5, "gwenview", "");
-    testeGp.gerenciador.processoStart(5, "kcalc", "");
+//    testeGp.gerenciador.processoStart(5, "gwenview", "");
+//    testeGp.gerenciador.processoStart(5, "kcalc", "");
 
-    qDebug() << Q_FUNC_INFO << testeGp.gerenciador.getProcessos();
+//    qDebug() << Q_FUNC_INFO << testeGp.gerenciador.getProcessos();
 /********************** teste5 *********************************/
 //    testeGp.gerenciador.processoStart(5, "ping", "localhost");
 
 /********************** teste6 *********************************/
-//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:5:ping:192.168.1.101");
+//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:5:ping:192.168.1.101:");
 
 /********************** teste7 *********************************/
 //    testeGp.gerenciador.processoStart(14, "pikaloka", "");
 //    testeGp.gerenciador.processoStart(15, "pikaloka", "");
 
 /********************** teste8 *********************************/
-//    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:123:pikaloka:");
+    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:123:ping:");
 
 /********************** teste9 ********************************/
 //    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:14:pikaloka::");
