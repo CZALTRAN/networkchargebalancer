@@ -91,6 +91,19 @@ signals:
 
 private:
     void
+    mataProcessoExportado( const int& _id_host,
+                           const Q_PID& _pid,
+                           const int& _num_requisicao );
+
+    void
+    mataProcessoImportado( const int& _id_dono,
+                           const Q_PID& _pid,
+                           const int& _num_requisicao );
+
+    void
+    trataMensagemGP( const int& _id, GP::PacoteBase* _pacote );
+
+    void
     trataMensagemBalancer( const int& _id, GP::PacoteBase* _pacote );
 
     void
@@ -98,6 +111,12 @@ private:
 
     void
     trataMensagemProcesso( const int& _id, GP::PacoteBase* _pacote );
+
+    void
+    trataKillProcess( const int& _id, GP::PacoteBase* _pacote );
+
+    void
+    trataProcessKilled( const int& _id, GP::PacoteBase* _pacote );
 
     void
     trataStartProcess( const int& _id, GP::PacoteBase* _pacote );

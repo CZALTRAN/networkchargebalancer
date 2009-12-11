@@ -34,6 +34,8 @@ GP::ProcessoLocalOuImportado::start(const QString& _processo,
     this->processo->start(_processo, _parametros);
 
     this->pid = this->processo->pid();
+
+    qDebug() << Q_FUNC_INFO << "### Processo Criado: " << this->pid;
 }
 
 bool

@@ -58,6 +58,10 @@ GP::ParserDePacotes::parseiaPacote(const QString& _pacote) const
     {
         return this->parseiaKillProcess(campos);
     }
+    else if( campos[2] == "PROCESS_KILLED")
+    {
+        return this->parseiaProcessKilled(campos);
+    }
     else
     {
         qDebug() << Q_FUNC_INFO << "Nao foi possivel parsear o pacote";
@@ -101,8 +105,6 @@ GP::ParserDePacotes::parseiaSuccessStartProcess(
     pacote->dono = GP::LAUNCHER;
 
     this->setaInteiroDePacote(_lista_parametros, 3, pacote->num_requisicao);
-
-    bool sucesso_ao_converter;
 
     this->setaInt64DePacote(_lista_parametros, 4, pacote->pid );
 
@@ -202,6 +204,20 @@ GP::ParserDePacotes::parseiaKillProcess( const QStringList& _lista_parametros ) 
     return pacote;
 }
 
+GP::PacoteProcessKilled*
+GP::ParserDePacotes::parseiaProcessKilled( const QStringList& _lista_parametros ) const
+{
+    GP::PacoteProcessKilled*
+    pacote = new GP::PacoteProcessKilled;
+
+    pacote->nome = GP::PROCESS_KILLED;
+    pacote->dono = GP::GP;
+
+    this->setaInt64DePacote(_lista_parametros, 3, pacote->pid);
+    this->setaInteiroDePacote(_lista_parametros, 4, pacote->num_requisicao);
+
+    return pacote;
+}
 
 void
 GP::ParserDePacotes::setaInteiroDePacote( const QStringList& _pacote,

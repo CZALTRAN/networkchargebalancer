@@ -18,7 +18,7 @@ namespace GP
         int
         qtde_processos_permitidos;
 
-        QHash<QString,const Aplicacao*>
+        QHash<QString,Aplicacao*>
         aplicacoes;
 
     public:

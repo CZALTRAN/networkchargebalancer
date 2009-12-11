@@ -138,7 +138,7 @@ GerenciadorProcessos::incommingMessage(int _id, QString _mensagem)
     switch( _pacote->dono )
     {
         case GP::GP:
-            qDebug() << Q_FUNC_INFO << "eh minha" << GP::GP;
+            this->trataMensagemGP(_id, _pacote);
         break;
 
         case GP::BALANCER:
@@ -190,8 +190,9 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
                                     int _id_dono,
                                     int _num_requisicao)
 {
-    Q_PID
-    pid = static_cast<Q_PID>(_pid);
+    Q_UNUSED(_pid)
+//    Q_PID
+//    pid = static_cast<Q_PID>(_pid);
 
     QList<GP::Processo*>
     processos_id = this->buscaProcessosPorIdDono(_id_dono);
@@ -219,7 +220,7 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
                         pid = static_cast<qint64>(iterador.value()->getPid());
 
                         emit this->terminoDeProcesso(
-                                           iterador.value()->getPid(),
+                                           pid,
                                            iterador.value()->getNumRequisicao(),
                                            SOLICITADO);
 
@@ -231,12 +232,12 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
                         qDebug() << Q_FUNC_INFO << "Matei processo de outro kra!";
 
                         QString
-                        pacote_kill_process =
-                        GP::ConstrutorDePacotes::getInstance().montaKillProcess(
+                        pacote_process_killed =
+                        GP::ConstrutorDePacotes::getInstance().montaProcessKilled(
                                           iterador.value()->getPid(),
                                           iterador.value()->getNumRequisicao());
 
-
+                        emit this->sendMessage(_id_dono, pacote_process_killed);
                     }
 
                     qDebug() << Q_FUNC_INFO << "Removido o processo: " << iterador.value()->getNome();
@@ -408,6 +409,127 @@ GerenciadorProcessos::pegaSaidaProcesso( Q_PID _pid,
 }
 
 void
+GerenciadorProcessos::mataProcessoExportado( const int& _id_host,
+                       const Q_PID& _pid,
+                       const int& _num_requisicao )
+{
+    Q_UNUSED(_pid)
+    QList<GP::Processo*>
+    processos_id = this->buscaProcessosPorIdHost(_id_host);
+
+    for( int processo = 0;
+         processo < processos_id.size();
+         processo++ )
+    {
+        QHash<Q_PID, GP::Processo*>::iterator
+        iterador = this->processos.find(
+                          processos_id[processo]->getPid());
+
+        while( iterador != this->processos.end() )
+        {
+            if( iterador.value()->getPid()
+                    == processos_id[processo]->getPid())
+            {
+                if( iterador.value()->getNumRequisicao()
+                    == _num_requisicao )
+                {
+                    if( iterador.value()->getIdHost()
+                                     == _id_host )
+                    {
+                        qint64
+                        pid = static_cast<qint64>(iterador.value()->getPid());
+
+                        emit this->terminoDeProcesso(
+                                           pid,
+                                           iterador.value()->getNumRequisicao(),
+                                           PEER_MATOU);
+
+                        qDebug() << Q_FUNC_INFO << "Matei processo meu!";
+
+                        qDebug() << Q_FUNC_INFO << "Removido o processo: " << iterador.value()->getNome();
+                        delete iterador.value();
+                        this->processos.erase(iterador);
+
+                        iterador = this->processos.end();
+                    }
+                }
+            }
+            if( iterador != this->processos.end() )
+            {
+                iterador++;
+            }
+        }
+    }
+
+}
+
+void
+GerenciadorProcessos::mataProcessoImportado( const int& _id_dono,
+                       const Q_PID& _pid,
+                       const int& _num_requisicao )
+{
+    Q_UNUSED(_pid)
+    QList<GP::Processo*>
+    processos_id = this->buscaProcessosPorIdDono(_id_dono);
+
+    for( int processo = 0;
+         processo < processos_id.size();
+         processo++ )
+    {
+        QHash<Q_PID, GP::Processo*>::iterator
+        iterador = this->processos.find(
+                          processos_id[processo]->getPid());
+
+        while( iterador != this->processos.end() )
+        {
+            if( iterador.value()->getPid()
+                    == processos_id[processo]->getPid())
+            {
+                if( iterador.value()->getNumRequisicao()
+                    == _num_requisicao )
+                {
+                    if( iterador.value()->getIdDono()
+                                     == _id_dono )
+                    {
+                        qDebug() << Q_FUNC_INFO << "Matei processo do kra!";
+
+                        qDebug() << Q_FUNC_INFO << "Removido o processo: " << iterador.value()->getNome();
+                        delete iterador.value();
+                        this->processos.erase(iterador);
+
+                        iterador = this->processos.end();
+                    }
+                }
+            }
+            else
+            {
+                qDebug() << Q_FUNC_INFO << "###Processo Invalido: " << processos_id[processo]->getPid();
+            }
+            if( iterador != this->processos.end() )
+            {
+                iterador++;
+            }
+        }
+    }
+}
+
+
+void
+GerenciadorProcessos::trataMensagemGP( const int& _id, GP::PacoteBase* _pacote )
+{
+    switch( _pacote->nome )
+    {
+        case GP::KILL_PROCESS:
+            this->trataKillProcess(_id, _pacote);
+        break;
+
+        case GP::PROCESS_KILLED:
+            this->trataProcessKilled(_id, _pacote);
+        break;
+    }
+}
+
+void
 GerenciadorProcessos::trataMensagemBalancer( const int& _id,
                                              GP::PacoteBase* _pacote )
 {
@@ -457,6 +579,24 @@ GerenciadorProcessos::trataMensagemProcesso( const int& _id,
     case GP::STANDARD_OUTPUT:
         this->trataStdOut(_id, _pacote);
     }
+}
+
+void
+GerenciadorProcessos::trataKillProcess( const int& _id, GP::PacoteBase* _pacote )
+{
+    GP::PacoteKillProcess*
+    pacote = static_cast<GP::PacoteKillProcess*>(_pacote);
+
+    this->mataProcessoImportado(_id, pacote->pid, pacote->num_requisicao);
+}
+
+void
+GerenciadorProcessos::trataProcessKilled( const int& _id, GP::PacoteBase* _pacote )
+{
+    GP::PacoteProcessKilled*
+    pacote = static_cast<GP::PacoteProcessKilled*>(_pacote);
+
+    this->mataProcessoExportado(_id, pacote->pid, pacote->num_requisicao);
 }
 
 void
@@ -511,6 +651,7 @@ GerenciadorProcessos::trataSucessStartProcess( const int& _id,
     qint64
     pid = static_cast<qint64>(pacote_success_start_process->pid);
 
+    qDebug() << Q_FUNC_INFO << "avisando o dbus que foi startado o processo: " << pid;
     emit this->resultadoProcessoStart(
                             pacote_success_start_process->num_requisicao,
                             pacote_success_start_process->processo,
@@ -536,6 +677,7 @@ GerenciadorProcessos::trataFailStartProcess( const int& _id,
 void
 GerenciadorProcessos::trataStdIn( const int& _id, GP::PacoteBase* _pacote )
 {
+    Q_UNUSED(_id)
     qDebug() << Q_FUNC_INFO << "tratando StdIn";
 
     GP::PacoteStdIn*
@@ -552,6 +694,7 @@ GerenciadorProcessos::trataStdIn( const int& _id, GP::PacoteBase* _pacote )
 void
 GerenciadorProcessos::trataStdOut( const int& _id, GP::PacoteBase* _pacote )
 {
+    Q_UNUSED(_id)
     GP::PacoteStdOut*
     pacote_std_out = static_cast<GP::PacoteStdOut*>(_pacote);
 
