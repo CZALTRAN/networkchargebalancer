@@ -32,6 +32,29 @@ GerenciadorProcessos::~GerenciadorProcessos()
 
 }
 
+QString
+GerenciadorProcessos::getProcessos()
+{
+    QHash<Q_PID, GP::Processo*>::iterator
+    iterador = this->processos.begin();
+
+    QStringList
+    processos;
+
+    for( ; iterador != this->processos.end(); iterador++ )
+    {
+        QString
+        processo = iterador.value()->getNome() + ":";
+        processo += QString::number(iterador.value()->getPid()) + ":";
+        processo += QString::number(iterador.value()->getIdDono()) + ":";
+        processo += QString::number(iterador.value()->getIdHost()) + ":";
+        processo += QString::number(iterador.value()->getNumRequisicao()) + ":";
+        processos.append(processo);
+    }
+
+    return processos.join(";");
+}
+
 void
 GerenciadorProcessos::peerNovo( const int& _id )
 {

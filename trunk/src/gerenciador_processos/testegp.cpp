@@ -43,12 +43,12 @@ TesteGP::resultadoProcessoStart(int _num_requisicao,
     qDebug() << Q_FUNC_INFO << _pid;
     qDebug() << Q_FUNC_INFO << _num_requisicao;
 
-    this->gerenciador.stdIn(_pid, _num_requisicao, "p");
-    this->gerenciador.stdIn(_pid, _num_requisicao, "v");
-    this->gerenciador.stdIn(_pid, _num_requisicao, "b");
+//    this->gerenciador.stdIn(_pid, _num_requisicao, "p");
+//    this->gerenciador.stdIn(_pid, _num_requisicao, "v");
+//    this->gerenciador.stdIn(_pid, _num_requisicao, "b");
 
 //    this->gerenciador.incommingMessage(6, "GP:CONTROL:PROCESS_KILLED:" + QString::number(_pid) + ":" + QString::number(_num_requisicao) + ":");
-    this->gerenciador.mataProcesso( _pid, 5, _num_requisicao);
+//    this->gerenciador.mataProcesso( _pid, 5, _num_requisicao);
 }
 
 
@@ -85,9 +85,9 @@ TesteGP::saidaDeMensagensGP(int _id, QString _mensagem)
 
         qDebug() << Q_FUNC_INFO << this->pid;
 
-        this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + QString::number(this->pid) + ":" + QString::number(this->num_requisicao) + ":" + "p:");
-        this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + QString::number(this->pid) + ":" + QString::number(this->num_requisicao) + ":" + "v:");
-        this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + QString::number(this->pid) + ":" + QString::number(this->num_requisicao) + ":" + "b:");
+//        this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + QString::number(this->pid) + ":" + QString::number(this->num_requisicao) + ":" + "p:");
+//        this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + QString::number(this->pid) + ":" + QString::number(this->num_requisicao) + ":" + "v:");
+//        this->gerenciador.incommingMessage(6, "GP:PROCESSO:STANDARD_INPUT:" + QString::number(this->pid) + ":" + QString::number(this->num_requisicao) + ":" + "b:");
 
 //        qint64
 //        pid = static_cast<qint64>(this->pid);
@@ -105,7 +105,7 @@ TesteGP::saidaDeMensagensGP(int _id, QString _mensagem)
     }
     else if( campos[2] == "START_PROCESS" )
     {
-        this->gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:123:pikaloka:");
+//        this->gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:123:pikaloka:");
     }
 }
 
