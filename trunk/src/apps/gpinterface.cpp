@@ -29,6 +29,10 @@ GPInterface::GPInterface( QObject* _parent)
                        SLOT(slotResultStartProcesso( int, QString, int ))
                        );
 
+        this->connect( this->gp_interface,
+                       SIGNAL(processoTerminou( int, int, int )),
+                       this,
+                       SLOT(slotProcessoTerminado(int,int,int)));
     }
 }
 
@@ -107,6 +111,33 @@ GPInterface::slotStartProcesso( QString _nome_processo, QString _parametros)
 {
     emit this->startProcesso( _nome_processo,
                               _parametros );
+}
+
+void
+GPInterface::slotProcessoTerminado( int _processo, int _registro, int _retorno )
+{
+    if ( this->minhas_requisicoes.indexOf( _registro ) != -1 )
+    {
+        emit this->processoTerminado(_processo,
+                                     _registro,
+                                     _retorno);
+    }
+}
+
+void
+GPInterface::matarProcesso( int _pid, int _id_peer_dono, int _requisicao )
+{
+    QList<QVariant>
+    argumentos;
+
+    argumentos.push_back(_pid);
+    argumentos.push_back(_id_peer_dono);
+    argumentos.push_back(_requisicao);
+
+    this->gp_interface->callWithArgumentList(
+            QDBus::NoBlock,
+            "matarProcesso",
+            argumentos);
 }
 
 QList<QVariant>
