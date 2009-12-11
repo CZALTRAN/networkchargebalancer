@@ -36,6 +36,9 @@ public:
     virtual
     ~GerenciadorProcessos();
 
+    QString
+    getProcessos();
+
 public slots:
     //slots para comunicação externa
     void
