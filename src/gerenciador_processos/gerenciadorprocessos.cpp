@@ -730,7 +730,7 @@ GerenciadorProcessos::trataStdOut( const int& _id, GP::PacoteBase* _pacote )
     qint64
     pid = static_cast<qint64>(pacote_std_out->pid);
 
-    this->stdOut( pid,
+    emit this->stdOut( pid,
                  pacote_std_out->num_requisicao,
                  pacote_std_out->saida );
 }
