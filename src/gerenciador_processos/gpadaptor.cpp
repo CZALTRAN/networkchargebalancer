@@ -18,6 +18,8 @@ GPAdaptor::startProcesso( QString _nome_processo, QString _parametros )
     quint64
     id_solic = DBusConfig::getInstance().getNovoProcId();
 
+    qDebug() << Q_FUNC_INFO << " recebi uma nova solicitacao de processo: "
+            << _nome_processo;
     emit this->signalStartProcesso(id_solic, _nome_processo, _parametros );
 
     return id_solic;
@@ -35,7 +37,11 @@ GPAdaptor::slotStandardOutput( Q_PID _processo, int _registro, QString _mensagem
     QList<QVariant>
     argumentos;
 
-    argumentos.push_back(_processo);
+    //gambiarra azia pro dbus nao dar azia!!!
+    int
+    i = _processo;
+
+    argumentos.push_back(i);
     argumentos.push_back(_registro);
     argumentos.push_back(_mensagem);
 
@@ -50,9 +56,13 @@ GPAdaptor::slotResultStartProcesso( int _id_requisicao,
     QList<QVariant>
     argumentos;
 
+    //gambiarra azia pro dbus nao dar azia!!!
+    int
+    i = _pid;
+
     argumentos.push_back(_id_requisicao);
     argumentos.push_back(_processo);
-    argumentos.push_back(_pid);
+    argumentos.push_back(i);
 
     this->sendSignal( "resultStartProcesso", argumentos );
 }
@@ -60,10 +70,15 @@ GPAdaptor::slotResultStartProcesso( int _id_requisicao,
 void
 GPAdaptor::slotProcessoTerminou( qint64 _processo, int _registro, int _retorno)
 {
+    qDebug() << "to aqui to aqui to aqui";
     QList<QVariant>
     argumentos;
 
-    argumentos.push_back(_processo);
+    //gambiarra azia pro dbus nao dar azia!!!
+    int
+    i = _processo;
+
+    argumentos.push_back(i);
     argumentos.push_back(_registro);
     argumentos.push_back(_retorno);
 

@@ -1,6 +1,7 @@
 #include "gpinterface.h"
 
 #include <QDebug>
+
 GPInterface::GPInterface( QObject* _parent)
     : QObject(_parent)
 {
@@ -11,9 +12,23 @@ GPInterface::GPInterface( QObject* _parent)
             QDBusConnection::sessionBus(),
             this);
 
-    if ( ! this->redeOk() )
+    if ( this->gp_interface->lastError().type() != QDBusError::NoError )
     {
-        qDebug() << Q_FUNC_INFO << "nao foi prossivel detectar o servico dbus";
+        qDebug() << Q_FUNC_INFO <<"erro ao acessar a interface de gp do xboga";
+    }
+    else
+    {
+
+        this->connect( this->gp_interface,
+                       SIGNAL(standardOutput( int , int , QString )),
+                       SLOT(slotStandardOutput(int, int, QString ))
+                       );
+
+        this->connect( this->gp_interface,
+                       SIGNAL(resultStartProcesso( int, QString, int )),
+                       SLOT(slotResultStartProcesso( int, QString, int ))
+                       );
+
     }
 }
 
@@ -32,7 +47,16 @@ int
 GPInterface::startProcesso( QString _nome_processo, QString _parametros )
 {
     QList<QVariant>
-    retorno = this->getArgumentsFromCall("startProcesso");
+    parametros;
+
+    parametros.push_back(_nome_processo);
+    parametros.push_back(_parametros);
+
+    QList<QVariant>
+    retorno = this->gp_interface->callWithArgumentList(
+            QDBus::Block,
+            "startProcesso",
+            parametros ).arguments();
 
     int
     requisicao_id = retorno[0].toInt();
@@ -45,7 +69,7 @@ GPInterface::startProcesso( QString _nome_processo, QString _parametros )
 void
 GPInterface::slotResultStartProcesso( int _id_requisicao,
                                   QString _processo,
-                                  qint64 _pid)
+                                  int _pid)
 {
     if ( this->minhas_requisicoes.indexOf( _id_requisicao ) != -1 )
     {
@@ -56,7 +80,7 @@ GPInterface::slotResultStartProcesso( int _id_requisicao,
 }
 
 void
-GPInterface::slotStandardOutput( qint64 _processo,
+GPInterface::slotStandardOutput( int _processo,
                              int _registro,
                              QString _mensagem )
 {
