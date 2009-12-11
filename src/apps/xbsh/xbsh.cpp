@@ -16,6 +16,9 @@ XBSh::XBSh(QObject *_parent)
     QObject::connect( this->gerenciador_lancamento, SIGNAL(recebiEntrada(QString)),
                       this, SLOT(recebeEntrada(QString)));
 
+    QObject::connect( this->gerenciador_lancamento, SIGNAL(endStdOut(QString)),
+                      this,SLOT(displayStdOut(QString)));
+
     this->displayBoasVindas();
     this->stdin->start();
 }
@@ -30,7 +33,7 @@ XBSh::recebeEntrada( QString _input )
 {
     this->gerenciador_lancamento->processaEntrada( _input );
 
-    if (! this->gerenciador_lancamento->processo_rodando )
+    if (! this->gerenciador_lancamento->is_processo_rodando )
     {
         this->displayPS1();
     }
@@ -39,7 +42,14 @@ XBSh::recebeEntrada( QString _input )
 void
 XBSh::displayStdOut( QString _mensagem )
 {
-    std::cout << _mensagem.toStdString();
+    qDebug(_mensagem.toAscii());
+}
+
+void
+XBSh::terminated( int _return_code )
+{
+    //todo
+    this->displayPS1();
 }
 
 void
