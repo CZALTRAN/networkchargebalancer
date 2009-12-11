@@ -84,7 +84,7 @@ signals:
 
     void
     terminoDeProcesso( qint64 _pid, int num_requisicao,
-                                   motivoFimProcesso _motivo );
+                                   int _motivo );
 
     void
     resultadoProcessoStart( int _num_requisicao, QString _processo, qint64 _pid );
