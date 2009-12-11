@@ -63,14 +63,14 @@ int main(int argc, char *argv[])
 //    testeGp.gerenciador.processoStart(5, "kcalc", "");
 
 /********************** teste5 *********************************/
-//    testeGp.gerenciador.processoStart(5, "ping", "192.168.1.101");
+    testeGp.gerenciador.processoStart(5, "ping", "localhost");
 
 /********************** teste6 *********************************/
 //    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:START_PROCESS:5:ping:192.168.1.101");
 
 /********************** teste7 *********************************/
-    testeGp.gerenciador.processoStart(14, "pikaloka", "");
-    testeGp.gerenciador.processoStart(15, "pikaloka", "");
+//    testeGp.gerenciador.processoStart(14, "pikaloka", "");
+//    testeGp.gerenciador.processoStart(15, "pikaloka", "");
 
 /********************** teste8 *********************************/
 //    testeGp.gerenciador.incommingMessage(6, "GP:LAUNCHER:SUCCESS_START_PROCESS:14:123:pikaloka:");
