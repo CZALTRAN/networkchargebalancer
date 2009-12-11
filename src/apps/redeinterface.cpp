@@ -86,7 +86,7 @@ RedeInterface::getServerId()
 bool
 RedeInterface::redeOk() const
 {
-    return (QDBusConnection::sessionBus().lastError().type() == QDBusError::NoError);
+    return this->interface_rede->isValid();
 }
 
 QList<QVariant>

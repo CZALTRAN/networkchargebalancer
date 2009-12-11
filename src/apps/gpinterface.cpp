@@ -45,7 +45,7 @@ GPInterface::~GPInterface()
 bool
 GPInterface::redeOk() const
 {
-    return (QDBusConnection::sessionBus().lastError().type() == QDBusError::NoError);
+    return this->gp_interface->isValid();
 }
 
 int
