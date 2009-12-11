@@ -35,6 +35,12 @@ public slots:
     void
     slotStartProcesso( QString _nome_processo, QString _parametros);
 
+    void
+    slotProcessoTerminado( int _processo, int _registro, int retorno );
+
+    void
+    matarProcesso( int _pid, int _id_peer_dono, int _requisicao );
+
 signals:
 
     void
@@ -45,6 +51,9 @@ signals:
 
     void
     standardOutput(  int _processo, int _registro, QString _mensagem );
+
+    void
+    processoTerminado( int _processo, int _registro, int retorno );
 
 private:
 
