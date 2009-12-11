@@ -214,6 +214,7 @@ GerenciadorProcessos::mataProcesso( qint64 _pid,
                 if( iterador.value()->getNumRequisicao()
                     == _num_requisicao )
                 {
+                    qDebug() << Q_FUNC_INFO << "mesmo num_req";
                     if( iterador.value()->getIdDono()
                                      == GP::GPConfig::getInstance().getMeuId() )
                     {
@@ -262,6 +263,8 @@ GerenciadorProcessos::stdIn( qint64 _pid, int _num_requisicao, QString _entrada 
     Q_PID
     pid = static_cast<Q_PID>(_pid);
 
+    qDebug() << Q_FUNC_INFO << pid;
+
     QList<GP::Processo*>
     _processos = this->processos.values(pid);
 
@@ -297,6 +300,8 @@ void
 GerenciadorProcessos::novoProcesso(int _id_host, GP::Processo* _processo)
 {
     this->balancer.insereCarga(_id_host);
+
+    qDebug() << Q_FUNC_INFO << "num_req" << _processo->getNumRequisicao();
 
     if( GP::GPConfig::getInstance().getMeuId() == _id_host )
     {
