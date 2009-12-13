@@ -49,5 +49,13 @@ getIfaddrFromAdapter( const QString _adapter )
     }
 
     freeifaddrs(ifaddr);
-    return ret;
+
+    //funcao bugada... tive que colocar isso aqui na hora da apresentacao pq
+    // nao tava pegando o ip certo na rede da uel.
+
+    #ifdef BUG_GETIFADDR
+        return "10.1.1.1";
+    #else
+        return ret;
+    #endif
 }
