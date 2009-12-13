@@ -1,10 +1,15 @@
 QT += network dbus
 QT -= gui
+
 TARGET = xboga
 TEMPLATE = app
+
 DESTDIR = build
 MOC_DIR = build
 OBJECTS_DIR = build
+
+DEFINES += BUG_GETIFADDR
+
 SOURCES += main.cpp \
     xbogainittializer.cpp \
     rede/redeconfig.cpp \
