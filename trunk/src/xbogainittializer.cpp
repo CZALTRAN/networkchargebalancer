@@ -37,7 +37,7 @@ XBogaInittializer::XBogaInittializer( int argc, char* argv[], QObject *parent) :
     if (argc == 3)
     {
         Rede::Peer*
-        primeiro_peer = new Rede::Peer();;
+        primeiro_peer = new Rede::Peer();
 
         primeiro_peer->setHost( argv[2] );
 

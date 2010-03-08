@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include "rede/redeconfig.h"
+
 Rede::Ouvinte::Ouvinte( QObject* _parent )
         : QTcpServer( _parent )
 {
@@ -21,7 +23,8 @@ Rede::Ouvinte::startListen( const quint16& _porta)
 
     if ( this->isListening() )
     {
-        qDebug() << Q_FUNC_INFO << " to ouvino fia!";
+        qDebug() << Q_FUNC_INFO << " to ouvino fia "
+                << Rede::RedeConfig::getInstance().host;
         return true;
     }
     else

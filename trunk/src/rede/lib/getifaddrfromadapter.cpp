@@ -1,61 +1,36 @@
 #include "getifaddrfromadapter.h"
 
+#include <stdio.h>
+
+#include <string.h> /* for strncpy */
+
 #include <sys/types.h>
-#include <ifaddrs.h>
 #include <sys/socket.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <cstdlib>
+#include <sys/ioctl.h>
+#include <netinet/in.h>
+#include <net/if.h>
+
+#include <arpa/inet.h>
 
 QString
 getIfaddrFromAdapter( const QString _adapter )
 {
-    struct ifaddrs *ifaddr, *ifa;
-    int family, s;
-    char host[NI_MAXHOST];
+    int fd;
+    struct ifreq ifr;
 
-    if (getifaddrs(&ifaddr) == -1)
-    {
-        perror("getifaddrs");
-        exit(1);
-    }
+    fd = socket(AF_INET, SOCK_DGRAM, 0);
 
-    QString
-    ifname_tmp;
+    /* I want to get an IPv4 IP address */
+    ifr.ifr_addr.sa_family = AF_INET;
 
-    QString
-    ret;
+    /* I want IP address attached to "eth0" */
+    strncpy(ifr.ifr_name, _adapter.toAscii(), IFNAMSIZ-1);
 
-    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
-    {
-        family = ifa->ifa_addr->sa_family;
+    ioctl(fd, SIOCGIFADDR, &ifr);
 
-        ifname_tmp = ifa->ifa_name;
+    close(fd);
 
-        if ( ifname_tmp == _adapter &&
-             (family == AF_INET || family == AF_INET6) )
-        {
-            s = getnameinfo(ifa->ifa_addr,
-                    (family == AF_INET) ? sizeof(struct sockaddr_in) :
-                                          sizeof(struct sockaddr_in6),
-                    host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
-            if (s != 0)
-            {
-                printf("getnameinfo() failed: %s\n", gai_strerror(s));
-                exit(1);
-            }
-        ret = host;
-        }
-    }
+    QString ret = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
 
-    freeifaddrs(ifaddr);
-
-    //funcao bugada... tive que colocar isso aqui na hora da apresentacao pq
-    // nao tava pegando o ip certo na rede da uel.
-
-    #ifdef BUG_GETIFADDR
-        return "10.1.1.1";
-    #else
-        return ret;
-    #endif
+    return ret;
 }
